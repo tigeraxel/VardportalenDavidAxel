@@ -1,0 +1,15 @@
+version: '3.8'
+services:
+  db:
+    build: './db'
+    environment:
+      MARIADB_ROOT_PASSWORD: abc123
+      MARIADB_DATABASE: hello
+    ports:
+      - "3306:3306"
+  "webapp":
+    build: "./webapp"
+    ports: 
+    - "3000:8080"
+    volumes:
+    - "./webapp/src:/webapp/src"
