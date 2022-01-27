@@ -3,8 +3,8 @@ services:
   db:
     build: './db'
     environment:
-      MARIADB_ROOT_PASSWORD: abc123
-      MARIADB_DATABASE: hello
+      MARIADB_ROOT_PASSWORD: "abc123"
+      MARIADB_DATABASE: "hello"
     ports:
       - "3306:3306"
   "webapp":
