@@ -1,2 +1,6 @@
 #siteMargin{margin-left: 1%; margin-right: 1%; }
 .siteBackgroundColor{background-color: #deeade;}
+#loginFormDiv{margin-top: 1%;}
+#toggleToMembership{margin-top: 1%;margin-bottom: 0%; display: none;}
+#toggleToLogin{margin-top: 1%;margin-bottom: 0%; display: none;}
+#notMemberTitle{margin-top: 1%; margin-bottom: 0%;}

@@ -36,7 +36,12 @@ defaultLayout: 'main.hbs'
 app.set('views', path.join(__dirname, "views"))
 
 app.get('/', function(request,response){
-    response.render('homepage.hbs')
+    response.render('loginPage.hbs')
+    
+})
+
+app.get('/login', function(request,response){
+    response.render('loginPage.hbs')
     
 })
 

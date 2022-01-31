@@ -1,0 +1,63 @@
+<head>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            const membershipFormDiv = document.body.querySelector('#membershipFormDiv')
+            const loginFormDiv = document.body.querySelector('#loginFormDiv')
+            const toggleToMembership = document.body.querySelector('#toggleToMembership')
+            const toggleToLogin = document.body.querySelector('#toggleToLogin')
+            membershipFormDiv.style.display = "none"
+            toggleToMembership.style.display = "block"
+            toggleToLogin.style.display = "block"
+
+            toggleToMembership.addEventListener("click", function () {
+                membershipFormDiv.style.display = "block"
+                loginFormDiv.style.display = "none"
+            })
+            toggleToLogin.addEventListener("click", function () {
+                membershipFormDiv.style.display = "none"
+                loginFormDiv.style.display = "block"
+            })
+        })
+    </script>
+</head>
+
+<body>
+
+    <div id="loginFormDiv">
+
+
+        <form id="loginForm" method="get" action="/login">
+            <label for="socialSecurityNumberLogin">Personnummer:</label><br>
+            <input type="text" id="socialSecurityNumberLogin" name="socialSecurityNumberLogin"><br>
+            <label for="passwordLogin">Lösenord:</label><br>
+            <input type="password" id="passwordLogin" name="passwordLogin">
+            <input type="submit" value="Logga in">
+        </form>
+
+        <a id="toggleToMembership"> Bli medlem</a>
+
+
+    </div>
+
+
+    <div id="membershipFormDiv">
+
+        <h5 class="title is-5" id="notMemberTitle"> Ange dina uppgifter nedan för att bli medlem</h5>
+        <form id="membershipForm" method="post" action="/login">
+            <label for="firstName">Förnamn:</label><br>
+            <input type="text" id="firstName" name="firstName"><br>
+            <label for="lastName">Efternamn:</label><br>
+            <input type="text" id="lastName" name="lastName"><br>
+
+            <label for="socialSecurityNumber">Personnummer:</label><br>
+            <input type="text" id="socialSecurityNumber" name="socialSecurityNumber"><br>
+            <label for="password">Lösenord:</label><br>
+            <input type="password" id="password" name="password">
+            <input type="submit" value="Bli Medlem">
+        </form>
+
+        <a id="toggleToLogin">Gå till inloggningssidan.</a>
+
+    </div>
+</body>
