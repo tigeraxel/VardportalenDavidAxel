@@ -40,9 +40,9 @@ app.get('/', function(request,response){
     
 })
 
-app.get('/tjo', function(request,response){
-    response.render('homepage.hbs')
-    console.log("homepage")
+app.get('/bokning', function(request,response){
+    response.render('bookingPage.hbs')
+    console.log("bookingpage")
 })
 
 app.listen(8080,function(){
