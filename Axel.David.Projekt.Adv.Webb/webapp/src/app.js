@@ -15,20 +15,6 @@ var dbConnection = mysql2.createConnection({
 })
 
 
-dbConnection.query("SELECT * FROM humans",function(error,humans){
-    if(error){
-        console.log("error db")
-    }
-    else{
-        console.log("Got humans:")
-        for(const human of humans){
-            console.log(human.name)
-        }
-    }
-}) 
-
-
-
 app.engine('hbs', expressHandlebars.engine({
 defaultLayout: 'main.hbs'
 }))
@@ -40,8 +26,19 @@ app.get('/', function(request,response){
     
 })
 
-app.get('/login', function(request,response){
+app.get('/testdb', function(request,response){
     response.render('loginPage.hbs')
+    dbConnection.query("SELECT * FROM users",function(error,users){
+        if(error){
+            console.log("error db")
+        }
+        else{
+            console.log("Got users:")
+            for(const user of users){
+                console.log(user.firstName,user.lastName,user.socialSecurityNumber,user.isAdmin,user.isDoctor)
+            }
+        }
+    }) 
     
 })
 
