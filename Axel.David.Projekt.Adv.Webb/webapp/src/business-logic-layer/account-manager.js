@@ -1,0 +1,7 @@
+const accountRepository = require('../data-access-layer/account-repository')
+//funkar om man kommenterar bort o sen startar om.....
+const accountValidator = require('./account-validator')
+
+exports.getAllAccounts = function(callback){
+    accountRepository.getAllAccounts(callback)
+}
