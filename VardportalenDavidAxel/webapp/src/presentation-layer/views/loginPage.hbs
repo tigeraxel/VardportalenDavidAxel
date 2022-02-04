@@ -24,20 +24,20 @@
 
 <body>
 
+
     <div id="loginFormDiv">
 
 
         <h5 class="title is-5"> Vänligen logga in först.</h5>
         <form id="loginForm" method="get" action="/login">
-            <label for="socialSecurityNumberLogin">Personnummer:</label><br>
-            <input type="text" id="socialSecurityNumberLogin" name="socialSecurityNumberLogin"><br>
-            <label for="passwordLogin">Lösenord:</label><br>
-            <input type="password" id="passwordLogin" name="passwordLogin">
+            <label for="socialSecurityNumberLogin">Personnummer:</label>
+            <input class="input is-normal" type="text" id="socialSecurityNumberLogin" name="socialSecurityNumberLogin">
+            <label for="passwordLogin">Lösenord:</label>
+            <input class="input is-normal" type="password" type="password" id="passwordLogin" name="passwordLogin">
             <input class="button" type="submit" value="Logga in">
         </form>
 
         <a id="toggleToMembership"> Bli medlem</a>
-
 
     </div>
 
@@ -46,20 +46,18 @@
 
         <h5 class="title is-5" id="notMemberTitle"> Ange dina uppgifter nedan för att bli medlem</h5>
         <form id="membershipForm" method="post" action="/register">
-            <label for="firstName">Förnamn:</label><br>
-            <input type="text" id="firstName" name="firstName"><br>
-            <label for="lastName">Efternamn:</label><br>
-            <input type="text" id="lastName" name="lastName"><br>
-            <label for="email">Email:</label><br>
-            <input type="text" id="email" name="email"><br>
-            <label for="phoneNumber">Mobilnummer:</label><br>
-            <input type="text" id="phoneNumber" name="phoneNumber"><br>
-            
-
-            <label for="socialSecurityNumber">Personnummer:</label><br>
-            <input type="text" id="socialSecurityNumber" name="socialSecurityNumber"><br>
-            <label for="password">Lösenord:</label><br>
-            <input type="password" id="password" name="password">
+            <label for="firstName">Förnamn:</label>
+            <input class="input is-normal" type="text" id="firstName" name="firstName">
+            <label for="lastName">Efternamn:</label>
+            <input class="input is-normal" type="text" id="lastName" name="lastName">
+            <label for="email">Email:</label>
+            <input class="input is-normal" type="text" id="email" name="email">
+            <label for="phoneNumber">Mobilnummer:</label>
+            <input class="input is-normal" type="text" id="phoneNumber" name="phoneNumber">
+            <label for="socialSecurityNumber">Personnummer:</label>
+            <input class="input is-normal" type="text" id="socialSecurityNumber" name="socialSecurityNumber">
+            <label for="password">Lösenord:</label>
+            <input class="input is-normal" type="password" id="password" name="password">
             <input class="button" type="submit" value="Bli Medlem">
         </form>
 

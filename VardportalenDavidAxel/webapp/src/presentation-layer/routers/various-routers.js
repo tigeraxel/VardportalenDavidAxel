@@ -12,6 +12,33 @@ router.get('/newDoctor', function (request, response) {
     response.render("addNewDoctor.hbs")
 })
 
+router.get('/register', function (request, response) {
+    response.render("loginPage.hbs")
+})
+
+
+router.post('/register', function (request, response) {
+    const user = {
+        firstName : request.body.firstName,
+        lastName : request.body.lastName,
+        email : request.body.email,
+        phoneNumber : request.body.phoneNumber,
+        socialSecurityNumber : request.body.socialSecurityNumber,
+        password : request.body.password
+        
+        }
+        console.log(user)
+
+        accountManager.createAccount(user,function (errors, text) {
+            const model = {
+                errors: errors,
+                text: text
+            }
+            console.log("LYCKADES LÄGGA TILL användare")
+            response.render("loginPage.hbs", model)
+        })
+})
+
 router.post('/newDoctor', function (request, response) {
     
     const user = {
@@ -32,6 +59,15 @@ router.post('/newDoctor', function (request, response) {
     })
 })
 
+router.get("/doctors", function(request,response){
+    accountManager.getAllAccounts(function(errors,users){
+        const model = {
+            errors: errors,
+            users: users
+        }
+        response.render("ourDoctors.hbs",model)
+    })
+})
 
 
 router.get('/bokning', function (request, response) {

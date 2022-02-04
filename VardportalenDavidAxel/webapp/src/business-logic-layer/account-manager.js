@@ -6,6 +6,10 @@ exports.getAllAccounts = function(callback){
     accountRepository.getAllAccounts(callback)
 }
 
+exports.createAccount = function(user,callback){
+    accountRepository.createAccount(user,callback)
+}
+
 exports.GiveDoctorPrivilige = function(user,callback){
     accountRepository.GiveDoctorPrivilige(user,callback)
 }

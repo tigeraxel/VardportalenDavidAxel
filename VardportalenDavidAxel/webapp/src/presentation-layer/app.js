@@ -10,7 +10,7 @@ app.set('views', path.join(__dirname, "views"))
 const variousRouter = require('./routers/various-routers')
 const accountRouter = require('./routers/account-router')
 app.use('/', variousRouter)
-app.use('/accounts', accountRouter)
+app.use('/account', accountRouter)
 
 
 
