@@ -4,6 +4,7 @@ const expressHandlebars = require('express-handlebars')
 
 const app = express()
 app.use(express.static(__dirname + '/static'))
+app.use(express.urlencoded())
 app.set('views', path.join(__dirname, "views"))
 
 const variousRouter = require('./routers/various-routers')
@@ -20,17 +21,6 @@ defaultLayout: 'main'
 }))
 
 
-app.get('/', function(request,response){
-    response.render('loginPage.hbs')
-    
-})
-
-
-
-app.get('/bokning', function(request,response){
-    response.render('bookingPage.hbs')
-    console.log("bookingpage")
-})
 
 app.listen(8080,function(){
 console.log("Up and running")

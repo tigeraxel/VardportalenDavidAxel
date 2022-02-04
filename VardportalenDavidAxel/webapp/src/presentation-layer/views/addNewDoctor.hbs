@@ -1,0 +1,20 @@
+    <h3 class="title is-3"> Lägg till en doktor</h3>
+    
+{{text}}
+
+    <div id="newDoctorFormDiv">
+
+        <h5 class="title is-5" id="notMemberTitle"> Ange den nya doktorns uppgifter</h5>
+        <p>(måste finnas som användare innan tilläggning)</p>
+        <form id="newDoctorForm" method="post" action="/newDoctor">
+            <label for="firstName">Förnamn:</label><br>
+            <input class="input is-normal" type="text" id="firstName" name="firstName"><br>
+            <label for="lastName">Efternamn:</label><br>
+            <input class="input is-normal" type="text" id="lastName" name="lastName"><br>
+            <label for="socialSecurityNumber">Personnummer:</label><br>
+            <input class="input is-normal" type="text" id="socialSecurityNumber" name="socialSecurityNumber"><br>
+            <input class="button" type="submit" value="Lägg till ny doktor">
+        </form>
+
+
+    </div>
