@@ -6,6 +6,10 @@ exports.getAllAccounts = function(callback){
     accountRepository.getAllAccounts(callback)
 }
 
+exports.getAccountNameFromId = function(id,callback){
+    accountRepository.getAccountNameFromId(id,callback)
+}
+
 exports.createAccount = function(user,callback){
     accountRepository.createAccount(user,callback)
 }

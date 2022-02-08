@@ -17,6 +17,21 @@ exports.getAllAccounts = function(callback){
         }
     })
 }
+
+exports.getAccountNameFromId = function(id,callback){
+    const query = "SELECT * FROM users WHERE userID = ?"
+    const values = [id]
+
+    db.query(query,values,function(error,users){
+        if(error){
+            callback(['databaseError'], null)
+        }
+        else{
+            callback([], users)
+        }
+    })
+}
+
 exports.createAccount = function(user,callback){
     const query = 'INSERT INTO users (socialSecurityNumber, userPassword, firstName, lastName, email, phoneNumber,isDoctor, isAdmin) VALUES (?,?,?,?,?,?,0,0)'
     const values = [user.socialSecurityNumber,user.password,user.firstName,user.lastName,user.email,user.phoneNumber]

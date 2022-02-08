@@ -17,7 +17,7 @@
         <div id="wrapper">
             <label for="yes_no_covid_radio">Har du haft covid?</label>
             <p>
-                <input type="radio" name="yes_no_covid" >Yes</input>
+                <input type="radio" name="yes_no_covid">Yes</input>
             </p>
             <p>
                 <input type="radio" name="yes_no_covid">No</input>
@@ -31,6 +31,52 @@
 
 
     </form>
+
+    {{#if errors.length}}
+    <h3 class="title is-3"> errors:</h3>
+
+    <ul>
+        {{#each errors}}
+        <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    {{/if}}
+
+    {{#if bookingsWithNames.length}}
+    <ul>
+        {{#each bookingsWithNames}}
+        <li>
+            <div class="box">
+                <h5 class="title is-5">
+                    <div id="bookingTimeDiv">
+                        <p>{{this.appointmentDate}} {{this.appointmentTime}}</p>
+                        <p>Meddelande från patient: {{this.messageFromPatient}}</p>
+
+                    </div>
+
+                    <div id="bookingPatientDiv">
+
+                        <p>Patient: {{this.patientFirstName}} {{this.lastName}}</p>
+
+                    </div>
+
+                    <div id="bookingDoctorDiv">
+
+                        <p>Doktor: {{this.doctorFirstName}} {{this.lastName}}</p>
+
+
+                    </div>
+
+
+
+                </h5>
+            </div>
+        </li><br>
+        {{/each}}
+
+    </ul>
+
+    {{/if}}
 
 
 </div>

@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const accountManager = require('../../business-logic-layer/account-manager')
 const specialityManager = require('../../business-logic-layer/speciality-manager')
+const bookingManager = require('../../business-logic-layer/booking-manager')
 
 
 router.get('/', function (request, response) {
@@ -25,7 +26,7 @@ router.get('/newSpeciality', function (request, response) {
             specialitys: specialitys
         }
         console.log(specialitys)
-    response.render("addNewSpeciality.hbs", model)
+        response.render("addNewSpeciality.hbs", model)
     })
 })
 
@@ -102,9 +103,18 @@ router.get("/doctors", function (request, response) {
 })
 
 
-router.get('/bokning', function (request, response) {
-    response.render('bookingPage.hbs')
-    console.log("bookingpage")
+router.get('/bookings', function (request, response) {
+console.log("fresh")
+    bookingManager.getBookingsWithNames(function (errors, bookingsWithNames) {
+        console.log(bookingsWithNames)
+        const model = {
+            errors: errors,
+            bookingsWithNames: bookingsWithNames
+        }
+        response.render("bookingPage.hbs", model)
+
+    })
+
 })
 
 
