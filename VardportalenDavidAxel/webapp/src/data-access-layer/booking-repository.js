@@ -20,7 +20,7 @@ exports.getBookings = function(callback){
 }
  // halvklart
 exports.getBookingsWithNames = function(callback){
-    const query = "select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID;"
+    const query = "select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID;"
     const values = []
 
     db.query(query,values,function(error,bookingsWithNames){
