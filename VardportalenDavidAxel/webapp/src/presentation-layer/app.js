@@ -8,7 +8,11 @@ app.use(express.urlencoded())
 app.set('views', path.join(__dirname, "views"))
 
 const variousRouter = require('./routers/various-routers')
+const bookingRouter = require('./routers/booking-router')
+const specialityRouter = require('./routers/speciality-router')
 const accountRouter = require('./routers/account-router')
+app.use('/speciality', specialityRouter)
+app.use('/booking', bookingRouter)
 app.use('/', variousRouter)
 app.use('/account', accountRouter)
 
