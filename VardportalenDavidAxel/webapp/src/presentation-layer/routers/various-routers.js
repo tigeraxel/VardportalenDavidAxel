@@ -3,14 +3,20 @@ const router = express.Router()
 const accountManager = require('../../business-logic-layer/account-manager')
 const specialityManager = require('../../business-logic-layer/speciality-manager')
 const bookingManager = require('../../business-logic-layer/booking-manager')
+const { route } = require('./account-router')
 
 
 router.get('/', function (request, response) {
     response.render('loginPage.hbs')
 })
 
-
-router.get('/newDoctor', function (request, response) {
+router.get('/about', function (request, response) {
+    response.render('about.hbs')
+})
+router.get('/location', function (request, response) {
+    response.render('location.hbs')
+})
+router.get('/doctors/newDoctor', function (request, response) {
     response.render("addNewDoctor.hbs")
 })
 
@@ -19,60 +25,8 @@ router.get('/register', function (request, response) {
     response.render("loginPage.hbs")
 })
 
-router.get('/newSpeciality', function (request, response) {
-    specialityManager.getAllSpeciality(function (errors, specialitys) {
-        const model = {
-            errors: errors,
-            specialitys: specialitys
-        }
-        console.log(specialitys)
-        response.render("addNewSpeciality.hbs", model)
-    })
-})
 
-router.post('/newSpeciality', function (request, response) {
-
-    const specialityName = request.body.specialityName
-
-    console.log(specialityName)
-
-    specialityManager.createSpeciality(specialityName, function (errors, text) {
-        const model = {
-            errors: errors,
-            text: text
-        }
-        console.log("LYCKADES LÄGGA TILL specialitys")
-        response.redirect("/newSpeciality")
-    })
-})
-
-
-router.post('/register', function (request, response) {
-    const user = {
-        firstName: request.body.firstName,
-        lastName: request.body.lastName,
-        email: request.body.email,
-        phoneNumber: request.body.phoneNumber,
-        socialSecurityNumber: request.body.socialSecurityNumber,
-        password: request.body.password
-
-    }
-    console.log(user)
-
-    accountManager.createAccount(user, function (errors, text) {
-        const model = {
-            errors: errors,
-            text: text
-        }
-        console.log("LYCKADES LÄGGA TILL användare")
-        response.render("loginPage.hbs", model)
-    })
-})
-
-
-
-
-router.post('/newDoctor', function (request, response) {
+router.post('/doctors/newDoctor', function (request, response) {
 
     const user = {
         firstName: request.body.firstName,
@@ -101,23 +55,6 @@ router.get("/doctors", function (request, response) {
         response.render("ourDoctors.hbs", model)
     })
 })
-
-
-router.get('/bookings', function (request, response) {
-console.log("fresh")
-    bookingManager.getBookingsWithNames(function (errors, bookingsWithNames) {
-        console.log(bookingsWithNames)
-        const model = {
-            errors: errors,
-            bookingsWithNames: bookingsWithNames
-        }
-        response.render("bookingPage.hbs", model)
-
-    })
-
-})
-
-
 
 
 

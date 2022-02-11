@@ -2,18 +2,25 @@ const accountRepository = require('../data-access-layer/account-repository')
 //funkar om man kommenterar bort o sen startar om.....
 const accountValidator = require('./account-validator')
 
-exports.getAllAccounts = function(callback){
-    accountRepository.getAllAccounts(callback)
-}
+module.exports = {
 
-exports.getAccountNameFromId = function(id,callback){
-    accountRepository.getAccountNameFromId(id,callback)
-}
+    getAllAccounts(callback){
+        accountRepository.getAllAccounts(callback)
+    },
 
-exports.createAccount = function(user,callback){
-    accountRepository.createAccount(user,callback)
-}
+    getAccountNameFromId(id,callback){
+        accountRepository.getAccountNameFromId(id,callback)
+    },
 
-exports.GiveDoctorPrivilige = function(user,callback){
-    accountRepository.GiveDoctorPrivilige(user,callback)
+    createAccount(user,callback){
+        accountRepository.createAccount(user,callback)
+    },
+
+    GiveDoctorPrivilige(user,callback){
+        accountRepository.GiveDoctorPrivilige(user,callback)
+    },
+
+    checkLogInCredentials(user,callback){
+        accountValidator.checkLogInCredentials(user,callback)
+    }
 }

@@ -12,7 +12,7 @@ const bookingRouter = require('./routers/booking-router')
 const specialityRouter = require('./routers/speciality-router')
 const accountRouter = require('./routers/account-router')
 app.use('/speciality', specialityRouter)
-app.use('/booking', bookingRouter)
+app.use('/bookings', bookingRouter)
 app.use('/', variousRouter)
 app.use('/account', accountRouter)
 
