@@ -6,16 +6,26 @@ const router = express.Router();
 
 
 router.get('/', function (request, response) {
-    console.log("fresh")
-        bookingManager.getBookingsWithNames(function (errors, bookingsWithNames) {
-            //console.log(bookingsWithNames)
-            const model = {
-                errors: errors,
-                bookingsWithNames: bookingsWithNames
-            }
-            response.render("bookingPage.hbs", model)
-        })
+    bookingManager.getBookingsWithNames(function (errors, bookingsWithNames) {
+        //console.log(bookingsWithNames)
+        const model = {
+            errors: errors,
+            bookingsWithNames: bookingsWithNames
+        }
+        response.render("bookingPage.hbs", model)
     })
+})
 
+router.post('/newBooking', function(request, response){
+    request.body.no = Boolean(request.body.no)
+    request.body.yes = Boolean(request.body.yes)
+    console.log(request.body.yes)
+    console.log(request.body.no)
+    if(request.body.yes && request.body.no){
+        console.log("send back error message!")
+    }
+    const booking = {
 
+    }
+})
 module.exports = router

@@ -43,6 +43,8 @@ module.exports = {
                 callback(['databaseError'], null)
             }
             else{
+                console.log("Detta får vi tillbaks")
+                console.log(users)
                 callback([], users)
             }
         })
@@ -64,7 +66,7 @@ module.exports = {
         })
     
     },
-    
+
     getLogInCredentials(user, callback){
         const query = "SELECT socialSecurityNumber, userPassword FROM users WHERE socialSecurityNumber = ? AND userPassword = ?"
         const values = [user.socialSecurityNumber, user.password]

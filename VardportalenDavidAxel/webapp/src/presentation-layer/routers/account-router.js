@@ -14,7 +14,6 @@ router.post('/register', function (request, response) {
         socialSecurityNumber: request.body.socialSecurityNumber,
         password: request.body.password
     }
-    console.log(user)
 
     accountManager.createAccount(user, function (errors, text) {
         const model = {
@@ -45,6 +44,29 @@ router.post('/logIn', function (request, response) {
 
 })
 
+router.get('/newDoctor', function (request, response) {
+    response.render("addNewDoctor.hbs")
+})
+
+router.post('/newDoctor', function (request, response) {
+
+    const user = {
+        firstName: request.body.firstName,
+        socialSecurityNumber: request.body.socialSecurityNumber,
+        lastName: request.body.lastName
+    }
+
+    console.log(user)
+
+    accountManager.GiveDoctorPrivilige(user, function (errors, text) {
+        const model = {
+            errors: errors,
+            text: text
+        }
+        console.log("LYCKADES LÄGGA TILL DOKTOR")
+        response.render("addNewDoctor.hbs", model)
+    })
+})
 
 
 
