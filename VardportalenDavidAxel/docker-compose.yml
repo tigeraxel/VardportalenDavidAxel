@@ -13,3 +13,10 @@ services:
     - "3000:8080"
     volumes:
     - "./webapp/src:/webapp/src"
+  session-db:
+    image: redis:alpine
+    build: './session-db'
+    ports:
+      - "6379:6379"
+    
+  

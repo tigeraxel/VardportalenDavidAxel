@@ -35,7 +35,7 @@ router.post('/newBooking', function(request, response){
         console.log("send back error message!")
     }
     const booking = {
-
+        
     }
 })
 module.exports = router
