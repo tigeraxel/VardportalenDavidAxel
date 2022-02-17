@@ -79,6 +79,7 @@ exports.getBookingsWithNames = function(callback){
         }
     })
 }
+
 /*
 "SELECT employee.first_name, employee.last_name, call.start_time, call.end_time, call_outcome.outcome_text
 FROM employee

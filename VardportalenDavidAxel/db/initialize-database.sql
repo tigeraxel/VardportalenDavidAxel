@@ -49,4 +49,5 @@ VALUES
 
 INSERT INTO `bookings` (`bookingID`, `appointmentTime`, `appointmentDate`,`covidQuestion`, `messageFromPatient`, `categoryID`, `doctorID`, `patientID`)
 VALUES
-	(1, '09:19', '22/2/2022','Ja jag har haft covid.', 'vill ta min 1a dos covid 19 vaccin', 1, 1, 4);
+	(1, '09:19', '22/2/2022','Ja jag har haft covid.', 'vill ta min 1a dos covid 19 vaccin!', 1, 1, 4);
+

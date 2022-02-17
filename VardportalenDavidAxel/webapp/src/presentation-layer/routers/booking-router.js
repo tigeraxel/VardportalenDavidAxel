@@ -70,7 +70,6 @@ router.post('/reserve', function(request, response){
             response.render('ourDoctors.hbs', bookingMessage)
         }
     })
-
     console.log(bookingInfo)
 })
 module.exports = router
