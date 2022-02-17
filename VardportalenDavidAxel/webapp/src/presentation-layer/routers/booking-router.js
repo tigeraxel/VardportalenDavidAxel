@@ -1,6 +1,7 @@
 const express = require('express');
 const bookingManager = require('../../business-logic-layer/booking-manager')
-const bookingValidator = require('../../business-logic-layer/booking-validator');
+const bookingValidator = require('../../business-logic-layer/booking-validator')
+const specialityManager = require('../../business-logic-layer/speciality-manager')
 
 const router = express.Router();
 
@@ -21,13 +22,17 @@ router.get('/create', function (request, response) {
 })
 
 router.get('/reserve', function (request, response) {
-    bookingManager.getBookings(function(errors, bookings){
-        const model = {
-            errors: errors,
-            bookings: bookings
-        }
+    bookingManager.getFreeBookings(function(errorsBookings, bookings){
+        specialityManager.getAllSpeciality(function(errorsSpecialitys,specialitys){
+            const model = {
+                errorsBookings: errorsBookings,
+                errorsSpecialitys:errorsSpecialitys,
+                bookings: bookings,
+                specialitys:specialitys
+            }
 
     response.render("reserveBooking.hbs", model)
+        })
     })
 })
 

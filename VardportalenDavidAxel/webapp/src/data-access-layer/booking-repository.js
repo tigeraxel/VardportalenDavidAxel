@@ -19,6 +19,20 @@ exports.getBookings = function(callback){
     })
 }
 
+exports.getFreeBookings = function(callback){
+    const query = "SELECT * FROM bookings WHERE patientID IS NULL "
+    const values = []
+
+    db.query(query,values,function(error,bookings){
+        if(error){
+            callback(['databaseError'], null)
+        }
+        else{
+            callback([], bookings)
+        }
+    })
+}
+
 exports.createBooking = function(bookingInfo,callback){
 
     const query = "INSERT INTO bookings (appointmentTime, appointmentDate, doctorID) VALUES (?,?,?)"
