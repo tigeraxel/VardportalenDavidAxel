@@ -34,7 +34,7 @@ router.post('/logIn', function (request, response) {
     console.log(logInCredentials)
     accountManager.checkLogInCredentials(logInCredentials, function(errors, user){
         console.log(user)
-        if(errors) {
+        if(errors.length > 0) {
             response.render("about.hbs")
         }else{
             response.render('addNewDoctor.hbs', user)
