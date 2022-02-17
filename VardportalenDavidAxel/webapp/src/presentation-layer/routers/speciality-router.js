@@ -5,18 +5,18 @@ const router = express.Router()
 
 
 
-router.get('/newSpeciality', function (request, response) {
+router.get('/create', function (request, response) {
     specialityManager.getAllSpeciality(function (errors, specialitys) {
         const model = {
             errors: errors,
             specialitys: specialitys
         }
         console.log(specialitys)
-        response.render("addNewSpeciality.hbs", model)
+        response.render("createSpeciality.hbs", model)
     })
 })
 
-router.post('/newSpeciality', function (request, response) {
+router.post('/create', function (request, response) {
 
     const specialityName = request.body.specialityName
 
@@ -28,7 +28,7 @@ router.post('/newSpeciality', function (request, response) {
             text: text
         }
         console.log("LYCKADES LÄGGA TILL specialitys")
-        response.redirect("/speciality/newSpeciality")
+        response.redirect("/speciality/create")
     })
 })
 

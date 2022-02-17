@@ -1,75 +1,50 @@
-<h3 class="title is-3">Boka tid</h3>
+<h3 class="title is-3">Bokningar</h3>
+{{#if errors.length}}
+<h3 class="title is-3"> errors:</h3>
 
-<div class="bookingFormDiv">
-    <form action="/bookings/newBooking" method="post" id="bookingForm">
-        <label for="Category">Vilken sorts undersökning:</label>
-        <select id="Category" name="Category">
-            <option value="Vaccine">Vaccine</option>
-            <option value="Injury">Injury</option>
-            <option value="Rehab">Rehab</option>
-            <option value="Psychiatric">Psychiatric</option>
-        </select>
-        <br>
-        <label for="QuestionSmoking">Röker du:</label>
-        <input type="checkbox" id="QuestionSmoking" name="QuestionSmoking" value="false">
-        <br>
+<ul>
+    {{#each errors}}
+    <li>{{this}}</li>
+    {{/each}}
+</ul>
+{{/if}}
 
-        <div id="wrapper">
-            <label for="yes_no_covid_radio">Har du haft covid?</label>
-            <p>Yes
-                <input type="checkbox" name="yes" value="false">
-            </p>
-            <p>No <input type="checkbox" name="no" value="false"> </p>
-            <input class="button" type="submit" id="postNewBooking" value="Skapa bokning">
-            <br>
-        <div>
-    </form>
-    {{#if errors.length}}
-    <h3 class="title is-3"> errors:</h3>
+{{#if bookingsWithNames.length}}
+<ul>
+    {{#each bookingsWithNames}}
+    <li>
+        <div class="box">
+            <h5 class="title is-5">
+                <div id="bookingTimeDiv">
+                    <p>{{this.appointmentDate}} {{this.appointmentTime}}</p>
+                    <p>{{this.specialityName}}</p>
+                    <p>Meddelande från patient: {{this.messageFromPatient}}</p>
 
-    <ul>
-        {{#each errors}}
-        <li>{{this}}</li>
-        {{/each}}
-    </ul>
-    {{/if}}
+                </div>
 
-    {{#if bookingsWithNames.length}}
-    <ul>
-        {{#each bookingsWithNames}}
-        <li>
-            <div class="box">
-                <h5 class="title is-5">
-                    <div id="bookingTimeDiv">
-                        <p>{{this.appointmentDate}} {{this.appointmentTime}}</p>
-                        <p>{{this.specialityName}}</p>
-                        <p>Meddelande från patient: {{this.messageFromPatient}}</p>
+                <div id="bookingPatientDiv">
 
-                    </div>
+                    <p>Patient: {{this.patientFirstName}} {{this.lastName}}</p>
 
-                    <div id="bookingPatientDiv">
+                </div>
 
-                        <p>Patient: {{this.patientFirstName}} {{this.lastName}}</p>
+                <div id="bookingDoctorDiv">
 
-                    </div>
-
-                    <div id="bookingDoctorDiv">
-
-                        <p>Doktor: {{this.doctorFirstName}} {{this.lastName}}</p>
+                    <p>Doktor: {{this.doctorFirstName}} {{this.lastName}}</p>
 
 
-                    </div>
+                </div>
 
 
 
-                </h5>
-            </div>
-        </li><br>
-        {{/each}}
+            </h5>
+        </div>
+    </li><br>
+    {{/each}}
 
-    </ul>
+</ul>
 
-    {{/if}}
+{{/if}}
 
 
 </div>

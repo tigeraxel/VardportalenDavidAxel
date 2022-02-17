@@ -18,6 +18,22 @@ exports.getBookings = function(callback){
         }
     })
 }
+
+exports.createBooking = function(bookingInfo,callback){
+
+    const query = "INSERT INTO bookings (appointmentTime, appointmentDate, doctorID) VALUES (?,?,?)"
+    const values = [bookingInfo.time,bookingInfo.date,bookingInfo.doctorID]
+    console.log(values)
+
+    db.query(query,values,function(error,bookings){
+        if(error){
+            callback(['databaseError'], null)
+        }
+        else{
+            callback([], bookings)
+        }
+    })
+}
  // halvklart
 exports.getBookingsWithNames = function(callback){
     const query = "select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID;"

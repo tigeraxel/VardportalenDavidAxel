@@ -9,3 +9,7 @@ exports.getBookings = function(callback){
 exports.getBookingsWithNames = function(callback){
     bookingRepository.getBookingsWithNames(callback)
 }
+
+exports.createBooking = function(bookingInfo,callback){
+    bookingRepository.createBooking(bookingInfo,callback)
+}
