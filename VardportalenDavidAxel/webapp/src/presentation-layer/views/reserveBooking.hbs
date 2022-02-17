@@ -1,0 +1,27 @@
+<h3 class="title is-3">Boka tid</h3>
+
+<div class="bookingFormDiv">
+    <form action="/bookings/reserve" method="post" id="bookingForm">
+        <label for="Category">Vilken sorts undersökning:</label>
+        <select id="Category" name="Category">
+            <option value="Vaccine">Vaccine</option>
+            <option value="Injury">Injury</option>
+            <option value="Rehab">Rehab</option>
+            <option value="Psychiatric">Psychiatric</option>
+        </select>
+        <br>
+        <label for="QuestionSmoking">Röker du:</label>
+        <input type="checkbox" id="QuestionSmoking" name="QuestionSmoking" value="false">
+        <br>
+
+        <div id="wrapper">
+            <label for="yes_no_covid_radio">Har du haft covid?</label>
+            <p>Yes
+                <input type="checkbox" name="yes" value="false">
+            </p>
+            <p>No <input type="checkbox" name="no" value="false"> </p>
+            <input class="button" type="submit" id="postNewBooking" value="Skapa bokning">
+            <br>
+            <div>
+    </form>
+</div>

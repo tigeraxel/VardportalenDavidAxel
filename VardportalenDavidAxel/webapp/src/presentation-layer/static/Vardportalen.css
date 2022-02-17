@@ -6,6 +6,7 @@
 #notMemberTitle{margin-top: 1%; margin-bottom: 0%;}
 #newDoctorForm{max-width: 20%;}
 #newSpecialityFormDiv{max-width: 20%;}
+#createBookingDiv{max-width: 20%;}
 #bookingTimeDiv{display: inline;}
 #bookingPatientDiv{display: inline;}
 #bookingDoctorDiv{display: inline;}
