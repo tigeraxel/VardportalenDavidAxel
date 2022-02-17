@@ -19,6 +19,7 @@ CREATE TABLE IF NOT EXISTS users(
     bookingID INT AUTO_INCREMENT PRIMARY KEY,
     appointmentTime VARCHAR(20),
     appointmentDate VARCHAR(20),
+    covidQuestion VARCHAR(30),
     messageFromPatient VARCHAR(250),
     categoryID INT,
     doctorID INT,
@@ -46,6 +47,7 @@ VALUES
 	(2, 'Skada'),
 	(3, 'Rehab');
 
-INSERT INTO `bookings` (`bookingID`, `appointmentTime`, `appointmentDate`, `messageFromPatient`, `categoryID`, `doctorID`, `patientID`)
+INSERT INTO `bookings` (`bookingID`, `appointmentTime`, `appointmentDate`,`covidQuestion`, `messageFromPatient`, `categoryID`, `doctorID`, `patientID`)
 VALUES
-	(1, '09:19', '22/2/2022', 'vill ta min 1a dos covid 19 vaccin', 1, 1, 4);
+	(1, '09:19', '22/2/2022','Ja jag har haft covid.', 'vill ta min 1a dos covid 19 vaccin!', 1, 1, 4);
+

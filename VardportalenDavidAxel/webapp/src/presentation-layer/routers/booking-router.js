@@ -54,24 +54,22 @@ router.post('/create', function (request, response) {
 
 router.post('/reserve', function(request, response){
 
-    request.body.no = Boolean(request.body.no)
-    request.body.yes = Boolean(request.body.yes)
+    const bookingInfo = {
+        bookingID: request.body.bookingID,
+        userID: request.body.userID,
+        message: request.body.message,
+        CategoryID: request.body.CategoryID,
+        covidQuestion: request.body.covidQuestion
+    }
 
-    if(request.body.no && !request.body.yes){
-        console.log("Har inte haft corona")
-    }
-    else if(request.body.yes && !request.body.no){
-        console.log("har haft corona!")
-    }else{
-        console.log("error, båda fälten får inte vara ifyllda")
-    }
-    console.log(request.body.yes)
-    console.log(request.body.no)
-    if(request.body.yes && request.body.no){
-        console.log("send back error message!")
-    }
-    const booking = {
-        
-    }
+    bookingManager.updateBooking(bookingInfo,function(errors,bookingMessage){
+        if(errors.length > 0) {
+            console.log(errors)
+            response.render("about.hbs")
+        }else{
+            response.render('ourDoctors.hbs', bookingMessage)
+        }
+    })
+    console.log(bookingInfo)
 })
 module.exports = router

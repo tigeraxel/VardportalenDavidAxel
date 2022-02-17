@@ -48,6 +48,23 @@ exports.createBooking = function(bookingInfo,callback){
         }
     })
 }
+
+
+exports.updateBooking = function(bookingInfo,callback){
+
+    const query = "UPDATE bookings SET patientID = ?, messageFromPatient = ?, categoryID = ?, covidQuestion = ? WHERE bookingID = ?"
+    const values = [bookingInfo.userID,bookingInfo.message,bookingInfo.CategoryID,bookingInfo.covidQuestion,bookingInfo.bookingID]
+    console.log(values)
+
+    db.query(query,values,function(error,bookings){
+        if(error){
+            callback(['databaseError'], null)
+        }
+        else{
+            callback([], bookings)
+        }
+    })
+}
  // halvklart
 exports.getBookingsWithNames = function(callback){
     const query = "select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID;"
@@ -62,6 +79,7 @@ exports.getBookingsWithNames = function(callback){
         }
     })
 }
+
 /*
 "SELECT employee.first_name, employee.last_name, call.start_time, call.end_time, call_outcome.outcome_text
 FROM employee

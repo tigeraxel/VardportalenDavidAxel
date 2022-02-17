@@ -7,6 +7,7 @@
 #newDoctorForm{max-width: 20%;}
 #newSpecialityFormDiv{max-width: 20%;}
 #createBookingDiv{max-width: 20%;}
+#bookingFormDiv{max-width: 40%;}
 #bookingTimeDiv{display: inline;}
 #bookingPatientDiv{display: inline;}
 #bookingDoctorDiv{display: inline;}

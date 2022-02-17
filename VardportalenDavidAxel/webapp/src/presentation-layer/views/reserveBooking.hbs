@@ -20,38 +20,42 @@
 
 {{#if bookings.length}}
 {{#if specialitys.length}}
-<div class="bookingFormDiv">
+<div id="bookingFormDiv">
     <form action="/bookings/reserve" method="post" id="bookingForm">
-        <label for="whichBooking">Vilken tid och datum?:</label>
-        <select id="bookingID" name="time And Date">
+        <label for="userID"> fyll i ditt userID som egentligen ska autofylllas med hjälp av session/cookie:</label>
+        <input class="input is-normal" type="text" id="userID" name="userID">
+        <label for="bookingID">Vilken tid och datum?:</label>
+        <select id="bookingID" name="bookingID">
             {{#each bookings}}
             <option value="{{this.bookingID}}">{{this.appointmentDate}} {{this.appointmentTime}}</option>
             {{/each}}
         </select>
         <br>
-        <label for="Category">Vilken sorts undersökning:</label>
-        <select id="Category" name="Category">
+        <label for="CategoryID">Vilken sorts undersökning:</label>
+        <select id="CategoryID" name="CategoryID">
             {{#each specialitys}}
             <option value="{{this.specialityID}}">{{this.specialityName}}</option>
             {{/each}}
         </select>
         <br>
-        <label for="QuestionSmoking">Röker du:</label>
-        <input type="checkbox" id="QuestionSmoking" name="QuestionSmoking" value="false">
-        <br>
-
-        <div id="wrapper">
-            <label for="yes_no_covid_radio">Har du haft covid?</label>
-            <p>Yes
-                <input type="checkbox" name="yes" value="false">
-            </p>
-            <p>No <input type="checkbox" name="no" value="false"> </p>
+            <label for="covidQuestion">Har du haft covid?</label> <br>
+            <input type="radio" name="covidQuestion" id="yes" value="Ja jag har haft covid."> Ja<br>
+            <input type="radio" name="covidQuestion" id="no" value="Nej jag har inte haft covid."> Nej<br>
+            <label for="message"> Annan övrig info som är bra att känna till:</label>
+            <input class="input is-normal" type="text" id="message" name="message">
+            <br>
             <input class="button" type="submit" id="postNewBooking" value="Skapa bokning">
             <br>
-            <div>
     </form>
 </div>
 
 
+
 {{/if}}
+{{else}}
+
+<h4 class="title is-4"> No available times! </h4>
 {{/if}}
+
+
+
