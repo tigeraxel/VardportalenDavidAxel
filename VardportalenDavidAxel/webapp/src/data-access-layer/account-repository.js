@@ -2,6 +2,7 @@ const { getAllAccounts } = require('../business-logic-layer/account-manager')
 const { GiveDoctorPrivilige } = require('../business-logic-layer/account-manager')
 const { createAccount } = require('../business-logic-layer/account-manager')
 
+
 const db = require('./db')
 
 
