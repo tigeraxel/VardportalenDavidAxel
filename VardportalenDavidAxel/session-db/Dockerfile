@@ -1,1 +1,1 @@
-FROM alpine:3.15
+FROM redis:7.0-rc1

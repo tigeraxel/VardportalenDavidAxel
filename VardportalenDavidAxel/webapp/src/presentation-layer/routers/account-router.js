@@ -6,6 +6,7 @@ const router = express.Router()
 
 
 router.post('/register', function (request, response) {
+
     const user = {
         firstName: request.body.firstName,
         lastName: request.body.lastName,
