@@ -7,6 +7,7 @@ const { route } = require('./account-router')
 
 
 router.get('/', function (request, response) {
+    console.log("in home page get request")
     response.render('loginPage.hbs')
 })
 

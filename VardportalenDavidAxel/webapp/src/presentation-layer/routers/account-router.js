@@ -1,9 +1,31 @@
 const express = require('express')
 const accountManager = require('../../business-logic-layer/account-manager')
-const accountValidator = require('../../business-logic-layer/account-validator')
+const sessionValidator = require('../../business-logic-layer/session-validator')
+const session = require('../../data-access-layer/session-db')
 
 const router = express.Router()
 
+router.post('/logIn', function (request, response) {
+    console.log("I logIn function")
+ 
+    const logInCredentials = {
+        socialSecurityNumber: request.body.socialSecurityNumberLogin,
+        password: request.body.passwordLogin
+    }
+    console.log(logInCredentials)
+    accountManager.checkLogInCredentials(logInCredentials, function(errors, user){
+        console.log(user)
+        if(errors.length > 0) {
+            response.render("about.hbs")
+        }else{
+            response.locals.session.sessionId = user.socialSecurityNumber
+            console.log(user)
+            response.render('addNewDoctor.hbs', user)
+        }
+        
+    })
+
+})
 
 router.post('/register', function (request, response) {
 
@@ -26,24 +48,9 @@ router.post('/register', function (request, response) {
     })
 })
 
-router.post('/logIn', function (request, response) {
-    console.log("I logIn function")
-    const logInCredentials = {
-        socialSecurityNumber: request.body.socialSecurityNumberLogin,
-        password: request.body.passwordLogin
-    }
-    console.log(logInCredentials)
-    accountManager.checkLogInCredentials(logInCredentials, function(errors, user){
-        console.log(user)
-        if(errors.length > 0) {
-            response.render("about.hbs")
-        }else{
-            response.render('addNewDoctor.hbs', user)
-        }
-        
-    })
-
-})
+//router.use(session)
+//kollar så användaren har en session för att kunna komma åt sidorna nedanför.
+//router.use(sessionValidator.authenticateSession, () => {console.log('kollat session')})
 
 router.get('/newDoctor', function (request, response) {
     response.render("addNewDoctor.hbs")
@@ -68,8 +75,6 @@ router.post('/newDoctor', function (request, response) {
         response.render("addNewDoctor.hbs", model)
     })
 })
-
-
 
 
 module.exports = router

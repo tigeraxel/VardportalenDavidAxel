@@ -71,13 +71,17 @@ module.exports = {
     getLogInCredentials(user, callback){
         const query = "SELECT socialSecurityNumber, userPassword FROM users WHERE socialSecurityNumber = ? AND userPassword = ?"
         const values = [user.socialSecurityNumber, user.password]
-        db.query(query, values,function(error,users){
-            if(error){
-                console.log("Error when executing query")
+        db.query(query, values, function(error,users){
+            userError = []
+            if(users.length < 1){
+                userError.push('User not found')
+            }
+            if(error || userError.length > 0){
                 console.log(error)
                 callback(["DatabaseError"])
             }else{
                 console.log("Found user!")
+                console.log(users)
                 callback([], users[0])
             }
         })    
