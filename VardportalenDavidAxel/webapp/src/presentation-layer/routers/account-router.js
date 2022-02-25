@@ -7,23 +7,28 @@ const router = express.Router()
 
 router.post('/logIn', function (request, response) {
     console.log("I logIn function")
- 
+
     const logInCredentials = {
         socialSecurityNumber: request.body.socialSecurityNumberLogin,
         password: request.body.passwordLogin
     }
     console.log(logInCredentials)
-    accountManager.checkLogInCredentials(logInCredentials, function(errors, user){
+    accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
         console.log(user)
-        if(errors.length > 0) {
+        if (errors.length > 0) {
             response.render("about.hbs")
-        }else{
+        } else {
             request.session.isLoggedIn = true
-            request.session.isAdmin = false
+            if (user.isAdmin == 1) {
+                request.session.isAdmin = true
+            }
+            else {
+                request.session.isAdmin = false
+            }
             console.log(request.session)
             response.render('addNewDoctor.hbs', user)
         }
-        
+
     })
 
 })
