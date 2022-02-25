@@ -70,7 +70,7 @@ module.exports = {
     },
 
     getLogInCredentials(user, callback){
-        const query = "SELECT socialSecurityNumber, userPassword FROM users WHERE socialSecurityNumber = ? AND userPassword = ?"
+        const query = "SELECT * FROM users WHERE socialSecurityNumber = ? AND userPassword = ?"
         const values = [user.socialSecurityNumber, user.password]
         db.query(query, values, function(error,users){
             userError = []
