@@ -4,11 +4,14 @@ const bookingValidator = require('../../business-logic-layer/booking-validator')
 const specialityManager = require('../../business-logic-layer/speciality-manager')
 const sessionValidator = require('../../business-logic-layer/session-validator')
 
+
 const router = express.Router();
 
 
 router.get('/showall', function (request, response) {
-    bookingManager.getBookingsWithNames(function (errors, bookingsWithNames) {
+    const session = request.session
+    console.log(session.isAdmin)
+    bookingManager.getBookingsWithNames(session, function (errors, bookingsWithNames) {
         //console.log(bookingsWithNames)
         const model = {
             errors: errors,
@@ -54,7 +57,8 @@ router.post('/reserve', function(request, response){
     console.log(bookingInfo)
 })
 
-router.use(sessionValidator.authenticateSession, () => { "checked session" })
+router.use(sessionValidator.authenticateDoctorSession)
+
 router.get('/create', function (request, response) {
     response.render("createBooking.hbs")
 })
@@ -75,5 +79,6 @@ router.post('/create', function (request, response) {
         }
     })
 })
+
 
 module.exports = router

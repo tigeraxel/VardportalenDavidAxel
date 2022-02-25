@@ -32,6 +32,8 @@ app.use(session({
 app.use(function(request, response, next){
     response.locals.isAdmin = request.session.isAdmin
     response.locals.isLoggedIn = request.session.isLoggedIn
+    response.locals.userID = request.session.userID
+    response.locals.isDoctor = request.session.isDoctor
     next()
 })
 
@@ -45,6 +47,7 @@ app.use('/speciality', specialityRouter)
 app.use('/bookings', bookingRouter)
 
 app.use((error, request, response, next) => {
+    console.log(error)
     response.render("loginPage.hbs", error)
 })
 
@@ -52,8 +55,6 @@ app.engine('hbs', expressHandlebars.engine({
     extname: 'hbs',
 defaultLayout: 'main'
 }))
-
-
 
 app.listen(8080,function(){
     console.log("Up and running")

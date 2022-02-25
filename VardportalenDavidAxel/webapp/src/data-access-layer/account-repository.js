@@ -1,5 +1,5 @@
 const { request } = require('express')
-const { getAllAccounts } = require('../business-logic-layer/account-manager')
+const { getAllDoctors } = require('../business-logic-layer/account-manager')
 const { GiveDoctorPrivilige } = require('../business-logic-layer/account-manager')
 const { createAccount } = require('../business-logic-layer/account-manager')
 
@@ -8,7 +8,7 @@ const db = require('./db')
 
 
 module.exports = {
-    getAllAccounts(callback){
+    getAllDoctors(callback){
         const query = "SELECT * FROM users WHERE isDoctor = 1"
         const values = []
     
@@ -81,8 +81,6 @@ module.exports = {
                 console.log(error)
                 callback(["DatabaseError"])
             }else{
-                console.log("Found user!")
-                console.log(users)
                 callback([], users[0])
             }
         })    

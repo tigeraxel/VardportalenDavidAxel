@@ -4,8 +4,8 @@ const accountValidator = require('./account-validator')
 
 module.exports = {
 
-    getAllAccounts(callback){
-        accountRepository.getAllAccounts(callback)
+    getAllDoctors(callback){
+        accountRepository.getAllDoctors(callback)
     },
 
     getAccountNameFromId(id,callback){
