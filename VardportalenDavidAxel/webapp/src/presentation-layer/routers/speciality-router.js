@@ -1,9 +1,10 @@
 const express = require('express')
 const specialityManager = require('../../business-logic-layer/speciality-manager')
 const specialityValidator = require('../../business-logic-layer/speciality-validator')
+const sessionValidator = require('../../business-logic-layer/session-validator')
 const router = express.Router()
 
-
+router.use(sessionValidator.authenticateAdminSession)
 
 router.get('/create', function (request, response) {
     specialityManager.getAllSpeciality(function (errors, specialitys) {

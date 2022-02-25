@@ -24,6 +24,14 @@
 
 <body>
 
+    {{#if isLoggedIn}}
+
+
+        <h5 class="title is-5"> HomeScreen.</h5>
+        <h5 class="title is-5"> Du är inloggad.</h5>
+
+    {{else}}
+
 
     <div id="loginFormDiv">
         <h5 class="title is-5"> Vänligen logga in först.</h5>
@@ -62,4 +70,6 @@
         <a id="toggleToLogin">Gå till inloggningssidan.</a>
 
     </div>
+
+    {{/if}}
 </body>

@@ -8,6 +8,8 @@ const sessionValidator = require('../../business-logic-layer/session-validator')
 const router = express.Router();
 
 
+router.use(sessionValidator.authenticateSession)
+
 router.get('/showall', function (request, response) {
     const session = request.session
     console.log(session.isAdmin)
