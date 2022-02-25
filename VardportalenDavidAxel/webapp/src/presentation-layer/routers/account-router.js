@@ -71,8 +71,20 @@ router.get("/doctors", function (request, response) {
     })
 })
 
+
+
 //kollar så användaren har en session för att kunna komma åt sidorna nedanför.
 router.use(sessionValidator.authenticateAdminSession)
+
+router.get("/users", function (request, response) {
+    accountManager.getAllUsers(function (errors, users) {
+        const model = {
+            errors: errors,
+            users: users
+        }
+        response.render("ourUsers.hbs", model)
+    })
+})
 
 router.get('/newDoctor', function (request, response) {
     response.render("addNewDoctor.hbs")

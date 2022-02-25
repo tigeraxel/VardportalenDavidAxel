@@ -48,7 +48,10 @@ app.use('/bookings', bookingRouter)
 
 app.use((error, request, response, next) => {
     console.log(error)
-    response.render("loginPage.hbs", error)
+    model = {
+        errors : error
+    }
+    response.render("loginPage.hbs", model)
 })
 
 app.engine('hbs', expressHandlebars.engine({

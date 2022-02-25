@@ -2,8 +2,8 @@
 module.exports = {
     authenticateSession(request, response, next) {
         if (!request.session.isLoggedIn) {
-            const error = new Error("please log in")
-            next(error)
+            const errors = ["please log in"]
+            next(errors)
         }
         else {
             next()
@@ -11,8 +11,8 @@ module.exports = {
     },
     authenticateAdminSession(request, response, next) {
         if (!request.session.isAdmin) {
-            const error = new Error("You do not have admin privileges")
-            next(error)
+            const errors = ["You do not have admin privileges"]
+            next(errors)
         }
         else {
             next()
@@ -22,8 +22,9 @@ module.exports = {
         console.log("i doctor session validator")
         console.log(request.session)
         if (!request.session.isDoctor && !request.session.isAdmin) {
-            const error = new Error("You do not have doctor privileges")
-            next(error)
+        
+            const errors = ["You dont have Admin Rights"]
+            next(errors)
         }
         else {
             next()

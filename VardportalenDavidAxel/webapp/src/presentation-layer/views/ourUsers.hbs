@@ -1,0 +1,25 @@
+<h3 class="title is-3"> Våra Användare</h3>
+{{#if errors.length}}
+<h3 class="title is-3"> errors:</h3>
+
+<ul>
+    {{#each errors}}
+    <li>{{this}}</li>
+    {{/each}}
+</ul>
+{{/if}}
+
+{{#if users.length}}
+<ul>
+    {{#each users}}
+    <li>
+        <h5 class="title is-5">
+            {{this.firstName}} {{this.lastName}} {{#if this.isAdmin}}(Admin){{/if}},
+            {{this.email}}, {{this.phoneNumber}}
+            
+        </h5>
+    </li>
+    {{/each}}
+</ul>
+
+{{/if}}

@@ -8,6 +8,10 @@ module.exports = {
         accountRepository.getAllDoctors(callback)
     },
 
+    getAllUsers(callback){
+        accountRepository.getAllUsers(callback)
+    },
+
     getAccountNameFromId(id,callback){
         accountRepository.getAccountNameFromId(id,callback)
     },
