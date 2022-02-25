@@ -19,6 +19,7 @@ router.post('/logIn', function (request, response) {
             response.render("about.hbs")
         }else{
             request.session.isLoggedIn = true
+            request.session.isAdmin = false
             console.log(request.session)
             response.render('addNewDoctor.hbs', user)
         }

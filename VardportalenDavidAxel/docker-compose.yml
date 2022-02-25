@@ -7,7 +7,7 @@ services:
       MARIADB_DATABASE: "hello"
     ports:
       - "3306:3306"
-  "webapp":
+  webapp:
     depends_on:
       - session-db
       - db
