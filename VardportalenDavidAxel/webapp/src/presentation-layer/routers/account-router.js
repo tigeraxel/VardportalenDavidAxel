@@ -18,8 +18,8 @@ router.post('/logIn', function (request, response) {
         if(errors.length > 0) {
             response.render("about.hbs")
         }else{
-            response.locals.session.sessionId = user.socialSecurityNumber
-            console.log(user)
+            request.session.isLoggedIn = true
+            console.log(request.session)
             response.render('addNewDoctor.hbs', user)
         }
         

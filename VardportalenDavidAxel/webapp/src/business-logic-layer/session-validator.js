@@ -6,7 +6,6 @@ module.exports = {
             response.json('ingen session :(')
         }
         else{
-            request.session.id = 'sessionId'
             //response.locals.session = request.session
             next()
         }

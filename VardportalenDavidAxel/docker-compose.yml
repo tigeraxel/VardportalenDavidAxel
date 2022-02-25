@@ -8,6 +8,9 @@ services:
     ports:
       - "3306:3306"
   "webapp":
+    depends_on:
+      - session-db
+      - db
     build: "./webapp"
     ports: 
     - "3000:8080"
