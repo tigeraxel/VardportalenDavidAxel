@@ -58,9 +58,6 @@ router.post('/register', function (request, response) {
         response.render("loginPage.hbs", model)
     })
 })
-
-router.use(sessionValidator.authenticateDoctorSession)
-
 router.get("/doctors", function (request, response) {
     accountManager.getAllDoctors(function (errors, users) {
         const model = {
@@ -70,6 +67,9 @@ router.get("/doctors", function (request, response) {
         response.render("ourDoctors.hbs", model)
     })
 })
+router.use(sessionValidator.authenticateDoctorSession)
+
+
 
 
 

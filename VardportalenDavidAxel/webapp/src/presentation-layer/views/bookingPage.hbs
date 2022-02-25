@@ -9,6 +9,11 @@
 </ul>
 {{/if}}
 
+{{#if isAdmin}}
+<h4 class="title is-4">Du tittar ju patienters bokningar</h4>
+{{/if}}
+
+
 {{#if bookingsWithNames.length}}
 <ul>
     {{#each bookingsWithNames}}

@@ -24,6 +24,10 @@ module.exports = {
         accountRepository.GiveDoctorPrivilige(user,callback)
     },
 
+    getUserByID(id,callback){
+        accountRepository.getUserByID(id,callback)
+    },
+
     checkLogInCredentials(user,callback){
         accountValidator.checkLogInCredentials(user,callback)
     }

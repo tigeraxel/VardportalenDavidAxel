@@ -22,8 +22,6 @@
 {{#if specialitys.length}}
 <div id="bookingFormDiv">
     <form action="/bookings/reserve" method="post" id="bookingForm">
-        <label for="userID"> fyll i ditt userID som egentligen ska autofylllas med hjälp av session/cookie:</label>
-        <input class="input is-normal" type="text" id="userID" name="userID">
         <label for="bookingID">Vilken tid och datum?:</label>
         <select id="bookingID" name="bookingID">
             {{#each bookings}}

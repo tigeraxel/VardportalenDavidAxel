@@ -1,5 +1,6 @@
 const express = require('express');
 const bookingManager = require('../../business-logic-layer/booking-manager')
+const accountManager = require('../../business-logic-layer/account-manager')
 const bookingValidator = require('../../business-logic-layer/booking-validator')
 const specialityManager = require('../../business-logic-layer/speciality-manager')
 const sessionValidator = require('../../business-logic-layer/session-validator')
@@ -42,7 +43,7 @@ router.post('/reserve', function(request, response){
 
     const bookingInfo = {
         bookingID: request.body.bookingID,
-        userID: request.body.userID,
+        userID: request.session.userID,
         message: request.body.message,
         CategoryID: request.body.CategoryID,
         covidQuestion: request.body.covidQuestion
@@ -62,8 +63,14 @@ router.post('/reserve', function(request, response){
 router.use(sessionValidator.authenticateDoctorSession)
 
 router.get('/create', function (request, response) {
-    response.render("createBooking.hbs")
-})
+    accountManager.getAllDoctors(function (errors, users) {
+        const model = {
+            errors: errors,
+            users: users
+        }
+        response.render("createBooking.hbs", model)
+    })
+})    
 
 
 router.post('/create', function (request, response) {

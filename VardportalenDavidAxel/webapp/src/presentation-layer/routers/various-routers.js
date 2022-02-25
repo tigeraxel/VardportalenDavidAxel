@@ -22,15 +22,7 @@ router.get('/register', function (request, response) {
     response.render("loginPage.hbs")
 })
 
-router.get("/doctors", function (request, response) {
-    accountManager.getAllDoctors(function (errors, users) {
-        const model = {
-            errors: errors,
-            users: users
-        }
-        response.render("ourDoctors.hbs", model)
-    })
-})
+
 
 
 

@@ -34,6 +34,20 @@ module.exports = {
             }
         })
     },
+
+    getUserByID(id,callback){
+        const query = "SELECT * FROM users where userID = ?"
+        const values = [id]
+    
+        db.query(query,values,function(error,users){
+            if(error){
+                callback(['databaseError'], null)
+            }
+            else{
+                callback([], users)
+            }
+        })
+    },
     
     getAccountNameFromId(id,callback){
         const query = "SELECT * FROM users WHERE userID = ?"
