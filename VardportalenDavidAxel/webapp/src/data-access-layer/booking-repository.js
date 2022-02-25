@@ -80,6 +80,20 @@ exports.getBookingsWithNames = function(callback){
     })
 }
 
+exports.getBookingForUser = function(id,callback){
+    const query = "select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID WHERE bookings.patientID = ?;"
+    const values = [id]
+
+    db.query(query,values,function(error,userBooking){
+        if(error){
+            callback(['databaseError'], null)
+        }
+        else{
+            callback([], userBooking)
+        }
+    })
+}
+
 /*
 "SELECT employee.first_name, employee.last_name, call.start_time, call.end_time, call_outcome.outcome_text
 FROM employee

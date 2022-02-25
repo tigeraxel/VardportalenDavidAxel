@@ -13,7 +13,6 @@ module.exports = {
         console.log("i booking manager")
         console.log(session.isAdmin)
         bookingValidator.checkBookingPrivledges(session, callback)
-        bookingRepository.getBookingsWithNames(callback)
     },
     createBooking(bookingInfo,callback){
         bookingRepository.createBooking(bookingInfo,callback)
