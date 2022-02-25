@@ -44,7 +44,9 @@ app.use('/account', accountRouter)
 app.use('/speciality', specialityRouter)
 app.use('/bookings', bookingRouter)
 
-
+app.use((error, request, response, next) => {
+    response.render("loginPage.hbs", error)
+})
 
 app.engine('hbs', expressHandlebars.engine({
     extname: 'hbs',

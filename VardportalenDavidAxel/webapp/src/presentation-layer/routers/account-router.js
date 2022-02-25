@@ -49,9 +49,8 @@ router.post('/register', function (request, response) {
     })
 })
 
-//router.use(session)
 //kollar så användaren har en session för att kunna komma åt sidorna nedanför.
-//router.use(sessionValidator.authenticateSession, () => {console.log('kollat session')})
+router.use(sessionValidator.authenticateSession, () => {console.log('kollat session')})
 
 router.get('/newDoctor', function (request, response) {
     response.render("addNewDoctor.hbs")

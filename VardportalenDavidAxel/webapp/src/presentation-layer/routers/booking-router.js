@@ -2,6 +2,7 @@ const express = require('express');
 const bookingManager = require('../../business-logic-layer/booking-manager')
 const bookingValidator = require('../../business-logic-layer/booking-validator')
 const specialityManager = require('../../business-logic-layer/speciality-manager')
+const sessionValidator = require('../../business-logic-layer/session-validator')
 
 const router = express.Router();
 
@@ -17,10 +18,6 @@ router.get('/showall', function (request, response) {
     })
 })
 
-router.get('/create', function (request, response) {
-    response.render("createBooking.hbs")
-})
-
 router.get('/reserve', function (request, response) {
     bookingManager.getFreeBookings(function(errorsBookings, bookings){
         specialityManager.getAllSpeciality(function(errorsSpecialitys,specialitys){
@@ -33,22 +30,6 @@ router.get('/reserve', function (request, response) {
 
     response.render("reserveBooking.hbs", model)
         })
-    })
-})
-
-router.post('/create', function (request, response) {
-    const bookingInfo = {
-        time: request.body.time,
-        date: request.body.date,
-        doctorID: request.body.doctorID
-    }
-    bookingManager.createBooking(bookingInfo,function(errors,bookingMessage){
-        if(errors.length > 0) {
-            console.log(errors)
-            response.render("about.hbs")
-        }else{
-            response.render('ourDoctors.hbs', bookingMessage)
-        }
     })
 })
 
@@ -72,4 +53,27 @@ router.post('/reserve', function(request, response){
     })
     console.log(bookingInfo)
 })
+
+router.use(sessionValidator.authenticateSession, () => { "checked session" })
+router.get('/create', function (request, response) {
+    response.render("createBooking.hbs")
+})
+
+
+router.post('/create', function (request, response) {
+    const bookingInfo = {
+        time: request.body.time,
+        date: request.body.date,
+        doctorID: request.body.doctorID
+    }
+    bookingManager.createBooking(bookingInfo,function(errors,bookingMessage){
+        if(errors.length > 0) {
+            console.log(errors)
+            response.render("about.hbs")
+        }else{
+            response.render('ourDoctors.hbs', bookingMessage)
+        }
+    })
+})
+
 module.exports = router
