@@ -38,6 +38,11 @@
                 <a class="button" href="/speciality/create">Lägg till Specialitet</a>
                 <a class="button" href="/bookings/create">Skapa tom bokning</a>
                 <a class="button" href="/account/users">Våra Användare</a>
+                {{#if isLoggedIn}}
+                <form id="logOutButtonForm" method="post" action="/account/logout">
+                    <input class="button is-dark" type="submit" value="Logga ut">
+                </form>
+                {{/if}}
             </nav>
 
             <main>

@@ -25,9 +25,9 @@ router.post('/logIn', function (request, response) {
             else {
                 request.session.isAdmin = false
             }
-            if(user.isDoctor == 1){
+            if (user.isDoctor == 1) {
                 request.session.isDoctor = true
-            }else{
+            } else {
                 request.session.isDoctor = false
             }
             console.log(request.session)
@@ -37,6 +37,13 @@ router.post('/logIn', function (request, response) {
 
     })
 
+})
+
+
+router.post('/logout', function (request, response) {
+    request.session.destroy()
+    console.log("Precis loggat UT")
+    response.redirect('/')
 })
 
 router.post('/register', function (request, response) {
