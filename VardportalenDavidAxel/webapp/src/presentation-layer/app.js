@@ -1,64 +1,63 @@
 const path = require('path')
 const express = require('express')
-const expressHandlebars = require('express-handlebars') 
+const expressHandlebars = require('express-handlebars')
 const redisClient = require('../data-access-layer/session-db')
 const session = require('express-session')
 let RedisStore = require('connect-redis')(session)
 
-/*const redisClient = redis.createClient({
-    legacyMode: true,
-    host: 'session-db'
-})*/
+module.exports = function createApp({ accountRouter, bookingRouter, specialityRouter, variousRouter }) {
 
-const app = express()
+    return {
+        start() {
+            const app = express()
 
-app.use(express.static(__dirname + '/static'))
-app.use(express.urlencoded())
-app.set('views', path.join(__dirname, "views"))
+            app.use(express.static(__dirname + '/static'))
+            app.use(express.urlencoded())
+            app.set('views', path.join(__dirname, "views"))
 
-app.use(session({
-    store: new RedisStore({client: redisClient}),
-    secret: '1234',
-    saveUninitialized: false,
-    resave: false,
-    name: 'sessionId',
-    cookie:{
-        secure: false,
-        httpOnly: false,
-        maxAge: 100000
+            app.use(session({
+                store: new RedisStore({ client: redisClient }),
+                secret: '1234',
+                saveUninitialized: false,
+                resave: false,
+                name: 'sessionId',
+                cookie: {
+                    secure: false,
+                    httpOnly: false,
+                    maxAge: 100000
+                }
+            }))
+
+            app.use(function (request, response, next) {
+                response.locals.isAdmin = request.session.isAdmin
+                response.locals.isLoggedIn = request.session.isLoggedIn
+                response.locals.userID = request.session.userID
+                response.locals.isDoctor = request.session.isDoctor
+                next()
+            })
+
+            app.use('/', variousRouter)
+            app.use('/account', accountRouter)
+            app.use('/speciality', specialityRouter)
+            app.use('/bookings', bookingRouter)
+
+            app.use((error, request, response, next) => {
+                console.log(error)
+                model = {
+                    errors: error
+                }
+                response.render("loginPage.hbs", model)
+            })
+
+            app.engine('hbs', expressHandlebars.engine({
+                extname: 'hbs',
+                defaultLayout: 'main'
+            }))
+
+            app.listen(8080, function () {
+                console.log("Up and running")
+            })
+        }
     }
-}))
 
-app.use(function(request, response, next){
-    response.locals.isAdmin = request.session.isAdmin
-    response.locals.isLoggedIn = request.session.isLoggedIn
-    response.locals.userID = request.session.userID
-    response.locals.isDoctor = request.session.isDoctor
-    next()
-})
-
-const variousRouter = require('./routers/various-routers')
-const bookingRouter = require('./routers/booking-router')
-const specialityRouter = require('./routers/speciality-router')
-const accountRouter = require('./routers/account-router')
-app.use('/', variousRouter)
-app.use('/account', accountRouter)
-app.use('/speciality', specialityRouter)
-app.use('/bookings', bookingRouter)
-
-app.use((error, request, response, next) => {
-    console.log(error)
-    model = {
-        errors : error
-    }
-    response.render("loginPage.hbs", model)
-})
-
-app.engine('hbs', expressHandlebars.engine({
-    extname: 'hbs',
-defaultLayout: 'main'
-}))
-
-app.listen(8080,function(){
-    console.log("Up and running")
-})
+}

@@ -10,6 +10,10 @@ container.register(
     awilix.asFunction(require('./data-access-layer/account-repository.js'))
 )
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 90ba9b8078349fec1b4e14ec2d78c752687e6253
 container.register(
     'bookingRepository', 
     awilix.asFunction(require('./data-access-layer/booking-repository.js'))
