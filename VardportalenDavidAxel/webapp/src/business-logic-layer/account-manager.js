@@ -1,34 +1,35 @@
-const accountRepository = require('../data-access-layer/account-repository')
-//funkar om man kommenterar bort o sen startar om.....
-const accountValidator = require('./account-validator')
 
-module.exports = {
 
-    getAllDoctors(callback){
-        accountRepository.getAllDoctors(callback)
-    },
+module.exports = function createAccountManager({ accountRepository, accountValidator }) {
 
-    getAllUsers(callback){
-        accountRepository.getAllUsers(callback)
-    },
+    return {
+        getAllDoctors(callback) {
+            accountRepository.getAllDoctors(callback)
+        },
 
-    getAccountNameFromId(id,callback){
-        accountRepository.getAccountNameFromId(id,callback)
-    },
+        getAllUsers(callback) {
+            accountRepository.getAllUsers(callback)
+        },
 
-    createAccount(user,callback){
-        accountRepository.createAccount(user,callback)
-    },
+        getAccountNameFromId(id, callback) {
+            accountRepository.getAccountNameFromId(id, callback)
+        },
 
-    GiveDoctorPrivilige(user,callback){
-        accountRepository.GiveDoctorPrivilige(user,callback)
-    },
+        createAccount(user, callback) {
+            accountRepository.createAccount(user, callback)
+        },
 
-    getUserByID(id,callback){
-        accountRepository.getUserByID(id,callback)
-    },
+        GiveDoctorPrivilige(user, callback) {
+            accountRepository.GiveDoctorPrivilige(user, callback)
+        },
 
-    checkLogInCredentials(user,callback){
-        accountValidator.checkLogInCredentials(user,callback)
+        getUserByID(id, callback) {
+            accountRepository.getUserByID(id, callback)
+        },
+
+        checkLogInCredentials(user, callback) {
+            accountValidator.checkLogInCredentials(user, callback)
+        }
+
     }
 }
