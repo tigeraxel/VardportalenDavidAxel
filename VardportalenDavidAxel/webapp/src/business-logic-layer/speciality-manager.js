@@ -1,14 +1,15 @@
-const specialityRepository = require('../data-access-layer/speciality-repository')
-const specialityalidator = require('./speciality-validator')
 
 
-module.exports = {
-    createSpeciality(specialityName, callback){
-        specialityRepository.createSpeciality(specialityName,callback)
-    },
 
-    getAllSpeciality(callback){
-        specialityRepository.getAllSpeciality(callback)
+module.exports = function createSpecialityManager({ specialityRepository, specialityValidator }) {
+    return {
+        createSpeciality(specialityName, callback) {
+            specialityRepository.createSpeciality(specialityName, callback)
+        },
+
+        getAllSpeciality(callback) {
+            specialityRepository.getAllSpeciality(callback)
+        }
     }
 }
 

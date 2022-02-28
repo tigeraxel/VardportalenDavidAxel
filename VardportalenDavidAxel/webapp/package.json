@@ -2,15 +2,16 @@
   "name": "axel.david.projekt.avancerad.webbutveckling",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "main.js",
   "scripts": {
-    "start": "nodemon -L src/presentation-layer/app.js",
+    "start": "nodemon -L src/main.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "awilix": "^6.1.0",
     "connect-redis": "^6.1.1",
     "cookie-parser": "^1.4.6",
     "express": "^4.17.3",
