@@ -5,7 +5,6 @@ module.exports = function createSpecialityRepository() {
         createSpeciality(specialityName, callback) {
             const query = 'INSERT INTO specialitys (specialityName) VALUES (?)'
             const values = specialityName
-            console.log(specialityName)
             db.query(query, values, function (error, users) {
                 if (error) {
                     callback(['databaseError'], null)

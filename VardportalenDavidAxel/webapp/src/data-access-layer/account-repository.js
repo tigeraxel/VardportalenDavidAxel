@@ -1,8 +1,9 @@
 
-const db = require('./db')
+
 
 module.exports = function createAccountRepository() {
-
+    const db = require('./db')
+    
     return {
 
         getAllDoctors(callback) {

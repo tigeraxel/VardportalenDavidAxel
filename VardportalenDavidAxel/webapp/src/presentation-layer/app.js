@@ -2,6 +2,7 @@ const path = require('path')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
 const redisClient = require('../data-access-layer/session-db')
+const sequelize = require('../data-access-layer-postgres/db')
 const session = require('express-session')
 let RedisStore = require('connect-redis')(session)
 
@@ -27,7 +28,6 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
                     maxAge: 100000
                 }
             }))
-
             app.use(function (request, response, next) {
                 response.locals.isAdmin = request.session.isAdmin
                 response.locals.isLoggedIn = request.session.isLoggedIn
@@ -35,7 +35,6 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
                 response.locals.isDoctor = request.session.isDoctor
                 next()
             })
-
             app.use('/', variousRouter)
             app.use('/account', accountRouter)
             app.use('/speciality', specialityRouter)

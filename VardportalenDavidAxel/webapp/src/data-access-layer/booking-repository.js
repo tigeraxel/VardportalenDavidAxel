@@ -1,8 +1,8 @@
 
-const db = require('./db')
 
 module.exports = function createBookingRepository() {
-
+    const db = require('./db')
+    
     return {
         getBookings(callback) {
             const query = "SELECT * FROM bookings"

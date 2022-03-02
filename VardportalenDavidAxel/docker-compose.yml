@@ -20,5 +20,13 @@ services:
     build: './session-db'
     ports:
       - "6379:6379"
+  postgres-db:
+    build: './postgres-db'
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: docker
+      POSTGRES_USER: david
+      POSTGRES_DB: postgres
     
   
