@@ -26,9 +26,6 @@ const bookings = sequelize.define('bookings', {
     messageFromPatient: {
         type: DataTypes.TEXT,
     },
-    categoryID: {
-        type: DataTypes.INTEGER,
-    },
 })
 const users = sequelize.define('users', {
     userID: {
@@ -67,6 +64,11 @@ const users = sequelize.define('users', {
     }
 })
 const specialitys = sequelize.define('specialitys', {
+    specialityID: {
+        primaryKey: true,
+        autoIncrement: true,
+        type: DataTypes.INTEGER,
+    },  
     specialityName: {
         type: DataTypes.TEXT,
         allowNull: false
@@ -77,19 +79,25 @@ console.log('innan hasOne !')
 //users.hasOne(bookings, { foreignKey: { name: 'doctorID' } } )
 bookings.belongsTo(users, { as: 'patient' })
 bookings.belongsTo(users, { as: 'doctor' })
+bookings.belongsTo(specialitys, {as: 'speciality'})
 //bookings.belongsTo(users, { foreignKey: 'userID' })
 /*bookings.belongsTo(users)
 users.hasOne(bookings, { foreignKey: 'userID'})
 bookings.belongsTo(users)
 */
-/*bookings.sync({force: true})
+
+/*
+bookings.sync({force: true})
 users.sync({force: true})
 specialitys.sync({force: true})
 */
 
+
 bookings.sync()
 users.sync()
 specialitys.sync()
+
+
 const user = users.create({
     socialSecurityNumber: 1997,
     userPassword: '123',
@@ -112,13 +120,22 @@ const user = users.create({
     ]
 })
 
+const spec = specialitys.create({
+    specialityName: 'special'
+}, {
+    fields: [
+        'specialityID',
+        'specialityName'
+    ]
+})
+
 
 const booking =  bookings.create({
     appointmentTime: '06:20',
     appointmentDate: '12/12/12',
     covidQuestion: 'yes',
     messageFromPatient: 'Hej axel',
-    categoryID: 1,
+    specialitySpecialityID: 1,
     patientUserID: 1,
     doctorUserID: 1,
 }, {
@@ -128,7 +145,7 @@ const booking =  bookings.create({
             'appointmentDate',
             'covidQuestion',
             'messageFromPatient',
-            'categoryID',
+            'specialitySpecialityID',
             'patientUserID',
             'doctorUserID'
         ]
@@ -143,9 +160,6 @@ const bok = bookings.findAll().then((booking)=>{
 })
 
 
-console.log('------------------------')
-console.log(bookings === sequelize.model.bookings)
-console.log('------------------------')
 
 module.exports = sequelize
 
