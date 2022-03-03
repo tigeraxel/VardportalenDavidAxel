@@ -1,17 +1,17 @@
 
 
 
-module.exports = function createPostgresBookingRepository(){
+module.exports = function createPostgresBookingRepository() {
     return {
-        getBookings(){
+        getBookings() {
             const bokning = (await bookings.findAll()).map(
                 b => b.dataValues
             )
         },
-        getFreeBookings(){
-            
+        getFreeBookings() {
+
         },
-        createBooking(){
+        createBooking() {
             const booking = await bookings.create({
                 appointmentTime: '06:20',
                 appointmentDate: '12/12/12',
@@ -33,15 +33,14 @@ module.exports = function createPostgresBookingRepository(){
                     ]
             })
         },
-        updateBooking(){
+        updateBooking() {
 
         },
-        getBookingsWithNames(){
+        getBookingsWithNames() {
 
         },
-        getBookingForUser(){
+        getBookingForUser() {
 
         },
-
     }
 }
