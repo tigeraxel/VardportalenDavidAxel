@@ -28,6 +28,7 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
                     maxAge: 100000
                 }
             }))
+
             app.use(function (request, response, next) {
                 response.locals.isAdmin = request.session.isAdmin
                 response.locals.isLoggedIn = request.session.isLoggedIn
@@ -42,10 +43,13 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
 
             app.use((error, request, response, next) => {
                 console.log(error)
+                console.log("erroororoeoreoor")
                 model = {
                     errors: error
                 }
-                response.render("loginPage.hbs", model)
+                if(error.length > 0){
+                    response.render("loginPage.hbs", model)
+                }
             })
 
             app.engine('hbs', expressHandlebars.engine({

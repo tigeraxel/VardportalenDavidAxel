@@ -20,6 +20,7 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
             console.log("---------------")
             console.log(user)
             if (errors.length > 0) {
+                console.log("store error!")
                 response.render("about.hbs")
             } else {
                 request.session.userID = user.userID
@@ -37,7 +38,7 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
                 }
                 console.log(request.session)
                 console.log("Precis loggat in")
-                response.render('addNewDoctor.hbs')
+                response.render('loggedInPage.hbs')
             }
     
         })
@@ -50,19 +51,6 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
     })
     
     router.post('/register', function (request, response) {
-
-        const { query } = request
-
-        console.log(query)
-
-        try{
-            const criteria = querystringConverter.convert({query})
-            console.log("-----------")
-            console.log(criteria)
-            console.log("-----------")
-        }catch(err){
-            console.error(err)
-        }
     
         const user = {
             firstName: request.body.firstName,
@@ -119,7 +107,6 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
             lastName: request.body.lastName
         }
     
-        console.log(user)
     
         accountManager.GiveDoctorPrivilige(user, function (errors, text) {
             const model = {
