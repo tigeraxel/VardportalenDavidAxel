@@ -1,8 +1,9 @@
 
 
-module.exports = function createAccountManager({ accountRepository, accountValidator }) {
+module.exports = function createAccountManager({ accountRepository, accountValidator, postgresAccountRepository  }) {
 
     return {
+        /*
         getAllDoctors(callback) {
             accountRepository.getAllDoctors(callback)
         },
@@ -25,6 +26,34 @@ module.exports = function createAccountManager({ accountRepository, accountValid
 
         getUserByID(id, callback) {
             accountRepository.getUserByID(id, callback)
+        },
+
+        checkLogInCredentials(user, callback) {
+            accountValidator.checkLogInCredentials(user, callback)
+        }
+        */
+        getAllDoctors(callback) {
+            postgresAccountRepository.getAllDoctors(callback)
+        },
+
+        getAllUsers(callback) {
+            postgresAccountRepository.getAllUsers(callback)
+        },
+
+        getAccountNameFromId(id, callback) {
+            postgresAccountRepository.getAccountNameFromId(id, callback)
+        },
+
+        createAccount(user, callback) {
+            postgresAccountRepository.createAccount(user, callback)
+        },
+
+        GiveDoctorPrivilige(user, callback) {
+            postgresAccountRepository.GiveDoctorPrivilige(user, callback)
+        },
+
+        getUserByID(id, callback) {
+            postgresAccountRepository.getUserByID(id, callback)
         },
 
         checkLogInCredentials(user, callback) {

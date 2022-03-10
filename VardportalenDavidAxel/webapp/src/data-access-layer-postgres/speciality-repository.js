@@ -1,5 +1,5 @@
 
-const sequelize = require('')
+const db = require('./db')
 
 module.exports = function createPostgresSpecialityRepository(){
     return {

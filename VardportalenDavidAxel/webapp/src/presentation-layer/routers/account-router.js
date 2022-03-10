@@ -1,4 +1,6 @@
 const express = require('express')
+const querystringConverter = require('sequelize-querystring-converter');
+
 
 
 
@@ -15,7 +17,8 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
         }
     
         accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
-            //console.log(user)
+            console.log("---------------")
+            console.log(user)
             if (errors.length > 0) {
                 response.render("about.hbs")
             } else {
@@ -34,7 +37,7 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
                 }
                 console.log(request.session)
                 console.log("Precis loggat in")
-                response.render('addNewDoctor.hbs', user)
+                response.render('addNewDoctor.hbs')
             }
     
         })
@@ -47,6 +50,19 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
     })
     
     router.post('/register', function (request, response) {
+
+        const { query } = request
+
+        console.log(query)
+
+        try{
+            const criteria = querystringConverter.convert({query})
+            console.log("-----------")
+            console.log(criteria)
+            console.log("-----------")
+        }catch(err){
+            console.error(err)
+        }
     
         const user = {
             firstName: request.body.firstName,
@@ -82,6 +98,7 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
     
     router.get("/users", function (request, response) {
         accountManager.getAllUsers(function (errors, users) {
+            console.log(users.dataValues)
             const model = {
                 errors: errors,
                 users: users

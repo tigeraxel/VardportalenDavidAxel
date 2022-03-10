@@ -23,7 +23,9 @@ function Bookings(sequelize, DataTypes) {
             type: DataTypes.TEXT,
         },
     })
-    sequelize.sync().then(() => {
+    sequelize.sync()
+    /*
+    .then(() => {
         Bookings.create({
             appointmentTime: '07:20',
             appointmentDate: '2022-04-18',
@@ -43,6 +45,7 @@ function Bookings(sequelize, DataTypes) {
             doctorUserID: 1,
         })
     })
+    */
 
     return Bookings
 }
@@ -87,7 +90,7 @@ function Users(sequelize, DataTypes) {
     })
     sequelize.sync().then(() => {
         Users.create({
-            socialSecurityNumber: 1997,
+            socialSecurityNumber: 12,
             userPassword: '123',
             firstName: 'Axel',
             lastName: 'Tiger',
@@ -123,7 +126,9 @@ function Specialitys(sequelize, DataTypes) {
             allowNull: false
         }
     })
-    sequelize.sync().then(() => {
+    sequelize.sync()
+    /*
+    .then(() => {
         Specialitys.create({
             specialityName: 'Vaccinering'
         }).catch(e => console.log(e))
@@ -131,9 +136,9 @@ function Specialitys(sequelize, DataTypes) {
             specialityName: 'Skada'
         }).catch(e => console.log(e))
     })
+   */
     return Specialitys
 }
-
 
 
 /******************************* EXPORTS *********************** */

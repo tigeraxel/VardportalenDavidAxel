@@ -1,4 +1,6 @@
 const Sequelize = require("sequelize");
+
+console.log("Skapar sequelize connection")
 const sequelize = new Sequelize('postgres', 'david', 'docker', {
     host: 'postgres-db',
     dialect: 'postgres'

@@ -65,6 +65,7 @@ module.exports = function createBookingRepository() {
             const values = []
 
             db.query(query, values, function (error, bookingsWithNames) {
+                console.log(bookingsWithNames)
                 if (error) {
                     callback(['databaseError'], null)
                 }
@@ -78,6 +79,7 @@ module.exports = function createBookingRepository() {
             const values = [id]
 
             db.query(query, values, function (error, userBooking) {
+                console.log(userBooking)
                 if (error) {
                     callback(['databaseError'], null)
                 }
