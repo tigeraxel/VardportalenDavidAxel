@@ -19,6 +19,7 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
         accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
             console.log("---------------")
             console.log(user)
+            console.log(errors)
             if (errors.length > 0) {
                 console.log("store error!")
                 response.render("about.hbs")

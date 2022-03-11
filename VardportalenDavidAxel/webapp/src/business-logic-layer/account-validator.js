@@ -9,12 +9,7 @@ module.exports = function createAccountValidator({ accountRepository,postgresAcc
                     console.error("Error i account validator")
                     console.error(errors)
                     callback(errors, [])
-                }
-                if(user.dataValues.userID > 0){
-                    console.log("skickar tillbaka dataValues")
-                    callback([], user.dataValues)
-                } 
-                else {
+                }else {
                     callback([], user)
                 }
             })

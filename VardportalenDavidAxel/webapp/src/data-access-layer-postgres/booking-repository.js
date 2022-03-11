@@ -1,39 +1,36 @@
 
-const { sequelize } = require('./db')
-const db = require('./db')
-const bookings = db.bookings
-const Users = db.users
-const Specialitys = db.specialitys
-const QueryTypes = db.Sequelize.QueryTypes
 
 
 
 module.exports = function createPostgresBookingRepository() {
+    const db = require('./db')
+    const bookings = db.bookings
+    const Users = db.users
     return {
         getBookings(callback) {
-            const allBookings = (bookings.findAll().then(() => {
+            (bookings.findAll()
+            .then(allBookings => 
                 callback(allBookings)
-            }).catch(err => {
-                console.log("could not get all bookings..")
+            ).catch(err => 
+                console.log("could not get all bookings.."),
                 callback(err)
-            })).map(
-                b => b.dataValues
-            )
+            ))
         },
-        getFreeBookings() {
-            const freeBookings = bookings.findAll({
+        getFreeBookings(callback) {
+            bookings.findAll({
                 where: {
                     patientUserID: null,
-                }
-            }).then(() => {
-                callback(freeBookings)
-            }).catch(err => {
-                console.log("could not find free bookings..")
-                callback(err)
+                },
+                raw: true
+            }).then(freeBookings => 
+                callback([],freeBookings)
+            ).catch((error) => {
+                console.log("could not find free bookings.."),
+                callback(error)
             })
         },
         createBooking(bookingInfo, callback) {
-            const newBooking = bookings.create({
+            bookings.create({
                 appointmentTime: bookingInfo.time,
                 appointmentDate: bookingInfo.date,
                 covidQuestion: null,
@@ -52,48 +49,65 @@ module.exports = function createPostgresBookingRepository() {
                         'doctorID',
                         'patientID'
                     ]
-            }).then(() => {
+            }).then(newBooking => 
                 callback(newBooking)
-            }).catch((err) => {
-                console.log("Could not create booking..")
+            ).catch((err) => {
+                console.log("Could not create booking.."),
                 callback(err)
             })
         },
         updateBooking(bookingInfo, callback) {
-            const updatedBooking = bookings.update({
+            bookings.update({
                 patientUserID: bookingInfo.userID,
                 messageFromPatient: bookingInfo.message,
-                specialitySpecialityID: bookingInfo.CategoryID
-            }, {
+                specialitySpecialityID: bookingInfo.CategoryID,
+                covidQuestion: bookingInfo.covidQuestion
+            },
+            {
                 where: {
                     bookingID: bookingInfo.bookingID
-                }
-            }).then(() => {
-                callback(updatedBooking)
-            }).catch(err => {
-                console.log("error when updating booking with bookingID " + bookingInfo.userID)
+                },
+                raw: true
+            },
+            {
+                fields: [
+                    'patientUserID',
+                    'messageFromPatient',
+                    'specialitySpecialityID',
+                    'specialitySpecialityID'
+                ]
+            }
+            ).then(updatedBooking => 
+                callback([], updatedBooking)
+            ).catch((err) => {
+                console.log(err),
+                console.log("error when updating booking with bookingID " + bookingInfo.bookingID),
                 callback(err)
             })
 
         },
         getBookingsWithNames(callback) {
-            db.sequelize.query('select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID')
-            .then(allBookingsWithNames, () => {
+            db.sequelize.query(`select *, P."firstName" as "patientFirstName", P."lastName" as patientLastName, D."firstName" as "doctorFirstName", D."lastName" as "doctorLastName" from Bookings join Users D on Bookings."doctorUserID" = D."userID" join Users P on Bookings."patientUserID" = P."userID" join Specialitys c on Bookings."specialitySpecialityID" = c."specialityID"`,{
+                raw: true,
+                type: db.Sequelize.QueryTypes.SELECT
+            }).then(allBookingsWithNames => 
                 callback([], allBookingsWithNames)
-            }).catch(err, ()=>{
-                console.log("error when fething all booking with names")
+            ).catch((err) => {
+                console.log("error when fething all booking with names"),
                 callback(err, [])
             })
             
         },
         getBookingForUser(id,callback) {
-            db.sequelize.query("select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID WHERE bookings.patientID = ?",{
+            console.log(id)
+            db.sequelize.query(`SELECT *, P."firstName" as "patientFirstName", P."lastName" as "patientLastName", D."firstName" as "doctorFirstName", D."lastName" as "doctorLastName" from Bookings join Users D on Bookings."doctorUserID" = D."userID" join Users P on Bookings."patientUserID" = P."userID" join Specialitys c on Bookings."specialitySpecialityID" = c."specialityID" WHERE Bookings."patientUserID" = ?`,{
                 replacements: [id],
-                type: QueryTypes.SELECT
-            }).then(allBookingsForUser, ()=>{
+                type: db.Sequelize.QueryTypes.SELECT,
+                raw: true,
+            }).then(allBookingsForUser=>
                 callback([],allBookingsForUser)
-            }).catch(err, ()=>{
-                console.log("error when fetching all bookings for user")
+            ).catch((err) => {
+                console.log("error when fetching all bookings for user"),
                 callback(err, [])
             })
         },

@@ -60,6 +60,8 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
 
     router.get('/create', function (request, response) {
         accountManager.getAllDoctors(function (errors, users) {
+            console.log("----------------------------------------------------")
+            console.log(users)
             const model = {
                 errors: errors,
                 users: users

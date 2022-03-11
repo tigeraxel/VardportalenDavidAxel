@@ -13,6 +13,7 @@ module.exports = function createSpecialityRouter({specialityManager, sessionVali
                 specialitys: specialitys
             }
             console.log(specialitys)
+            console.log(errors)
             response.render("createSpeciality.hbs", model)
         })
     })
@@ -28,7 +29,9 @@ module.exports = function createSpecialityRouter({specialityManager, sessionVali
                 errors: errors,
                 text: text
             }
-            console.log("LYCKADES LÄGGA TILL specialitys")
+            if(errors.length > 0){
+                response.render("createSpeciality.hbs", model)
+            }
             response.redirect("/speciality/create")
         })
     })

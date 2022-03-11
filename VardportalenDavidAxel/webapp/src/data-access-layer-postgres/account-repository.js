@@ -4,33 +4,36 @@ module.exports = function createPostgresAccountRepository(){
     const db = require('./db')
     const users = db.users
     return {
-        getAlldoctors(callback) {
-            const errors = []
+        getAllDoctors(callback) {
             users.findAll({
                 where: {
-                    doctorUserID: 1
-                }
+                    isDoctor: true
+                },
+                raw: true
             }).then(doctors=>
-                callback( [], doctors)
-            ).catch(err => 
+                callback([], doctors)
+            ).catch((err) => {
                 console.log(err),
                 callback( err, [])
-            )
+            })
         },
         getAllUsers(callback){
-            users.findAll()
+            users.findAll({
+                raw: true
+            })
             .then(foundUsers =>
                 callback( [], foundUsers)
-            ).catch(err => 
-                console.log("error when fetching all users"),
+            ).catch((err) => {
+                console.log("error when fetching all users")
                 callback( err, [])
-            )
+            })
         },
         getUserById(_userID, callback) {
             const user = users.findAll({
                 where : {
                     userID: _userID
-                }
+                },
+                raw: true
             }).then(()=>{
                 callback( [], user)
             }).catch( (err) => {
@@ -43,10 +46,11 @@ module.exports = function createPostgresAccountRepository(){
             const user = users.findAll({
                 where: {
                     userID: _userID
-                }
+                },
+                raw: true
             }).then(()=>{
                 callback( [], user)
-            }).catch(()=>{
+            }).catch((err) =>{
                 console.log("error when fetching user with id "+ _userID)
                 callback(err, [])
             })
@@ -71,7 +75,7 @@ module.exports = function createPostgresAccountRepository(){
                     'phoneNumber',
                     'isDoctor',
                     'isAdmin'
-                ]
+                ],
             }).then(() =>{
                 callback( [], newUser)
             }).catch((err) =>{
@@ -84,10 +88,11 @@ module.exports = function createPostgresAccountRepository(){
             const updatedUser = users.update({doctorUserID: 1},{
                 where: {
                     socialSecurityNumber: user.socialSecurityNumber
-                }
+                },
+                raw: true
             }).then(()=>{
                 callback([], updatedUser)
-            }).catch((err) =>{
+            }).catch((err) => {
                 console.log("Could not update doctorID for social number "+ user.socialSecurityNumber)
                 callback( err, [])
             })
@@ -97,13 +102,14 @@ module.exports = function createPostgresAccountRepository(){
                 where: {
                     socialSecurityNumber: user.socialSecurityNumber,
                     userPassword: user.password
-                }
+                },
+                raw: true
             }).then(foundUser => 
                 callback([], foundUser[0])
-            ).catch(err =>
+            ).catch((err) => {
                 console.log("Could not find user with social number "+user.socialSecurityNumber+" and password "+user.password),
                 callback(err, [])
-            )
+            })
         }
     }  
 }

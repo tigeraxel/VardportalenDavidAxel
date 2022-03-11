@@ -1,7 +1,7 @@
 
 /******************************* BOOKINGS *********************** */
 function Bookings(sequelize, DataTypes) {
-    const Bookings = sequelize.define('Bookings', {
+    const Bookings = sequelize.define('bookings', {
         bookingID: {
             primaryKey: true,
             type: DataTypes.INTEGER,
@@ -17,7 +17,7 @@ function Bookings(sequelize, DataTypes) {
         },
         covidQuestion: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: true
         },
         messageFromPatient: {
             type: DataTypes.TEXT,
@@ -52,7 +52,7 @@ function Bookings(sequelize, DataTypes) {
 
 /******************************* USERS *********************** */
 function Users(sequelize, DataTypes) {
-    const Users = sequelize.define('Users', {
+    const Users = sequelize.define('users', {
         userID: {
             primaryKey: true,
             type: DataTypes.INTEGER,
@@ -60,7 +60,8 @@ function Users(sequelize, DataTypes) {
         },
         socialSecurityNumber: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
+            unique: true
         },
         userPassword: {
             type: DataTypes.TEXT,
@@ -115,7 +116,7 @@ function Users(sequelize, DataTypes) {
 
 /******************************* SPECIALITYS *********************** */
 function Specialitys(sequelize, DataTypes) {
-    const Specialitys = sequelize.define('Specialitys', {
+    const Specialitys = sequelize.define('specialitys', {
         specialityID: {
             primaryKey: true,
             autoIncrement: true,
@@ -123,11 +124,11 @@ function Specialitys(sequelize, DataTypes) {
         },
         specialityName: {
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
+            unique: true
         }
     })
     sequelize.sync()
-    /*
     .then(() => {
         Specialitys.create({
             specialityName: 'Vaccinering'
@@ -136,7 +137,6 @@ function Specialitys(sequelize, DataTypes) {
             specialityName: 'Skada'
         }).catch(e => console.log(e))
     })
-   */
     return Specialitys
 }
 
