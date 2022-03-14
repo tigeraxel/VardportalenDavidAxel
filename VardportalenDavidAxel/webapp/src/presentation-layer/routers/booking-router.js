@@ -53,7 +53,6 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
                 response.render('ourDoctors.hbs', bookingMessage)
             }
         })
-        console.log(bookingInfo)
     })
 
     router.use(sessionValidator.authenticateDoctorSession)

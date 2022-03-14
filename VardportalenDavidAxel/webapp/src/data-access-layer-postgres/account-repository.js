@@ -85,7 +85,9 @@ module.exports = function createPostgresAccountRepository(){
         
         },
         GiveDoctorPrivilige(user, callback){
-            const updatedUser = users.update({doctorUserID: 1},{
+            const updatedUser = users.update({
+                doctorUserID: 1
+            },{
                 where: {
                     socialSecurityNumber: user.socialSecurityNumber
                 },

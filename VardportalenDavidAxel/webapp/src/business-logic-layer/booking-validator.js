@@ -43,11 +43,9 @@ module.exports = function createBookingValidator({ bookingRepository, postgresBo
                 console.log("Hämtar bokningar för användaren")
                 console.log(session.userID)
                 postgresBookingRepository.getBookingForUser(session.userID, function (errors, bookings) {
-                    console.log(bookings)
                     if (errors.length > 0) {
                         callback(errors, [])
                     } else {
-                        console.log(bookings)
                         callback([], bookings)
                     }
                 })

@@ -89,7 +89,8 @@ function Users(sequelize, DataTypes) {
             type: DataTypes.BOOLEAN,
         }
     })
-    sequelize.sync().then(() => {
+    sequelize.sync()
+    /*.then(() => {
         Users.create({
             socialSecurityNumber: 12,
             userPassword: '123',
@@ -111,6 +112,7 @@ function Users(sequelize, DataTypes) {
                 isAdmin: 1
         }).catch(e => console.log(e))
     })
+    */
     return Users
 }
 
@@ -129,6 +131,7 @@ function Specialitys(sequelize, DataTypes) {
         }
     })
     sequelize.sync()
+    /*
     .then(() => {
         Specialitys.create({
             specialityName: 'Vaccinering'
@@ -137,6 +140,7 @@ function Specialitys(sequelize, DataTypes) {
             specialityName: 'Skada'
         }).catch(e => console.log(e))
     })
+    */
     return Specialitys
 }
 
