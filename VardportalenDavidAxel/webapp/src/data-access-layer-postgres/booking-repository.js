@@ -40,20 +40,10 @@ module.exports = function createPostgresBookingRepository() {
                 specialitySpecialityID: null,
                 doctorUserID: bookingInfo.doctorID,
                 patientUserID: null,
-            }, {
-                fields:
-                    [
-                        'appointmentTime',
-                        'appointmentDate',
-                        'covidQuestion',
-                        'messageFromPatient',
-                        'categoryID',
-                        'doctorID',
-                        'patientID'
-                    ]
-            }).then(newBooking =>
-                callback(newBooking)
-            ).catch((err) => {
+            }).then(newBooking => {
+                console.log("skapade ny bokning")
+                callback([],newBooking)
+            }).catch((err) => {
                 console.log("Could not create booking.."),
                     callback(err)
             })
@@ -64,8 +54,9 @@ module.exports = function createPostgresBookingRepository() {
                 messageFromPatient: bookingInfo.message,
                 patientUserID: bookingInfo.userID,
                 specialitySpecialityID: bookingInfo.CategoryID,
+            },{ 
+                where: { bookingID: bookingInfo.bookingID },
             },
-                { where: { bookingID: bookingInfo.bookingID }, }
             ).then(updatedBooking =>
                 callback([], updatedBooking)
             ).catch((err) => {
@@ -77,32 +68,49 @@ module.exports = function createPostgresBookingRepository() {
         },
         getBookingsWithNames(callback) {
             bookings.findAll({
-                where: {
-                    patientUserID: {
-                        [Op.not]: null,
+                where: { patientUserID: { [Op.not]: null } },
+                include: {
+                    model: Users,
+                    as: 'doctor',
+                    where: {
+                        isDoctor: {
+                            [Op.eq]: true
+                        }
                     }
                 },
-                raw: true
+                raw: true,
+                nest: true
             }).then(foundBookings => {
                 console.log("------------------------")
-                console.log(foundBookings)
                 callback([], foundBookings)
-            }).catch((err)=>{
+            }).catch((err) => {
                 callback(err)
             })
         },
+        getBookingById(id) {
+            //hämta bokning för ett id och returnera det tillbaka
+        },
         getBookingForUser(id, callback) {
             bookings.findAll({
-                where: {
-                    patientUserID: id
+                where: { patientUserID: id },
+                include: {
+                    model: Users,
+                    as: 'patient',
+                    where: {
+                        userID: {
+                            [Op.eq]: id
+                        }
+                    }
                 },
-                raw: true
+                raw: true,
+                nest: true
             }).then(foundBookings => {
                 console.log("---------------------------------")
                 console.log(foundBookings)
-                callback([],foundBookings)
+                callback([], foundBookings)
             }).catch(err => {
                 console.log("error when fetching bookingsForUserId...")
+                console.log(err)
                 callback(err)
             })
         },

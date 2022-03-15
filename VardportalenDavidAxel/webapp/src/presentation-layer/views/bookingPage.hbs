@@ -14,9 +14,9 @@
 {{/if}}
 
 
-{{#if bookingsWithNames.length}}
+{{#if bookings.length}}
 <ul>
-    {{#each bookingsWithNames}}
+    {{#each bookings}}
     <li>
         <div class="box">
             <h5 class="title is-5">
@@ -29,13 +29,13 @@
 
                 <div id="bookingPatientDiv">
 
-                    <p>Patient: {{this.patientFirstName}} {{this.lastName}}</p>
+                    <p>Patient: {{this.patient.firstName}} {{this.patient.lastName}}</p>
 
                 </div>
 
                 <div id="bookingDoctorDiv">
 
-                    <p>Doktor: {{this.doctorFirstName}} {{this.doctorLastName}}</p>
+                    <p>Doktor: {{this.doctor.firstName}} {{this.doctor.lastName}}</p>
 
 
                 </div>
