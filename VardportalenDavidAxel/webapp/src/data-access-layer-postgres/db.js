@@ -1,16 +1,33 @@
 const Sequelize = require("sequelize");
-
+/*
+"postgres://kalle:docker@postgres-db:5432/postgres"
+*/
 console.log("Skapar sequelize connection")
-const sequelize = new Sequelize('postgres', 'david', 'docker', {
+/*
+connectionFound = setInterval(() => {
+    try {
+        clearInterval(connectionFound)
+
+    } catch (e) {
+        console.log('Error! could not find sequelize connection')
+    }
+}, 3000)
+*/
+
+const sequelize = new Sequelize('postgres', 'kalle', 'docker', {
     host: 'postgres-db',
-    dialect: 'postgres'
+    dialect: 'postgres',
+})
+
+sequelize.authenticate().then(() => {
+    console.log("Connection has been established successfully.")
+}).catch(err => {
+    console.log("Unable to connect to the database:" + err)
 })
 
 const db = {}
-
 db.Sequelize = Sequelize
 db.sequelize = sequelize
-
 /***************************  CREATE TABLES ***************** */
 
 db.users = require("./sequelize-model").Users(sequelize, Sequelize)
@@ -25,30 +42,28 @@ db.bookings.belongsTo(db.users, { as: 'patient' })
 db.bookings.belongsTo(db.users, { as: 'doctor' })
 db.bookings.belongsTo(db.specialitys, { as: 'speciality' })
 
-
+module.exports = db
 /*************************** FIND DATA ***************** */
-function tempQuerys(){
+function tempQuerys() {
     const showUsers = db.users.findAll().then((user) => {
         console.log(user)
     }).catch((error) => {
         console.log(error)
     })
-    
+
     const showBookings = db.bookings.findAll().then((booking) => {
         console.log(booking)
     }).catch((error) => {
         console.log(error)
     })
-    
+
     const showSpecialitys = db.specialitys.findAll().then((speciality) => {
         console.log(speciality)
     }).catch((error) => {
         console.log(error)
     })
 }
-
 // tempQuerys()
 // Ta bort kommentar ovan för att se all data
 
-module.exports = db
 

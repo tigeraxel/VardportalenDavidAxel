@@ -36,6 +36,7 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
                 response.locals.isDoctor = request.session.isDoctor
                 next()
             })
+
             app.use('/', variousRouter)
             app.use('/account', accountRouter)
             app.use('/speciality', specialityRouter)

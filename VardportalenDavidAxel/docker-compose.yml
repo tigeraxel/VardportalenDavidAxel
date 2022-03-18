@@ -1,32 +1,35 @@
 version: '3.8'
 services:
+  webapp:
+    depends_on:
+      - "db"
+      - "session-db"
+      - "postgres-db"
+    build: "./webapp"
+    ports: 
+      - "3000:8080"
+    volumes:
+      - "./webapp/src:/webapp/src"
   db:
+    container_name: db
     build: './db'
     environment:
       MARIADB_ROOT_PASSWORD: "abc123"
       MARIADB_DATABASE: "hello"
     ports:
       - "3306:3306"
-  webapp:
-    depends_on:
-      - session-db
-      - db
-    build: "./webapp"
-    ports: 
-    - "3000:8080"
-    volumes:
-    - "./webapp/src:/webapp/src"
   session-db:
     build: './session-db'
     ports:
       - "6379:6379"
   postgres-db:
+    container_name: postgres-db
     build: './postgres-db'
     ports:
       - "5432:5432"
     environment:
       POSTGRES_PASSWORD: docker
-      POSTGRES_USER: david
+      POSTGRES_USER: kalle
       POSTGRES_DB: postgres
     
   
