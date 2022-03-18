@@ -82,11 +82,15 @@ container.register(
 )
 container.register(
     'specialityRouter', 
-    awilix.asFunction(require('./presentation-layer/routers/speciality-router'))
+    awilix.asFunction(require('./presentation-layer/routers/speciality-router.js'))
 )
 container.register(
     'variousRouter', 
-    awilix.asFunction(require('./presentation-layer/routers/various-routers'))
+    awilix.asFunction(require('./presentation-layer/routers/various-routers.js'))
+)
+container.register(
+    'apiRouter', 
+    awilix.asFunction(require('./presentation-layer-rest-api/rest-api.js'))
 )
 
 

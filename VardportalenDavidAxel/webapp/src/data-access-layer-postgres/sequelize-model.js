@@ -131,7 +131,6 @@ function Specialitys(sequelize, DataTypes) {
         }
     })
     sequelize.sync()
-    /*
     .then(() => {
         Specialitys.create({
             specialityName: 'Vaccinering'
@@ -140,7 +139,7 @@ function Specialitys(sequelize, DataTypes) {
             specialityName: 'Skada'
         }).catch(e => console.log(e))
     })
-    */
+
     return Specialitys
 }
 

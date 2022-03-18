@@ -6,7 +6,7 @@ const sequelize = require('../data-access-layer-postgres/db')
 const session = require('express-session')
 let RedisStore = require('connect-redis')(session)
 
-module.exports = function createApp({ accountRouter, bookingRouter, specialityRouter, variousRouter }) {
+module.exports = function createApp({ accountRouter, bookingRouter, specialityRouter, variousRouter,apiRouter }) {
 
     return {
         start() {
@@ -41,6 +41,7 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
             app.use('/account', accountRouter)
             app.use('/speciality', specialityRouter)
             app.use('/bookings', bookingRouter)
+            app.use('/api', apiRouter)
 
             app.use((error, request, response, next) => {
                 console.log(error)
