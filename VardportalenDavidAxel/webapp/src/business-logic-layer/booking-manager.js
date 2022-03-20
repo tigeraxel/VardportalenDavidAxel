@@ -21,20 +21,26 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
             bookingRepository.updateBooking(bookingInfo, callback)
         }*/
         getBookings(callback) {
-            postgresBookingRepository.getBookings(callback)
+            bookingRepository.getBookings(callback)
+        },
+        getBookingWithID(id,callback) {
+            bookingRepository.getBookingWithID(id,callback)
         },
         getFreeBookings(callback) {
-            postgresBookingRepository.getFreeBookings(callback)
+            bookingRepository.getFreeBookings(callback)
         },
         getBookingsWithNames(session, callback) {
             console.log("i booking manager")
-            bookingValidator.checkBookingPrivledges(session, callback)
+            bookingRepository.checkBookingPrivledges(session, callback)
         },
         createBooking(bookingInfo, callback) {
-            postgresBookingRepository.createBooking(bookingInfo, callback)
+            bookingRepository.createBooking(bookingInfo, callback)
         },
         updateBooking(bookingInfo, callback) {
-            postgresBookingRepository.updateBooking(bookingInfo, callback)
+            bookingRepository.updateBooking(bookingInfo, callback)
+        },
+        deleteBooking(bookingInfo, callback) {
+            bookingRepository.deleteBooking(bookingInfo, callback)
         }
     }
 }

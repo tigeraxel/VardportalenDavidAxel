@@ -49,10 +49,84 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
     router.get("/bookings/:id", function(request, response){
         const id = request.params.id
 
-        bookingManager.getBookings(id, function (errors, bookings){
-            
+        bookingManager.getBookingWithID(id, function (errors, bookings){
+            console.log(bookings)
+            console.log(errors)
+            if(errors[0] == 400) {
+                errors[0] = "bookings SQL WRONG is already taken"
+                response.status(400).json(errors)
+            }else if(errors[0]==500){
+                response.status(500).end()
+            }else{
+                response.status(200).json(bookings)
+            }
         })
 
+    })
+
+    router.post("/bookings/create", function(request, response){
+
+        const bookingInfo = {
+            time: request.body.time,
+            date: request.body.date,
+            doctorID: request.body.doctorID
+        }
+        bookingManager.createBooking(bookingInfo,function(errors,booking){
+            console.log(booking)
+            console.log(errors)
+            if(errors[0] == 400) {
+                errors[0] = "SQL WRONG is already taken"
+                response.status(400).json(errors)
+            }else if(errors[0]==500){
+                response.status(500).end()
+            }else{
+                response.status(201).json(booking)
+            }
+        })
+    })
+
+
+    router.post("/bookings/delete/:id", function(request, response){
+        const bookingidID = request.params.id
+
+        bookingManager.deleteBooking(bookingidID,function(errors,booking){
+            console.log(booking)
+            console.log(errors)
+            if(errors[0] == 400) {
+                errors[0] = "SQL WRONG is already taken"
+                response.status(400).json(errors)
+            }else if(errors[0]==500){
+                response.status(500).end()
+            }else{
+                response.status(201).json(booking)
+            }
+        })
+    })
+
+
+    router.post("/bookings/reserve/:id", function(request, response){
+        const bookingID = request.params.id
+
+        const bookingInfo = {
+            bookingID: bookingID,
+            userID: request.body.userID,
+            message: request.body.message,
+            CategoryID: request.body.CategoryID,
+            covidQuestion: request.body.covidQuestion
+        }
+
+        bookingManager.updateBooking(bookingInfo,function(errors,booking){
+            console.log(booking)
+            console.log(errors)
+            if(errors[0] == 400) {
+                errors[0] = "SQL WRONG is already taken"
+                response.status(400).json(errors)
+            }else if(errors[0]==500){
+                response.status(500).end()
+            }else{
+                response.status(201).json(booking)
+            }
+        })
     })
     //i GET
     //status code 200 om det lyckas

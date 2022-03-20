@@ -17,6 +17,19 @@ module.exports = function createBookingRepository() {
                 }
             })
         },
+        getBookingWithID(id,callback) {
+            const query = "SELECT * FROM bookings WHERE bookingID = ?"
+            const values = [id]
+
+            db.query(query, values, function (error, booking) {
+                if (error) {
+                    callback(['databaseError'], null)
+                }
+                else {
+                    callback([], booking)
+                }
+            })
+        },
         getFreeBookings(callback) {
             const query = "SELECT * FROM bookings WHERE patientID IS NULL "
             const values = []
@@ -49,7 +62,21 @@ module.exports = function createBookingRepository() {
 
             const query = "UPDATE bookings SET patientID = ?, messageFromPatient = ?, categoryID = ?, covidQuestion = ? WHERE bookingID = ?"
             const values = [bookingInfo.userID, bookingInfo.message, bookingInfo.CategoryID, bookingInfo.covidQuestion, bookingInfo.bookingID]
-            console.log(values)
+            console.log(bookingInfo.userID)
+
+            db.query(query, values, function (error, bookings) {
+                if (error) {
+                    callback(['databaseError'], null)
+                }
+                else {
+                    callback([], bookings)
+                }
+            })
+        },
+        deleteBooking(id, callback) {
+
+            const query = "DELETE FROM bookings WHERE bookingID = ?"
+            const values = [id]
 
             db.query(query, values, function (error, bookings) {
                 if (error) {
