@@ -43,12 +43,12 @@ module.exports = function createPostgresAccountRepository(){
 
         },
         getAccountNameFromId(_userID, callback) {
-            const user = users.findAll({
+            users.findAll({
                 where: {
                     userID: _userID
                 },
                 raw: true
-            }).then(()=>{
+            }).then( user => {
                 callback( [], user)
             }).catch((err) =>{
                 console.log("error when fetching user with id "+ _userID)
@@ -56,7 +56,7 @@ module.exports = function createPostgresAccountRepository(){
             })
         },
         createAccount(user,callback){
-            const newUser = users.create({
+            users.create({
                 socialSecurityNumber: user.socialSecurityNumber,
                 userPassword: user.password,
                 firstName: user.firstName,
@@ -76,23 +76,28 @@ module.exports = function createPostgresAccountRepository(){
                     'isDoctor',
                     'isAdmin'
                 ],
-            }).then(() =>{
+            }).then( newUser => {
+                console.log("skapade användare!")
+                console.log(newUser)
                 callback( [], newUser)
             }).catch((err) =>{
                 console.log("error when creating user ")
-                callback(err, [])
+                if(err["name"] == "SequelizeUniqueConstraintError"){
+                    callback([400], [])
+                }
+                callback([500], [])
             })
         
         },
         GiveDoctorPrivilige(user, callback){
-            const updatedUser = users.update({
+            users.update({
                 doctorUserID: 1
             },{
                 where: {
                     socialSecurityNumber: user.socialSecurityNumber
                 },
                 raw: true
-            }).then(()=>{
+            }).then(updatedUser => {
                 callback([], updatedUser)
             }).catch((err) => {
                 console.log("Could not update doctorID for social number "+ user.socialSecurityNumber)

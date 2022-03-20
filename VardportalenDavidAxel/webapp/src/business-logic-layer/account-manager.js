@@ -45,7 +45,14 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         },
 
         createAccount(user, callback) {
-            postgresAccountRepository.createAccount(user, callback)
+            accountValidator.validateAccountCredentials(user, function(validationErrors, newUser){
+                if(validationErrors.length == 0){
+                    console.log("Försöker registrera användare!")
+                    postgresAccountRepository.createAccount(user, callback)
+                }else{
+                    callback(validationErrors, [])
+                }
+            })
         },
 
         GiveDoctorPrivilige(user, callback) {
