@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -12,6 +13,7 @@
 
     <link rel="stylesheet" href="./styles.css">
 </head>
+
 <body>
 
     <H1>WENNERBLOMSVÅRDCENTRAL</H1>
@@ -19,20 +21,34 @@
     <nav>
         <button id="loginToggle"> LOGIN FORM</button><br>
         <button id="registerToggle"> REGISTER FORM</button><br>
-
+        <button id="bookingToggle"> BOOKING FORM</button><br>
     </nav>
-    
+
     <div id="loginFormDiv">
         <h3> Vänligen logga in först. </h3>
-        <form id="loginForm" method="post" action="/spa/logIn">
+        <form id="loginForm" method="post" action="/">
             <label for="socialSecurityNumberLogin">Personnummer:</label>
-            <input class="input is-normal" type="text" id="socialSecurityNumberLogin" name="socialSecurityNumberLogin"><br>
+            <input class="input is-normal" type="text" id="socialSecurityNumberLogin"
+                name="socialSecurityNumberLogin"><br>
             <label for="passwordLogin">Lösenord:</label>
             <input class="input is-normal" type="password" type="password" id="passwordLogin" name="passwordLogin"><br>
-            <input class="button" id="loginButton" type="submit" value="Logga in">
+            <button id="loginButton"> logga in </button>
         </form>
 
-        <a id="toggleToMembership"> Bli medlem</a>
+
+    </div>
+
+    <div id="bookingFormDiv">
+        <h3> Ange booking ID. </h3>
+        <form id="bookingForm" method="post" action="/">
+            <label for="bookingID">bookingID:</label>
+            <input type="text" id="bookingID" name="bookingID"><br>
+        </form>
+        <button id="bookingButton"> getta </button>
+
+        <p id="booking-date"> här ska stå date</p>
+        <p id="booking-message">här</p>
+        <p id="booking-time">här</p>
 
     </div>
 
@@ -52,11 +68,10 @@
             <input class="input is-normal" type="text" id="socialSecurityNumber" name="socialSecurityNumber"><br>
             <label for="password">Lösenord:</label>
             <input class="input is-normal" type="password" id="password" name="password"><br>
-            <input class="button" type="submit" id="registerButton" value="Bli Medlem"><br>
+            <button id="registerButton" >Bli Medlem </button>
         </form>
-
-        <a id="toggleToLogin">Gå till inloggningssidan.</a>
 
     </div>
 </body>
+
 </html>

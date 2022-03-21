@@ -50,8 +50,8 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
         const id = request.params.id
 
         bookingManager.getBookingWithID(id, function (errors, bookings){
-            console.log(bookings)
-            console.log(errors)
+            //console.log(bookings)
+            //console.log(errors)
             if(errors[0] == 400) {
                 errors[0] = "bookings SQL WRONG is already taken"
                 response.status(400).json(errors)
