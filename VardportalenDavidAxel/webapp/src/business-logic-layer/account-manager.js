@@ -3,7 +3,7 @@
 module.exports = function createAccountManager({ accountRepository, accountValidator, postgresAccountRepository  }) {
 
     return {
-        /*
+        
         getAllDoctors(callback) {
             accountRepository.getAllDoctors(callback)
         },
@@ -31,7 +31,7 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         checkLogInCredentials(user, callback) {
             accountValidator.checkLogInCredentials(user, callback)
         }
-        */
+        /*
         getAllDoctors(callback) {
             postgresAccountRepository.getAllDoctors(callback)
         },
@@ -66,6 +66,6 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         checkLogInCredentials(user, callback) {
             accountValidator.checkLogInCredentials(user, callback)
         }
-
+*/
     }
 }

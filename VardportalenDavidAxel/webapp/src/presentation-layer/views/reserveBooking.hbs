@@ -22,6 +22,7 @@
 {{#if specialitys.length}}
 <div id="bookingFormDiv">
     <form action="/bookings/reserve" method="post" id="bookingForm">
+        <input type="hidden" name="userID" id="userID" value="{{userID}}">
         <label for="bookingID">Vilken tid och datum?:</label>
         <select id="bookingID" name="bookingID">
             {{#each bookings}}

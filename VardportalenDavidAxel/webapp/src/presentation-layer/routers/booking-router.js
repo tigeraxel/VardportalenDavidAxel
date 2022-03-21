@@ -38,7 +38,7 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
 
         const bookingInfo = {
             bookingID: request.body.bookingID,
-            userID: request.session.userID,
+            userID: request.body.userID,
             message: request.body.message,
             CategoryID: request.body.CategoryID,
             covidQuestion: request.body.covidQuestion

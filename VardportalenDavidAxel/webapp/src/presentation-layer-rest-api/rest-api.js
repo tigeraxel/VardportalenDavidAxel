@@ -46,7 +46,7 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
             }
         })
     })
-    router.get("/bookings/:id", function(request, response){
+    router.get("/bookings/get/:id", function(request, response){
         const id = request.params.id
 
         bookingManager.getBookingWithID(id, function (errors, bookings){
