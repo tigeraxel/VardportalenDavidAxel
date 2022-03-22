@@ -1,5 +1,3 @@
-
-
 async function loadBookingPage(id){
 	
 	const response = await fetch("http://localhost:3000/api/bookings/get/"+id)
@@ -12,6 +10,9 @@ async function loadBookingPage(id){
 	document.body.querySelector('#booking-categoryID').innerText = booking.CategoryID
 	document.body.querySelector('#booking-time').innerText = booking.appointmentTime
     document.body.querySelector('#booking-date').innerText = booking.appointmentDate
+
+	document.getElementById("booking-time").innerText = "TJENAREEEEE"
+
 
 	
 }

@@ -1,76 +1,109 @@
 //var booking = require(".booking-functions")
 
-document.addEventListener('DOMContentLoaded', function (event) {
-    event.preventDefault()
+document.addEventListener('DOMContentLoaded', function () {
 
-    const loginToggleButton = document.body.querySelector('#loginToggle')
-    const loginButton = document.body.querySelector('#loginButton')
-    const bookingButton = document.body.querySelector('#bookingButton')
+    const anchors = document.querySelectorAll('a')
+    console.log(anchors)
 
-    const registerToggleButton = document.body.querySelector('#registerToggle')
-    const registerButton = document.body.querySelector('#registerButton')
-    const bookingToggleButton = document.body.querySelector('#bookingToggle')
+    for (const anchor of anchors) {
 
-    const loginFormDiv = document.body.querySelector('#loginFormDiv')
-    const membershipFormDiv = document.body.querySelector('#membershipFormDiv')
-    const bookingFormDiv = document.body.querySelector('#bookingFormDiv')
+        anchor.addEventListener('click', function (event) {
+            event.preventDefault()
 
+            const url = anchor.getAttribute('href')
 
+            history.pushState(null, "", url)
 
-    function closeForms(){
-        membershipFormDiv.style.display = "none"
-        loginFormDiv.style.display = "none"
-        bookingFormDiv.style.display = "none"
+            hideCurrentPage()
+            console.log(url)
+            showPage(url)
+
+        })
     }
-    closeForms()
 
+    showPage(location.pathname)
 
-
-    bookingToggleButton.addEventListener("click", function () {
-        closeForms()
-        bookingFormDiv.style.display = "block"
-    })
-    registerToggleButton.addEventListener("click", function () {
-        closeForms()
-        membershipFormDiv.style.display = "block"
-    })
-    loginToggleButton.addEventListener("click", function () {
-        closeForms()
-        loginFormDiv.style.display = "block"
-    })
+    const loginButton = document.body.querySelector('#loginButton')
+    const registerButton = document.body.querySelector('#registerButton')
+    const getBookingButton = document.body.querySelector('#getBookingButton')
 
 
     loginButton.addEventListener("click", function (event) {
-        event.preventDefault()
-
         console.log("vill logga in")
     })
-    bookingButton.addEventListener("click", function (event) {
-        event.preventDefault()
-
-        console.log("vill få bokning")
-        document.body.querySelector('#booking-time').innerText = "17.00"
-        
+    getBookingButton.addEventListener("click", function () {
         var id = document.body.querySelector('#bookingID').value
-        loadBookingPage(id)
-
+        let url = "/booking/" + id
+        history.pushState(null, "", url)
+        hideCurrentPage()
+        showPage(url)
     })
 
     registerButton.addEventListener("click", function (event) {
         event.preventDefault()
-
         console.log("vill registrera sig")
     })
 
+})
 
 
-    history.pushState(null, "", url)
+window.addEventListener('popstate', function () {
 
     hideCurrentPage()
-    showPage(url)
-
-
+    showPage(location.pathname)
 
 })
 
+function hideCurrentPage() {
+    document.querySelector('.current-page').classList.remove('current-page')
+}
+
+function showPage(url) {
+
+    let nextPageId
+
+    switch (url) {
+
+        case '/':
+            nextPageId = 'start-page'
+            break
+
+        case '/login':
+            nextPageId = 'login-page'
+            break
+
+        case '/register':
+            nextPageId = 'register-page'
+            break
+
+        case '/booking':
+            nextPageId = 'booking-page'
+            break
+
+        case '/reserveBooking':
+            nextPageId = 'reserveBooking-page'
+            break
+
+        case '/deleteBooking':
+            nextPageId = 'deleteBooking-page'
+            break
+
+            case '/createBooking':
+                nextPageId = 'createBooking-page'
+                break
+
+        default:
+            if (url.startsWith("/booking/")) {
+                const [empty, booking, id] = url.split("/")
+                nextPageId = 'showBooking-page'
+                loadBookingPage(id)
+            } else {
+                nextPageId = 'not-found-page'
+            }
+
+    }
+
+    document.getElementById(nextPageId).classList.add('current-page')
+
+}
 

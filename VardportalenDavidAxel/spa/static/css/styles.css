@@ -1,2 +1,11 @@
-#membershipFormDiv{display: block;}
-#loginFormDiv{display: block;}
+body{
+	background-color: #deeade;
+}
+
+.page{
+	display: none;
+}
+
+.page.current-page{
+	display: block;
+}

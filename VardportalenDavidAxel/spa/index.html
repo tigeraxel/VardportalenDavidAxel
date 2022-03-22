@@ -7,11 +7,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 
-    <script src="./navigation.js"></script>
-    <script src="./booking-functions.js"></script>
-    <script src="./login-functions.js"></script>
+    <script src="navigation.js"></script>
+    <script src="login-page.js"></script>
+    <script src="booking-page.js"></script>
 
-    <link rel="stylesheet" href="./styles.css">
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
@@ -19,59 +19,121 @@
     <H1>WENNERBLOMSVÅRDCENTRAL</H1>
 
     <nav>
-        <button id="loginToggle"> LOGIN FORM</button><br>
-        <button id="registerToggle"> REGISTER FORM</button><br>
-        <button id="bookingToggle"> BOOKING FORM</button><br>
+        <ul>
+            <li><a href="/">Start</a></li>
+            <li><a href="/booking">Booking</a></li>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+            <li><a href="/reserveBooking">reserveBookig</a></li>
+            <li><a href="/deleteBooking">deleteBooking</a></li>
+            <li><a href="/createBooking">createBooking</a></li>
+
+        
+        </ul>
     </nav>
 
-    <div id="loginFormDiv">
-        <h3> Vänligen logga in först. </h3>
-        <form id="loginForm" method="post" action="/">
-            <label for="socialSecurityNumberLogin">Personnummer:</label>
-            <input class="input is-normal" type="text" id="socialSecurityNumberLogin"
-                name="socialSecurityNumberLogin"><br>
-            <label for="passwordLogin">Lösenord:</label>
-            <input class="input is-normal" type="password" type="password" id="passwordLogin" name="passwordLogin"><br>
-            <button id="loginButton"> logga in </button>
-        </form>
+    <main>
 
+        <div class="page" id="start-page">
+            <h2>TJENARE</h2>
+        </div>
 
-    </div>
+        <div class="page" id="login-page">
+            <h3> Vänligen logga in först. </h3>
+            <form id="loginForm" method="post" action="/">
+                <label for="socialSecurityNumberLogin">Personnummer:</label>
+                <input class="input is-normal" type="text" id="socialSecurityNumberLogin"
+                    name="socialSecurityNumberLogin"><br>
+                <label for="passwordLogin">Lösenord:</label>
+                <input class="input is-normal" type="password" type="password" id="passwordLogin"
+                    name="passwordLogin"><br>
+                <button id="loginButton"> logga in </button>
+            </form>
+        </div>
 
-    <div id="bookingFormDiv">
-        <h3> Ange booking ID. </h3>
-        <form id="bookingForm" method="post" action="/">
-            <label for="bookingID">bookingID:</label>
-            <input type="text" id="bookingID" name="bookingID"><br>
-        </form>
-        <button id="bookingButton"> getta </button>
+        <div class="page" id="booking-page">
+            <h3> Ange booking ID. </h3>
+            <form id="bookingForm" method="post" action="/">
+                <label for="bookingID">bookingID:</label>
+                <input type="text" id="bookingID" name="bookingID"><br>
+            </form>
+            <button id="getBookingButton" > getta </button>
+        </div>
 
-        <p id="booking-date"> här ska stå date</p>
-        <p id="booking-message">här</p>
-        <p id="booking-time">här</p>
+        <div class="page" id="deleteBooking-page">
+            <h3> Ange booking ID. </h3>
+            <form id="bookingForm" method="post" action="/">
+                <label for="bookingID">bookingID:</label>
+                <input type="text" id="bookingID" name="bookingID"><br>
+            </form>
+            <button id="getBookingButton" > deletea </button>
+        </div>
 
-    </div>
+        <div class="page" id="createBooking-page">
 
-    <div id="membershipFormDiv">
+            <form action="/bookings/create" method="post">
+                <label for="doctorID">Vilken Doktor?:</label> <br>
+                <input type="text" id="doctorID" name="doctorID"><br>
+                <label for="date">Date (dd/mm/yyyy):</label><br>
+                <input class="input is-normal" type="date" id="date" name="date"><br>
+                <label for="time">time: (hh:mm)</label><br>
+                <input type="time" id="time" name="time"><br>
+                <button type="submit" value="Lägg till ny bokning"> Lägg till ny bokning</button>
+        
+            </form>
+        
+        </div>
 
-        <h3> Ange dina uppgifter nedan för att bli medlem</h3>
-        <form id="membershipForm" method="post" action="/account/register">
-            <label for="firstName">Förnamn:</label>
-            <input class="input is-normal" type="text" id="firstName" name="firstName"> <br>
-            <label for="lastName">Efternamn:</label>
-            <input class="input is-normal" type="text" id="lastName" name="lastName"><br>
-            <label for="email">Email:</label>
-            <input class="input is-normal" type="text" id="email" name="email"><br>
-            <label for="phoneNumber">Mobilnummer:</label>
-            <input class="input is-normal" type="text" id="phoneNumber" name="phoneNumber"><br>
-            <label for="socialSecurityNumber">Personnummer:</label>
-            <input class="input is-normal" type="text" id="socialSecurityNumber" name="socialSecurityNumber"><br>
-            <label for="password">Lösenord:</label>
-            <input class="input is-normal" type="password" id="password" name="password"><br>
-            <button id="registerButton" >Bli Medlem </button>
-        </form>
+        <div class="page" id="showBooking-page">
+            <p id="booking-date"> här ska stå date</p>
+            <p id="booking-message">här</p>
+            <p id="booking-time">här</p>
+        </div>
 
-    </div>
+        <div class="page" id="reserveBooking-page">
+            <form action="/bookings/reserve" method="post" id="bookingForm">
+                <input type="hidden" name="userID" id="userID" value="{{userID}}">
+                <label for="bookingID">Vilket id på booking?:</label><br>
+                <input type="text" id="bookingID" name="bookingID"><br>
+                <label for="CategoryID">Vilken sorts undersökning skriv id:</label><br>
+                <input type="text" id="CategoryID" name="CategoryID"><br>
+                <label for="covidQuestion">Har du haft covid?</label> <br>
+                <input type="text" name="covidQuestion" id="covidQuestion" ><br>
+                <label for="message"> Annan övrig info som är bra att känna till:</label><br>
+                <input type="text" id="message" name="message"><br>
+                <button  id="postNewBooking">Skapa bokning</button>
+            </form>
+        </div>
+
+        <div class="page" id="register-page">
+            <h3> Ange dina uppgifter nedan för att bli medlem</h3>
+            <form id="membershipForm" method="post" action="/account/register">
+                <label for="firstName">Förnamn:</label>
+                <input class="input is-normal" type="text" id="firstName" name="firstName"> <br>
+                <label for="lastName">Efternamn:</label>
+                <input class="input is-normal" type="text" id="lastName" name="lastName"><br>
+                <label for="email">Email:</label>
+                <input class="input is-normal" type="text" id="email" name="email"><br>
+                <label for="phoneNumber">Mobilnummer:</label>
+                <input class="input is-normal" type="text" id="phoneNumber" name="phoneNumber"><br>
+                <label for="socialSecurityNumber">Personnummer:</label>
+                <input class="input is-normal" type="text" id="socialSecurityNumber" name="socialSecurityNumber"><br>
+                <label for="password">Lösenord:</label>
+                <input class="input is-normal" type="password" id="password" name="password"><br>
+                <button id="registerButton">Bli Medlem </button>
+            </form>
+        </div>
+
+        <div class="page" id="not-found-page">
+            <h1>Not Found Page</h1>
+            <p>This is the not found page.</p>
+        </div>
+
+        <footer>
+            Created by Axel | <a href="/about">About</a>
+        </footer>
+
+    </main>
 </body>
 
 </html>
