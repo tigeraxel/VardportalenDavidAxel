@@ -43,6 +43,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
             socialSecurityNumber: request.body.socialSecurityNumber,
             password: request.body.password
         }
+        console.log("WEB API LOGIN CREDENTIALS")
         console.log(logInCredentials)
         if (logInCredentials.grantType != "userPassword") {
             console.log("grantType not password")
@@ -75,7 +76,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
                         response.status(401).json("Error when signing token")
                     } else {
                         response.status(200).json({
-                            accessToken: token,
+                            "accessToken": token,
                             userInfo: payload
                         })
                     }
@@ -94,6 +95,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
             socialSecurityNumber: request.body.socialSecurityNumber,
             password: request.body.password
         }
+        console.log(newUser)
         accountManager.createAccount(newUser, function (errors, user) {
             console.log(user)
             console.log(errors)

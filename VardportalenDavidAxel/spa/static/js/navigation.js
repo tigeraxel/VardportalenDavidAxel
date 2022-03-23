@@ -133,7 +133,7 @@ function showPage(url) {
 
 async function loadBookingPage(id) {
 
-    const response = await fetch("http://localhost:3000/api/bookings/get/" + id, {
+    const response = await fetch("http://localhost:3000/api/bookings/" + id , {
         method: "GET",
         headers: {
             "Content-type": "application/json",
@@ -215,15 +215,18 @@ async function loadLogin() {
 
     console.log(loginInfo)
     const response = await fetch("http://localhost:3000/api/login",
-        {
-            method: "POST",
-            body: JSON.stringify(loginInfo)
-        })
+    {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
+		body: new URLSearchParams(loginInfo)
+	})
     // TODO: Check status code and act accordingly!
 
     const responseBody = await response.json()
     //console.log(responseBody)
-    console.log(responseBody["accessToken"])
+    //console.log(responseBody["accessToken"])
 
     ACCESS_TOKEN = responseBody.accessToken
     userId = responseBody.userInfo.userID
@@ -243,12 +246,12 @@ async function loadLogin() {
 async function Register() {
 
     const newAccount = {
-        firstname: document.body.querySelector('#firstName').value,
-        lastName: document.body.querySelector('#lastName').value,
-        email: document.body.querySelector('#email').value,
-        phoneNumber: document.body.querySelector('#phoneNumber').value,
-        socialSecurityNumber: document.body.querySelector('#socialSecurityNumber').value,
-        password: document.body.querySelector('#password').value
+        firstname: document.getElementById('firstName').value,
+        lastName: document.getElementById('lastName').value,
+        email: document.getElementById('email').value,
+        phoneNumber: document.getElementById('phoneNumber').value,
+        socialSecurityNumber: document.getElementById('socialSecurityNumber').value,
+        password: document.getElementById('password').value
     }
 
     console.log(newAccount)
