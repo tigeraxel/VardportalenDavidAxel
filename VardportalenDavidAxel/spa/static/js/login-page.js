@@ -1,7 +1,14 @@
 async function loadLogin(){
 	
-	const response = await fetch("http://localhost:3000/api/login")
-	
+
+	const loginInfo = {
+		socialSecurityNumber: document.body.querySelector('#socialSecurityNumberLogin').value,
+		password: document.body.querySelector('#passwordLogin').value
+	}
+
+	const response = await fetch("http://localhost:3000/api/login",
+    {method: "POST",
+    body: JSON.stringify(loginInfo)})	
 	// TODO: Check status code and act accordingly!
 	
 	const user = await response.json()

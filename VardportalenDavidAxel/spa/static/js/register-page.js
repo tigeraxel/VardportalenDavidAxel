@@ -7,19 +7,27 @@ async function Register(){
     var socialSecurityNumber = document.body.querySelector('#socialSecurityNumber').value
     var password = document.body.querySelector('#password').value
     const newAccount = {
-        firstname: firstname,
-        lastName: lastName,
-        email: email,
-        phoneNumber: phoneNumber,
-        socialSecurityNumber: socialSecurityNumber,
-        password:password
+        firstname: document.body.querySelector('#firstName').value,
+        lastName: document.body.querySelector('#lastName').value,
+        email: document.body.querySelector('#email').value,
+        phoneNumber: document.body.querySelector('#phoneNumber').value,
+        socialSecurityNumber: document.body.querySelector('#socialSecurityNumber').value,
+        password:document.body.querySelector('#password').value
     }
 
-    const response = await fetch("http://localhost:3000/api/register",
-    {body: JSON.stringify(newAccount)})
+    console.log(newAccount)
+
+    const response = await fetch("http://localhost:3000/api/register/",
+    {method: "POST",
+    body: JSON.stringify(newAccount)})
 	
 	// TODO: Check status code and act accordingly!
 	
-	const user = await response.json()
+	const returnFromFetch = await response.json()
+    console.log(returnFromFetch)
+    
+    hideCurrentPage()
+    showPage('/login')
+
 	
 }

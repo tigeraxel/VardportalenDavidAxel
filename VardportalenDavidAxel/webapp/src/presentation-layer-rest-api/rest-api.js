@@ -30,6 +30,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
         }
         next()
     })
+    
 
     // router.use(function (request, response, next) {
     //     //grant type
