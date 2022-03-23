@@ -47,6 +47,7 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
         response.setHeader("Access-Control-Expose-Headers", "*")
         next()
     })
+    
 
     router.post("/login", function (request, response) {
 

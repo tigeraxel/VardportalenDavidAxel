@@ -10,6 +10,8 @@
     <script src="navigation.js"></script>
     <script src="login-page.js"></script>
     <script src="booking-page.js"></script>
+    <script src="register-page.js"></script>
+
 
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -71,8 +73,8 @@
 
         <div class="page" id="createBooking-page">
 
-            <form action="/api/bookings/create" method="post">
-                <label for="doctorID">Vilken Doktor?:</label> <br>
+            <form id="bookingFormCreate" action="/api/bookings/create" method="post">
+                <label for="doctorID">Vilket doktorID?:</label> <br>
                 <input type="text" id="doctorID" name="doctorID"><br>
                 <label for="date">Date (dd/mm/yyyy):</label><br>
                 <input class="input is-normal" type="date" id="date" name="date"><br>
@@ -93,14 +95,15 @@
 
         <div class="page" id="reserveBooking-page">
             <form action="/bookings/reserve" method="post" id="bookingFormReserve">
-                <input type="hidden" name="userID" id="userID" value="{{userID}}">
-                <label for="bookingID">Vilket id på booking?:</label><br>
-                <input type="text" id="bookingID" name="bookingIDreserve"><br>
-                <label for="CategoryID">Vilken sorts undersökning skriv id:</label><br>
+                <label for="userID">Vilket id på user?</label><br>
+                <input type="text" name="userID" id="userID" ><br>
+                <label for="bookingID">Vilket id på booking?</label><br>
+                <input type="text" id="bookingIDreserve" name="bookingIDreserve"><br>
+                <label for="CategoryID">Vilken sorts undersökning skriv id</label><br>
                 <input type="text" id="CategoryID" name="CategoryID"><br>
                 <label for="covidQuestion">Har du haft covid?</label> <br>
                 <input type="text" name="covidQuestion" id="covidQuestion"><br>
-                <label for="message"> Annan övrig info som är bra att känna till:</label><br>
+                <label for="message"> Annan övrig info som är bra att känna till</label><br>
                 <input type="text" id="message" name="message"><br>
                 <button id="postNewBooking">Skapa bokning</button>
             </form>
@@ -108,7 +111,7 @@
 
         <div class="page" id="register-page">
             <h3> Ange dina uppgifter nedan för att bli medlem</h3>
-            <form id="registerForm" method="post" action="/account/register">
+            <form id="registerForm" method="post" action="/api/register">
                 <label for="firstName">Förnamn:</label>
                 <input class="input is-normal" type="text" id="firstName" name="firstName"> <br>
                 <label for="lastName">Efternamn:</label>
@@ -121,7 +124,7 @@
                 <input class="input is-normal" type="text" id="socialSecurityNumber" name="socialSecurityNumber"><br>
                 <label for="password">Lösenord:</label>
                 <input class="input is-normal" type="password" id="password" name="password"><br>
-                <input type="submit" id="registerButton">Bli Medlem </button>
+                <input type="submit" id="registerButton" value="submit">
             </form>
         </div>
 

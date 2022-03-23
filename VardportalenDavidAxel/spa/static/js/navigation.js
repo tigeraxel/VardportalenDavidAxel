@@ -24,18 +24,12 @@ document.addEventListener('DOMContentLoaded', function () {
     showPage(location.pathname)
 
     const loginButton = document.body.querySelector('#loginButton')
-    const registerButton = document.body.querySelector('#registerButton')
-    const getBookingButton = document.body.querySelector('#getBookingButton')
 
 
     loginButton.addEventListener("click", function (event) {
         console.log("vill logga in")
     })
 
-    registerButton.addEventListener("click", function (event) {
-        event.preventDefault()
-        console.log("vill registrera sig")
-    })
 
 })
 
@@ -63,6 +57,12 @@ function showPage(url) {
 
         case '/login':
             nextPageId = 'login-page'
+            const loginForm = document.getElementById("loginForm")
+			loginForm.addEventListener("submit", function (event) {
+				event.preventDefault()
+                let url = "/login"
+                Login()
+			})
             break
 
         case '/register':
@@ -98,6 +98,11 @@ function showPage(url) {
 
         case '/createBooking':
             nextPageId = 'createBooking-page'
+            const bookingFormCreate = document.getElementById("bookingFormCreate")
+			bookingFormCreate.addEventListener("submit", function (event) {
+				event.preventDefault()
+                createBooking()
+			})
             break
 
         default:
@@ -114,6 +119,7 @@ function showPage(url) {
     document.getElementById(nextPageId).classList.add('current-page')
 
 }
+
 
 
 
