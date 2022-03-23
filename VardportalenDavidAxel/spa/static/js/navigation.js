@@ -1,5 +1,11 @@
 //var booking = require(".booking-functions")
 
+let ACCESS_TOKEN = ""
+let ACCOUNT_ID = ""
+let IS_ADMIN = false
+let IS_LOGGED_IN = false
+let userID = ""
+
 document.addEventListener('DOMContentLoaded', function () {
 
     const anchors = document.querySelectorAll('a')
@@ -58,34 +64,34 @@ function showPage(url) {
         case '/login':
             nextPageId = 'login-page'
             const loginForm = document.getElementById("loginForm")
-			loginForm.addEventListener("submit", function (event) {
-				event.preventDefault()
+            loginForm.addEventListener("submit", function (event) {
+                event.preventDefault()
                 let url = "/login"
-                Login()
-			})
+                loadLogin()
+            })
             break
 
         case '/register':
             nextPageId = 'register-page'
             const registerForm = document.getElementById("registerForm")
-			registerForm.addEventListener("submit", function (event) {
-				event.preventDefault()
+            registerForm.addEventListener("submit", function (event) {
+                event.preventDefault()
                 let url = "/register"
                 Register()
-			})
+            })
             break
 
         case '/booking':
             nextPageId = 'booking-page'
             const bookingForm = document.getElementById("bookingFormGet")
-			bookingForm.addEventListener("submit", function (event) {
-				event.preventDefault()
+            bookingForm.addEventListener("submit", function (event) {
+                event.preventDefault()
                 var id = document.body.querySelector('#bookingIDget').value
                 let url = "/booking/" + id
                 history.pushState(null, "", url)
                 hideCurrentPage()
                 showPage(url)
-			})
+            })
             break
 
         case '/reserveBooking':
@@ -99,10 +105,10 @@ function showPage(url) {
         case '/createBooking':
             nextPageId = 'createBooking-page'
             const bookingFormCreate = document.getElementById("bookingFormCreate")
-			bookingFormCreate.addEventListener("submit", function (event) {
-				event.preventDefault()
+            bookingFormCreate.addEventListener("submit", function (event) {
+                event.preventDefault()
                 createBooking()
-			})
+            })
             break
 
         default:
@@ -122,4 +128,144 @@ function showPage(url) {
 
 
 
+/* ########################## BOOKING ************* */
 
+
+async function loadBookingPage(id) {
+
+    const response = await fetch("http://localhost:3000/api/bookings/get/" + id, {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + ACCESS_TOKEN
+        }
+    })
+    // TODO: Check status code and act accordingly!
+
+    var booking = await response.json()
+    booking = booking[0]
+    console.log(booking)
+    document.body.querySelector('#booking-message').innerText = booking.messageFromPatient
+    document.body.querySelector('#booking-categoryID').innerText = booking.categoryID
+    document.body.querySelector('#booking-time').innerText = booking.appointmentTime
+    document.body.querySelector('#booking-date').innerText = booking.appointmentDate
+
+
+}
+
+
+async function reserveBooking() {
+
+    const bookingInfo = {
+        bookingID: document.body.querySelector('#bookingIDreserve').value,
+        userID: document.body.querySelector('#userID').value,
+        message: document.body.querySelector('#message').value,
+        CategoryID: document.body.querySelector('#CategoryID').value,
+        covidQuestion: document.body.querySelector('#covidQuestion').value
+    }
+
+    console.log(bookingInfo)
+
+    const response = await fetch("http://localhost:3000/api/bookings/reserve/" + bookingInfo.bookingID,
+        {
+            method: "POST",
+            body: JSON.stringify(bookingInfo)
+        })
+    // TODO: Check status code and act accordingly!
+
+    var booking = await response.json()
+    console.log(booking)
+
+}
+
+async function createBooking() {
+
+    const bookingInfo = {
+        time: document.body.querySelector('#time').value,
+        date: document.body.querySelector('#date').value,
+        doctorID: document.body.querySelector('#doctorID').value
+    }
+
+    console.log(bookingInfo)
+
+    const response = await fetch("http://localhost:3000/api/bookings/create",
+        {
+            method: "POST",
+            body: JSON.stringify(bookingInfo)
+        })
+    // TODO: Check status code and act accordingly!
+
+    var booking = await response.json()
+    console.log(booking)
+
+}
+
+
+/* ########################## LOGIN ************* */
+
+
+async function loadLogin() {
+
+
+    const loginInfo = {
+        socialSecurityNumber: document.getElementById('socialSecurityNumberLogin').value,
+        password: document.getElementById('passwordLogin').value,
+        grantType: "userPassword"
+    }
+
+    console.log(loginInfo)
+    const response = await fetch("http://localhost:3000/api/login",
+        {
+            method: "POST",
+            body: JSON.stringify(loginInfo)
+        })
+    // TODO: Check status code and act accordingly!
+
+    const responseBody = await response.json()
+    //console.log(responseBody)
+    console.log(responseBody["accessToken"])
+
+    ACCESS_TOKEN = responseBody.accessToken
+    userId = responseBody.userInfo.userID
+    //IS_ADMIN = responseBody.is_admin
+    //IS_LOGGED_IN = true
+
+    hideCurrentPage()
+    //updateNav(IS_LOGGED_IN)
+    showPage('/')
+
+}
+
+
+/* ########################## REGISTER ************* */
+
+
+async function Register() {
+
+    const newAccount = {
+        firstname: document.body.querySelector('#firstName').value,
+        lastName: document.body.querySelector('#lastName').value,
+        email: document.body.querySelector('#email').value,
+        phoneNumber: document.body.querySelector('#phoneNumber').value,
+        socialSecurityNumber: document.body.querySelector('#socialSecurityNumber').value,
+        password: document.body.querySelector('#password').value
+    }
+
+    console.log(newAccount)
+
+    const response = await fetch("http://localhost:3000/api/register/",
+        {
+            method: "POST",
+            body: JSON.stringify(newAccount)
+        })
+
+    // TODO: Check status code and act accordingly!
+
+    const returnFromFetch = await response.json()
+    console.log(returnFromFetch)
+
+    hideCurrentPage()
+    showPage('/login')
+
+
+}

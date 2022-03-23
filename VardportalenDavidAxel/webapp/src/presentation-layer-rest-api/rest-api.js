@@ -40,9 +40,10 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
         console.log("logIn")
         const logInCredentials = {
             grantType: request.body.grantType,
-            socialSecurityNumber: request.body.socialSecurityNumberLogin,
-            password: request.body.passwordLogin
+            socialSecurityNumber: request.body.socialSecurityNumber,
+            password: request.body.password
         }
+        console.log(logInCredentials)
         if (logInCredentials.grantType != "userPassword") {
             console.log("grantType not password")
             //skicka tillbaka error
@@ -112,6 +113,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
         //const token = request.body.token || request.query.token || request.headers["x-access-token"]
         // const authorizationHeader = request.header("Authorization")
         // const accessToken = authorizationHeader.substring("bearer ".length)
+        console.log(request.headers.authorization)
         const accessToken = request.headers.authorization.split(' ')[1];
 
         if (!accessToken) {

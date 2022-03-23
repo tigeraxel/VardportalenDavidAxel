@@ -2,20 +2,19 @@ async function loadLogin(){
 	
 
 	const loginInfo = {
-		socialSecurityNumber: document.body.querySelector('#socialSecurityNumberLogin').value,
-		password: document.body.querySelector('#passwordLogin').value
+		socialSecurityNumber: document.getElementById('socialSecurityNumberLogin').value,
+		password: document.getElementById('passwordLogin').value,
+		grantType: "userPassword"
 	}
 
+	console.log(loginInfo)
 	const response = await fetch("http://localhost:3000/api/login",
     {method: "POST",
-    body: JSON.stringify(loginInfo)})	
+    body: new URLSearchParams(loginInfo)})	
 	// TODO: Check status code and act accordingly!
 	
 	const user = await response.json()
 	
-	document.getElementById('login-id').innerText = user.id
-	document.getElementById('login-firstName').innerText = user.firstName
-	document.getElementById('login-lastName').innerText = user.lastName
-
+	console.log(user)
 	
 }
