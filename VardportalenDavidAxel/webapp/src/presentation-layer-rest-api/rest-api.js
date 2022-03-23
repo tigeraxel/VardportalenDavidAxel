@@ -1,38 +1,18 @@
 const express = require('express')
 const jwt = require('jsonwebtoken')
-const JWT_SECRET_KEY = "davidAxel"
+const JWT_SECRET_KEY = 'davidAxel'
 const HEADER = {
     algorithm: 'HS256',
-    exp: 120000 
-}
-
-
-function verifyToken(request,response, next) {
-    //const token = request.body.token || request.query.token || request.headers["x-access-token"]
-    const authToken = request.get("authorization")
-    console.log(authToken)
-    const accessToken = authToken.substr("bearer".length)
-
-    if(!accessToken){
-
-        response.status(403).json(["A token is required to perform this operation"])
-    }
-    try {
-        jwt.verify(accessToken, JWT_SECRET_KEY, function(err, decoded){
-            
-        })
-    }catch(err){
-        response.status(401).json(["Invalid token"])
-    }
-    next()
+    exp: 120000
 }
 
 
 
 
 
-module.exports = function createApiRouter({accountManager, specialityManager, specialityValidator, bookingManager }){
-    
+
+module.exports = function createApiRouter({ accountManager, specialityManager, specialityValidator, bookingManager }) {
+
     const router = express.Router()
 
     router.use(express.json())
@@ -45,62 +25,63 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
         response.setHeader("Access-Control-Allow-Methods", "*")
         response.setHeader("Access-Control-Allow-Headers", "*")
         response.setHeader("Access-Control-Expose-Headers", "*")
+        if (request.method == "OPTIONS") {
+            return response.status(200).end()
+        }
         next()
     })
 
-    router.post("/login", function (request, response) {
+    // router.use(function (request, response, next) {
+    //     //grant type
+    // })
 
-        const grantType = request.body.grant_type
-        if(grantType != "password"){
-            console.log("grantType nog password")
-            //skicka tillbaka error
-        }
+    router.post("/login", function (request, response) {
+        console.log("logIn")
         const logInCredentials = {
+            grantType: request.body.grantType,
             socialSecurityNumber: request.body.socialSecurityNumberLogin,
             password: request.body.passwordLogin
         }
+        if (logInCredentials.grantType != "userPassword") {
+            console.log("grantType not password")
+            //skicka tillbaka error
+        }
         console.log("------------------")
         console.log(logInCredentials)
-        accountManager.checkLogInCredentials(logInCredentials, function(errors, user){
-            if(errors.length > 0){
+        accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
+            if (errors.length > 0) {
                 response.status(404).json(errors)
-            }else{
+            } else {
                 const payload = {}
                 if (user.isAdmin == 1) {
                     payload.isAdmin = true
                 }
                 else {
-                    request.session.isAdmin = false
                     payload.isAdmin = false
                 }
                 if (user.isDoctor == 1) {
                     payload.isDoctor = true
-                    request.session.isDoctor = true
                 } else {
                     payload.isDoctor = false
                 }
+                payload.userID = user.userID
                 payload.isLoggedIn = true
                 payload.firstName = user.firstName
-                jwt.sign(payload, JWT_SECRET_KEY, function(error, token){
-                    console.log("hejhejhej")
+                jwt.sign(payload, JWT_SECRET_KEY, function (error, token) {
                     console.log(token)
-                    if(token){
+                    if (error) {
+                        response.status(401).json("Error when signing token")
+                    } else {
                         response.status(200).json({
                             accessToken: token,
                             userInfo: payload
                         })
-                    }else{
-                        //error när token skulle signeras.
                     }
                 })
             }
+        })
     })
 
-
-    router.use(function(request, response, next) {
-        //grant type
-
-    })
 
     router.post("/register", function (request, response) {
         const newUser = {
@@ -126,15 +107,36 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
     })
 
 
-    router.use(verifyToken)
+    router.use(function (request, response, next) {
+        //const token = request.body.token || request.query.token || request.headers["x-access-token"]
+        // const authorizationHeader = request.header("Authorization")
+        // const accessToken = authorizationHeader.substring("bearer ".length)
+        const accessToken = request.headers.authorization.split(' ')[1];
 
+        if (!accessToken) {
+            console.log("ingen access token")
+            response.status(403).json(["Unauthorized user"])
+        }
+        console.log("verifierar token")
+        jwt.verify(accessToken, JWT_SECRET_KEY, function (error, payload) {
+            console.log("------------------")
+            if (error) {
+                console.log(error)
+                response.sendStatus(403)
+            }else {
+                request.body.userInfo = payload
+                next()
+            }
+        })
+    })
 
-    router.get("/bookings/get/:id", function(request, response){
+    router.get("/bookings/:id", function (request, response) {
+        console.log("fetching booking")
         const id = request.params.id
 
         bookingManager.getBookingWithID(id, function (errors, bookings) {
-            //console.log(bookings)
-            //console.log(errors)
+            console.log(bookings)
+            console.log(errors)
             if (errors[0] == 400) {
                 errors[0] = "bookings SQL WRONG is already taken"
                 response.status(400).json(errors)
@@ -144,11 +146,10 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
                 response.status(200).json(bookings)
             }
         })
-
     })
 
 
-    router.post("/bookings/create", function(request, response){
+    router.post("/bookings/create", function (request, response) {
 
         const bookingInfo = {
             time: request.body.time,
@@ -252,7 +253,7 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
     })
 
 
-
     return router
 }
+
 
