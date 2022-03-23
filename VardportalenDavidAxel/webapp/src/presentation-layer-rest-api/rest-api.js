@@ -1,13 +1,49 @@
 const express = require('express')
+const jwt = require('jsonwebtoken')
+const JWT_SECRET_KEY = "davidAxel"
+const HEADER = {
+    algorithm: 'HS256',
+    exp: 120000 
+}
+
+
+function verifyToken(request,response, next) {
+    //const token = request.body.token || request.query.token || request.headers["x-access-token"]
+    const authToken = request.get("authorization")
+    console.log(authToken)
+    const accessToken = authToken.substr("bearer".length)
+
+    if(!accessToken){
+
+        response.status(403).json(["A token is required to perform this operation"])
+    }
+    try {
+        jwt.verify(accessToken, JWT_SECRET_KEY, function(err, decoded){
+            
+        })
+    }catch(err){
+        response.status(401).json(["Invalid token"])
+    }
+    next()
+}
+
+
+
 
 
 module.exports = function createApiRouter({accountManager, specialityManager, specialityValidator, bookingManager }){
+    
     const router = express.Router()
 
     router.use(express.json())
 
     router.post("/login", function(request, response){
 
+        const grantType = request.body.grant_type
+        if(grantType != "password"){
+            console.log("grantType nog password")
+            //skicka tillbaka error
+        }
         const logInCredentials = {
             socialSecurityNumber: request.body.socialSecurityNumberLogin,
             password: request.body.passwordLogin
@@ -18,10 +54,49 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
             if(errors.length > 0){
                 response.status(404).json(errors)
             }else{
-                //skicka med webbtoken att inloggningen lyckades
-                response.status(200).json(user)
+                const payload = {}
+                if (user.isAdmin == 1) {
+                    payload.isAdmin = true
+                }
+                else {
+                    request.session.isAdmin = false
+                    payload.isAdmin = false
+                }
+                if (user.isDoctor == 1) {
+                    payload.isDoctor = true
+                    request.session.isDoctor = true
+                } else {
+                    payload.isDoctor = false
+                }
+                payload.isLoggedIn = true
+                payload.firstName = user.firstName
+                jwt.sign(payload, JWT_SECRET_KEY, function(error, token){
+                    console.log("hejhejhej")
+                    console.log(token)
+                    if(token){
+                        response.status(200).json({
+                            accessToken: token,
+                            userInfo: payload
+                        })
+                    }else{
+                        //error när token skulle signeras.
+                    }
+                })
+
             }
         })
+    })
+    router.use(function(request, response, next){
+        response.setHeader("Access-Control-Allow-Origin", "*")
+        response.setHeader("Access-Control-Allow-Methods", "*")
+        response.setHeader("Access-Control-Allow-Headers", "*")
+        response.setHeader("Access-Control-Expose-Headers", "*")
+        next()
+    })
+
+    router.use(function(request, response, next) {
+        //grant type
+
     })
 
     router.post("/register", function(request, response){
@@ -46,6 +121,11 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
             }
         })
     })
+
+
+    router.use(verifyToken)
+
+
     router.get("/bookings/get/:id", function(request, response){
         const id = request.params.id
 
@@ -63,6 +143,7 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
         })
 
     })
+
 
     router.post("/bookings/create", function(request, response){
 

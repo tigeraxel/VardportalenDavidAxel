@@ -65,14 +65,14 @@ module.exports = function createAccountRepository() {
             const query = 'INSERT INTO users (socialSecurityNumber, userPassword, firstName, lastName, email, phoneNumber,isDoctor, isAdmin) VALUES (?,?,?,?,?,?,0,0)'
             const values = [user.socialSecurityNumber, user.password, user.firstName, user.lastName, user.email, user.phoneNumber]
 
-            db.query(query, values, function (error, users) {
+            db.query(query, values, function (error, user) {
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
                     console.log("Detta får vi tillbaks")
-                    console.log(users)
-                    callback([], users)
+                    console.log(user)
+                    callback([], user)
                 }
             })
         },

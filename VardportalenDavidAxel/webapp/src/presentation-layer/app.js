@@ -13,7 +13,9 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
             const app = express()
 
             app.use(express.static(__dirname + '/static'))
-            app.use(express.urlencoded())
+            app.use(express.urlencoded({
+                extended: false,
+            }))
             app.set('views', path.join(__dirname, "views"))
 
             app.use(session({

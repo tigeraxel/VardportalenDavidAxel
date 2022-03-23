@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS users(
     userID INT AUTO_INCREMENT PRIMARY KEY,
-    socialSecurityNumber VARCHAR (12) NOT NULL,
+    socialSecurityNumber VARCHAR (12) NOT NULL UNIQUE,
     userPassword VARCHAR (30) NOT NULL,
     firstName VARCHAR(30) NOT NULL,
     lastName VARCHAR(30) NOT NULL,
