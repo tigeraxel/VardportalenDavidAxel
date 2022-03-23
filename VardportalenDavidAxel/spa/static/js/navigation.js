@@ -150,7 +150,6 @@ async function loadBookingPage(id) {
     document.body.querySelector('#booking-time').innerText = booking.appointmentTime
     document.body.querySelector('#booking-date').innerText = booking.appointmentDate
 
-
 }
 
 
@@ -188,11 +187,14 @@ async function createBooking() {
 
     console.log(bookingInfo)
 
-    const response = await fetch("http://localhost:3000/api/bookings/create",
-        {
-            method: "POST",
-            body: JSON.stringify(bookingInfo)
-        })
+    const response = await fetch("http://localhost:3000/api/bookings/create", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer " + ACCESS_TOKEN
+		},
+		body: new URLSearchParams(bookingInfo)
+	})
     // TODO: Check status code and act accordingly!
 
     var booking = await response.json()
@@ -246,7 +248,7 @@ async function loadLogin() {
 async function Register() {
 
     const newAccount = {
-        firstname: document.getElementById('firstName').value,
+        firstName: document.getElementById('firstName').value,
         lastName: document.getElementById('lastName').value,
         email: document.getElementById('email').value,
         phoneNumber: document.getElementById('phoneNumber').value,
@@ -257,10 +259,13 @@ async function Register() {
     console.log(newAccount)
 
     const response = await fetch("http://localhost:3000/api/register/",
-        {
-            method: "POST",
-            body: JSON.stringify(newAccount)
-        })
+    {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded"
+		},
+		body: new URLSearchParams(newAccount)
+	})
 
     // TODO: Check status code and act accordingly!
 

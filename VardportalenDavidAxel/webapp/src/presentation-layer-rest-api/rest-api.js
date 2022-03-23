@@ -97,8 +97,8 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
         }
         console.log(newUser)
         accountManager.createAccount(newUser, function (errors, user) {
-            console.log(user)
-            console.log(errors)
+            console.log("user:" + user)
+            console.log("errors: " + errors)
             if (errors[0] == 400) {
                 errors[0] = "socialSecurityNumber is already taken"
                 response.status(400).json(errors)
@@ -161,6 +161,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
             date: request.body.date,
             doctorID: request.body.doctorID
         }
+        console.log(bookingInfo)
         bookingManager.createBooking(bookingInfo, function (errors, booking) {
             console.log(booking)
             console.log(errors)
