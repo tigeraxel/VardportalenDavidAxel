@@ -61,14 +61,39 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
         }
         console.log("------------------")
         console.log(logInCredentials)
-        accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
-            if (errors.length > 0) {
+        accountManager.checkLogInCredentials(logInCredentials, function(errors, user){
+            if(errors.length > 0){
                 response.status(404).json(errors)
-            } else {
-                //skicka med webbtoken att inloggningen lyckades
-                response.status(200).json(user)
+            }else{
+                const payload = {}
+                if (user.isAdmin == 1) {
+                    payload.isAdmin = true
+                }
+                else {
+                    request.session.isAdmin = false
+                    payload.isAdmin = false
+                }
+                if (user.isDoctor == 1) {
+                    payload.isDoctor = true
+                    request.session.isDoctor = true
+                } else {
+                    payload.isDoctor = false
+                }
+                payload.isLoggedIn = true
+                payload.firstName = user.firstName
+                jwt.sign(payload, JWT_SECRET_KEY, function(error, token){
+                    console.log("hejhejhej")
+                    console.log(token)
+                    if(token){
+                        response.status(200).json({
+                            accessToken: token,
+                            userInfo: payload
+                        })
+                    }else{
+                        //error när token skulle signeras.
+                    }
+                })
             }
-        })
     })
 
 
