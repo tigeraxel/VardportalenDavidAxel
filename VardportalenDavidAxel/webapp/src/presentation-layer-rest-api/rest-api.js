@@ -1,12 +1,24 @@
 const express = require('express')
 
 
-module.exports = function createApiRouter({accountManager, specialityManager, specialityValidator, bookingManager }){
+module.exports = function createApiRouter({ accountManager, specialityManager, specialityValidator, bookingManager }) {
     const router = express.Router()
 
     router.use(express.json())
 
-    router.post("/login", function(request, response){
+    router.use(express.urlencoded({
+        extended: false,
+    }))
+    router.use(function (request, response, next) {
+        response.setHeader("Access-Control-Allow-Origin", "*")
+        response.setHeader("Access-Control-Allow-Methods", "*")
+        response.setHeader("Access-Control-Allow-Headers", "*")
+        response.setHeader("Access-Control-Expose-Headers", "*")
+        next()
+    })
+
+
+    router.post("/login", function (request, response) {
 
         const logInCredentials = {
             socialSecurityNumber: request.body.socialSecurityNumberLogin,
@@ -14,17 +26,17 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
         }
         console.log("------------------")
         console.log(logInCredentials)
-        accountManager.checkLogInCredentials(logInCredentials, function(errors, user){
-            if(errors.length > 0){
+        accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
+            if (errors.length > 0) {
                 response.status(404).json(errors)
-            }else{
+            } else {
                 //skicka med webbtoken att inloggningen lyckades
                 response.status(200).json(user)
             }
         })
     })
 
-    router.post("/register", function(request, response){
+    router.post("/register", function (request, response) {
         const newUser = {
             firstName: request.body.firstName,
             lastName: request.body.lastName,
@@ -33,78 +45,78 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
             socialSecurityNumber: request.body.socialSecurityNumber,
             password: request.body.password
         }
-        accountManager.createAccount(newUser, function(errors, user){
+        accountManager.createAccount(newUser, function (errors, user) {
             console.log(user)
             console.log(errors)
-            if(errors[0] == 400) {
+            if (errors[0] == 400) {
                 errors[0] = "socialSecurityNumber is already taken"
                 response.status(400).json(errors)
-            }else if(errors[0]==500){
+            } else if (errors[0] == 500) {
                 response.status(500).end()
-            }else{
+            } else {
                 response.status(201).json(user)
             }
         })
     })
-    router.get("/bookings/get/:id", function(request, response){
+    router.get("/bookings/get/:id", function (request, response) {
         const id = request.params.id
 
-        bookingManager.getBookingWithID(id, function (errors, bookings){
+        bookingManager.getBookingWithID(id, function (errors, bookings) {
             //console.log(bookings)
             //console.log(errors)
-            if(errors[0] == 400) {
+            if (errors[0] == 400) {
                 errors[0] = "bookings SQL WRONG is already taken"
                 response.status(400).json(errors)
-            }else if(errors[0]==500){
+            } else if (errors[0] == 500) {
                 response.status(500).end()
-            }else{
+            } else {
                 response.status(200).json(bookings)
             }
         })
 
     })
 
-    router.post("/bookings/create", function(request, response){
+    router.post("/bookings/create", function (request, response) {
 
         const bookingInfo = {
             time: request.body.time,
             date: request.body.date,
             doctorID: request.body.doctorID
         }
-        bookingManager.createBooking(bookingInfo,function(errors,booking){
+        bookingManager.createBooking(bookingInfo, function (errors, booking) {
             console.log(booking)
             console.log(errors)
-            if(errors[0] == 400) {
+            if (errors[0] == 400) {
                 errors[0] = "SQL WRONG is already taken"
                 response.status(400).json(errors)
-            }else if(errors[0]==500){
+            } else if (errors[0] == 500) {
                 response.status(500).end()
-            }else{
+            } else {
                 response.status(201).json(booking)
             }
         })
     })
 
 
-    router.post("/bookings/delete/:id", function(request, response){
+    router.post("/bookings/delete/:id", function (request, response) {
         const bookingidID = request.params.id
 
-        bookingManager.deleteBooking(bookingidID,function(errors,booking){
+        bookingManager.deleteBooking(bookingidID, function (errors, booking) {
             console.log(booking)
             console.log(errors)
-            if(errors[0] == 400) {
+            if (errors[0] == 400) {
                 errors[0] = "SQL WRONG is already taken"
                 response.status(400).json(errors)
-            }else if(errors[0]==500){
+            } else if (errors[0] == 500) {
                 response.status(500).end()
-            }else{
+            } else {
                 response.status(201).json(booking)
             }
         })
     })
 
 
-    router.post("/bookings/reserve/:id", function(request, response){
+    router.post("/bookings/reserve/:id", function (request, response) {
         const bookingID = request.params.id
 
         const bookingInfo = {
@@ -115,15 +127,15 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
             covidQuestion: request.body.covidQuestion
         }
 
-        bookingManager.updateBooking(bookingInfo,function(errors,booking){
+        bookingManager.updateBooking(bookingInfo, function (errors, booking) {
             console.log(booking)
             console.log(errors)
-            if(errors[0] == 400) {
+            if (errors[0] == 400) {
                 errors[0] = "SQL WRONG is already taken"
                 response.status(400).json(errors)
-            }else if(errors[0]==500){
+            } else if (errors[0] == 500) {
                 response.status(500).end()
-            }else{
+            } else {
                 response.status(201).json(booking)
             }
         })
@@ -148,20 +160,20 @@ module.exports = function createApiRouter({accountManager, specialityManager, sp
     //400 om det sker ett validation error
     //404 om man försöker updatera ett id som inte finns
 
-    router.post("/speciality/create", function(request, response){
+    router.post("/speciality/create", function (request, response) {
 
     })
 
-    router.get("/specialitys", function(request, response){
+    router.get("/specialitys", function (request, response) {
         specialityManager.getAllSpeciality(function (errors, specialitys) {
             const model = {
                 specialitys: specialitys
             }
             console.log(specialitys)
             console.log(errors)
-            if(specialitys.length > 0) {
+            if (specialitys.length > 0) {
                 response.status(200).json(model)
-            }else{
+            } else {
                 response.status(500).end()
             }
         })

@@ -31,13 +31,6 @@ document.addEventListener('DOMContentLoaded', function () {
     loginButton.addEventListener("click", function (event) {
         console.log("vill logga in")
     })
-    getBookingButton.addEventListener("click", function () {
-        var id = document.body.querySelector('#bookingID').value
-        let url = "/booking/" + id
-        history.pushState(null, "", url)
-        hideCurrentPage()
-        showPage(url)
-    })
 
     registerButton.addEventListener("click", function (event) {
         event.preventDefault()
@@ -74,10 +67,25 @@ function showPage(url) {
 
         case '/register':
             nextPageId = 'register-page'
+            const registerForm = document.getElementById("registerForm")
+			registerForm.addEventListener("submit", function (event) {
+				event.preventDefault()
+                let url = "/register"
+                Register()
+			})
             break
 
         case '/booking':
             nextPageId = 'booking-page'
+            const bookingForm = document.getElementById("bookingFormGet")
+			bookingForm.addEventListener("submit", function (event) {
+				event.preventDefault()
+                var id = document.body.querySelector('#bookingIDget').value
+                let url = "/booking/" + id
+                history.pushState(null, "", url)
+                hideCurrentPage()
+                showPage(url)
+			})
             break
 
         case '/reserveBooking':
@@ -88,9 +96,9 @@ function showPage(url) {
             nextPageId = 'deleteBooking-page'
             break
 
-            case '/createBooking':
-                nextPageId = 'createBooking-page'
-                break
+        case '/createBooking':
+            nextPageId = 'createBooking-page'
+            break
 
         default:
             if (url.startsWith("/booking/")) {
@@ -106,4 +114,6 @@ function showPage(url) {
     document.getElementById(nextPageId).classList.add('current-page')
 
 }
+
+
 
