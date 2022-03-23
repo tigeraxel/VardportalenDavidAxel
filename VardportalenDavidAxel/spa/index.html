@@ -23,12 +23,12 @@
     <nav>
         <ul>
             <li><a href="/">Start</a></li>
-            <li><a href="/booking">Booking</a></li>
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
             <li><a href="/reserveBooking">reserveBookig</a></li>
             <li><a href="/deleteBooking">deleteBooking</a></li>
             <li><a href="/createBooking">createBooking</a></li>
+            <li><a href="/bookings">bookings</a></li>
 
 
         </ul>
@@ -52,22 +52,20 @@
             </form>
         </div>
 
-        <div class="page" id="booking-page">
-            <h3> Ange booking ID. </h3>
-            <form id="bookingFormGet" method="post" action="/api/booking/get">
-                <label for="bookingID">bookingID:</label>
-                <input type="text" id="bookingIDget" name="bookingIDget"><br>
-                <input type="submit" id="getBookingButton" value="getta bookingen">
-            </form>
-        </div>
+        <div class="page" id="bookings-page">
+			<h1>bookings</h1>
+			<ul id="all-bookings">
+				
+			</ul>
+		</div>
 
         <div class="page" id="deleteBooking-page">
             <h3> Ange booking ID. </h3>
             <form id="bookingFormDelete" method="post" action="/api/bookings/delete">
                 <label for="bookingID">bookingID:</label>
                 <input type="text" id="bookingIDdelete" name="bookingIDdelete"><br>
+                <input type="submit" id="deleteBookingButton" value="deletea">
             </form>
-            <button id="getBookingButton"> deletea </button>
         </div>
 
         <div class="page" id="createBooking-page">

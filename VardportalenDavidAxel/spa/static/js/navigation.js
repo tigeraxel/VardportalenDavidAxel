@@ -61,6 +61,11 @@ function showPage(url) {
             nextPageId = 'start-page'
             break
 
+        case '/bookings':
+            nextPageId = 'bookings-page'
+            loadBookings()
+            break
+
         case '/login':
             nextPageId = 'login-page'
             const loginForm = document.getElementById("loginForm")
@@ -81,26 +86,16 @@ function showPage(url) {
             })
             break
 
-        case '/booking':
-            nextPageId = 'booking-page'
-            const bookingForm = document.getElementById("bookingFormGet")
-            bookingForm.addEventListener("submit", function (event) {
+        case '/reserveBooking':
+            nextPageId = 'reserveBooking-page'
+            const reserveForm = document.getElementById("bookingFormReserve")
+            reserveForm.addEventListener("submit", function (event) {
                 event.preventDefault()
-                var id = document.body.querySelector('#bookingIDget').value
-                let url = "/booking/" + id
-                history.pushState(null, "", url)
-                hideCurrentPage()
-                showPage(url)
+                let url = "/reserve"
+                reserveBooking()
             })
             break
 
-        case '/reserveBooking':
-            nextPageId = 'reserveBooking-page'
-            break
-
-        case '/deleteBooking':
-            nextPageId = 'deleteBooking-page'
-            break
 
         case '/createBooking':
             nextPageId = 'createBooking-page'
@@ -112,9 +107,10 @@ function showPage(url) {
             break
 
         default:
-            if (url.startsWith("/booking/")) {
+            if (url.startsWith("/bookings/")) {
                 const [empty, booking, id] = url.split("/")
                 nextPageId = 'showBooking-page'
+                hideCurrentPage()
                 loadBookingPage(id)
             } else {
                 nextPageId = 'not-found-page'
@@ -153,7 +149,76 @@ async function loadBookingPage(id) {
 }
 
 
-async function reserveBooking() {
+async function loadBookings() {
+
+    const response = await fetch("http://localhost:3000/api/bookings/" , {
+        method: "GET",
+        headers: {
+            "Content-type": "application/json",
+            "Authorization": "Bearer " + ACCESS_TOKEN
+        }
+    })
+    // TODO: Check status code and act accordingly!
+
+    var bookings = await response.json()
+    console.log(bookings)
+    // document.body.querySelector('#booking-message').innerText = booking.messageFromPatient
+    // document.body.querySelector('#booking-categoryID').innerText = booking.categoryID
+    // document.body.querySelector('#booking-time').innerText = booking.appointmentTime
+    // document.body.querySelector('#booking-date').innerText = booking.appointmentDate
+
+
+    
+	const allBookingsUl = document.getElementById('all-bookings')
+	allBookingsUl.innerText = ""
+    for(const booking of bookings){
+		
+		const li = document.createElement('li')
+
+        const text = document.createElement('p')
+		const anchor = document.createElement('a')
+		text.innerText = "booknings id " + booking.bookingID + " Datum: " + booking.appointmentDate + "   Meddelande: " + booking.messageFromPatient + "  Tid: " + booking.appointmentTime
+        anchor.innerText = " GO TO "
+		anchor.setAttribute('href', "/bookings/"+booking.bookingID)
+
+        const deleteLink = document.createElement('a')
+        const reserveLink = document.createElement('a')
+		deleteLink.setAttribute('href', "/deleteBooking/"+booking.bookingID)
+        deleteLink.innerText = "TA BORT"
+
+
+        anchor.addEventListener('click', function (event) {
+            event.preventDefault()
+            let url = "/bookings/" + booking.bookingID
+            history.pushState(null, "", url)
+            showPage(url)
+        })
+
+        deleteLink.addEventListener('click', function (event) {
+            event.preventDefault()
+            const id = booking.bookingID
+            deleteBooking(id)
+            let deleteURL = deleteLink.getAttribute('href')
+            history.pushState(null, "", deleteURL)
+    
+            hideCurrentPage()
+            showPage("/bookings")
+        })
+
+        li.appendChild(text)
+		li.appendChild(anchor)
+        li.appendChild(deleteLink)
+
+
+		
+		allBookingsUl.appendChild(li)
+		
+	}
+
+}
+
+
+async function reserveBooking(id) {
 
     const bookingInfo = {
         bookingID: document.body.querySelector('#bookingIDreserve').value,
@@ -165,11 +230,38 @@ async function reserveBooking() {
 
     console.log(bookingInfo)
 
-    const response = await fetch("http://localhost:3000/api/bookings/reserve/" + bookingInfo.bookingID,
-        {
-            method: "POST",
-            body: JSON.stringify(bookingInfo)
-        })
+    const response = await fetch("http://localhost:3000/api/bookings/reserve/" + bookingInfo.bookingID, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer " + ACCESS_TOKEN
+		},
+		body: new URLSearchParams(bookingInfo)
+	})
+    // TODO: Check status code and act accordingly!
+
+    var booking = await response.json()
+    console.log(booking)
+
+}
+
+
+async function deleteBooking(id) {
+
+    const bookingInfo = {
+     bookingID : id
+    }
+
+    console.log(bookingInfo)
+
+    const response = await fetch("http://localhost:3000/api/bookings/delete/" + bookingInfo.bookingID, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/x-www-form-urlencoded",
+            "Authorization": "Bearer " + ACCESS_TOKEN
+		},
+		body: new URLSearchParams(bookingInfo)
+	})
     // TODO: Check status code and act accordingly!
 
     var booking = await response.json()

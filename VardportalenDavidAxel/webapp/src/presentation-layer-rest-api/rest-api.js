@@ -153,6 +153,23 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
         })
     })
 
+    router.get("/bookings", function (request, response) {
+        console.log("fetching bookings")
+
+        bookingManager.getBookings(function (errors, bookings) {
+            console.log(bookings)
+            console.log(errors)
+            if (errors[0] == 400) {
+                errors[0] = "bookings SQL WRONG is already taken"
+                response.status(400).json(errors)
+            } else if (errors[0] == 500) {
+                response.status(500).end()
+            } else {
+                response.status(200).json(bookings)
+            }
+        })
+    })
+
 
     router.post("/bookings/create", function (request, response) {
 
