@@ -1,5 +1,6 @@
 const FIRST_NAME_MIN_LENGTH = 3
 const LAST_NAME_MIN_LENGTH = 3
+const hashManager = require('./hash-manager')
 
 function validateUsernameAndPassword(newUser){
     const validationErrors = []
@@ -18,16 +19,20 @@ function validateUsernameAndPassword(newUser){
 
 module.exports = function createAccountValidator({ accountRepository,postgresAccountRepository }){
     return {
-        checkLogInCredentials(user, callback) {
-            accountRepository.getLogInCredentials(user, function (errors, user) {
+        checkLogInCredentials(userLogInCredentials, callback) {
+            accountRepository.getLogInCredentials(userLogInCredentials, async function (errors, foundUser) {
+                console.log(errors)
                 if (errors.length > 0) {
                     console.error("Error i account validator")
-                    console.error(errors)
                     callback(errors, [])
-                }else if(user.length == 0) {
-                    callback(["Incorrect username or password"], null)
                 }else {
-                    callback([], user)
+                    const validPassword = await hashManager.validateUserPassword(userLogInCredentials.password, foundUser.userPassword)
+                    if(validPassword){
+                        callback([], foundUser)
+                    }
+                    else{
+                        callback(["Incorrect username or password"])
+                    }
                 }
             })
         },

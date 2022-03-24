@@ -64,8 +64,9 @@ module.exports = function createAccountRepository() {
         createAccount(user, callback) {
             const query = 'INSERT INTO users (socialSecurityNumber, userPassword, firstName, lastName, email, phoneNumber,isDoctor, isAdmin) VALUES (?,?,?,?,?,?,0,0)'
             const values = [user.socialSecurityNumber, user.password, user.firstName, user.lastName, user.email, user.phoneNumber]
-
+            console.log(values)
             db.query(query, values, function (error, user) {
+                console.log(error)
                 if (error) {
                     callback(['databaseError'], null)
                 }
@@ -78,11 +79,9 @@ module.exports = function createAccountRepository() {
         },
 
         GiveDoctorPrivilige(user, callback) {
-
             const query = "UPDATE users SET isDoctor = '1' WHERE socialSecurityNumber = ? AND firstName = ? AND lastName = ?"
             const values = [user.socialSecurityNumber, user.firstName, user.lastName]
             console.log("account repository " + user.socialSecurityNumber)
-
             db.query(query, values, function (error, users) {
                 if (error) {
                     callback(['databaseError'], null)
@@ -95,18 +94,15 @@ module.exports = function createAccountRepository() {
         },
 
         getLogInCredentials(user, callback) {
-            const query = "SELECT * FROM users WHERE socialSecurityNumber = ? AND userPassword = ?"
-            const values = [user.socialSecurityNumber, user.password]
-            db.query(query, values, function (error, users) {
-                userError = []
-                if (users.length < 1) {
-                    userError.push('User not found')
-                }
-                if (error || userError.length > 0) {
-                    console.log(error)
-                    callback(["DatabaseError"])
-                } else {
-                    callback([], users[0])
+            const query = "SELECT * FROM users WHERE socialSecurityNumber = ?"
+            const values = [user.socialSecurityNumber]
+            db.query(query, values, function (error, user) {
+                if (error) {
+                    callback(["DatabaseError"], null)
+                }else if(user.length > 0) {
+                    callback([], user[0])
+                }else {
+                    callback(["wrong username or password", null])
                 }
             })
         }

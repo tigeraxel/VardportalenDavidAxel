@@ -31,7 +31,7 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
         },
         getBookingsWithNames(session, callback) {
             console.log("i booking manager")
-            bookingRepository.checkBookingPrivledges(session, callback)
+            bookingValidator.checkBookingPrivledges(session, callback)
         },
         createBooking(bookingInfo, callback) {
             bookingRepository.createBooking(bookingInfo, callback)
