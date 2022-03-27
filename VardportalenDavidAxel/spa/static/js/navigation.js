@@ -162,12 +162,6 @@ async function loadBookings() {
 
     var bookings = await response.json()
     console.log(bookings)
-    // document.body.querySelector('#booking-message').innerText = booking.messageFromPatient
-    // document.body.querySelector('#booking-categoryID').innerText = booking.categoryID
-    // document.body.querySelector('#booking-time').innerText = booking.appointmentTime
-    // document.body.querySelector('#booking-date').innerText = booking.appointmentDate
-
-
     
 	const allBookingsUl = document.getElementById('all-bookings')
 	allBookingsUl.innerText = ""
@@ -176,29 +170,27 @@ async function loadBookings() {
 		const li = document.createElement('li')
 
         const text = document.createElement('p')
-		const anchor = document.createElement('a')
+		const gotoButton = document.createElement('button')
 		text.innerText = "booknings id " + booking.bookingID + " Datum: " + booking.appointmentDate + "   Meddelande: " + booking.messageFromPatient + "  Tid: " + booking.appointmentTime
-        anchor.innerText = " GO TO "
-		anchor.setAttribute('href', "/bookings/"+booking.bookingID)
+        gotoButton.innerText = " Gå till bokning "
+		gotoButton.setAttribute('href', "/bookings/"+booking.bookingID)
 
-        const deleteLink = document.createElement('a')
-        const reserveLink = document.createElement('a')
-		deleteLink.setAttribute('href', "/deleteBooking/"+booking.bookingID)
-        deleteLink.innerText = "TA BORT"
+        const deleteButton = document.createElement('button')
+        deleteButton.innerText = "Ta bort"
 
 
-        anchor.addEventListener('click', function (event) {
+        gotoButton.addEventListener('click', function (event) {
             event.preventDefault()
             let url = "/bookings/" + booking.bookingID
             history.pushState(null, "", url)
             showPage(url)
         })
 
-        deleteLink.addEventListener('click', function (event) {
+        deleteButton.addEventListener('click', function (event) {
             event.preventDefault()
             const id = booking.bookingID
             deleteBooking(id)
-            let deleteURL = deleteLink.getAttribute('href')
+            let deleteURL = "/deleteBooking/"+ id
             history.pushState(null, "", deleteURL)
     
             hideCurrentPage()
@@ -206,10 +198,8 @@ async function loadBookings() {
         })
 
         li.appendChild(text)
-		li.appendChild(anchor)
-        li.appendChild(deleteLink)
-
-
+		li.appendChild(gotoButton)
+        li.appendChild(deleteButton)
 		
 		allBookingsUl.appendChild(li)
 		

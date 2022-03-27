@@ -5,7 +5,7 @@ module.exports = function createBookingRepository() {
     
     return {
         getBookings(callback) {
-            const query = "SELECT * FROM bookings"
+            const query = "SELECT * FROM bookings WHERE patientID IS NOT NULL"
             const values = []
 
             db.query(query, values, function (error, bookings) {
