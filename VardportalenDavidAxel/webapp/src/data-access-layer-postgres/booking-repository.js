@@ -18,6 +18,18 @@ module.exports = function createPostgresBookingRepository() {
                     callback(err)
                 ))
         },
+        deleteBooking(id, callback) {
+            (bookings.destroy({
+                where: {
+                    bookingID: id
+                }
+            }).then(
+                callback([])
+            ).catch((error) => {
+                console.log("could not delete booking.."), callback(error)
+            })
+            )
+        },
         getFreeBookings(callback) {
             bookings.findAll({
                 where: {
@@ -42,7 +54,7 @@ module.exports = function createPostgresBookingRepository() {
                 patientUserID: null,
             }).then(newBooking => {
                 console.log("skapade ny bokning")
-                callback([],newBooking)
+                callback([], newBooking)
             }).catch((err) => {
                 console.log("Could not create booking.."),
                     callback(err)
@@ -54,7 +66,7 @@ module.exports = function createPostgresBookingRepository() {
                 messageFromPatient: bookingInfo.message,
                 patientUserID: bookingInfo.userID,
                 specialitySpecialityID: bookingInfo.CategoryID,
-            },{ 
+            }, {
                 where: { bookingID: bookingInfo.bookingID },
             },
             ).then(updatedBooking =>
@@ -132,8 +144,8 @@ module.exports = function createPostgresBookingRepository() {
                 ],
                 include: [
                     {
-                        model: Users, 
-                        required: false, 
+                        model: Users,
+                        required: false,
                     },
                     {
                         model: Specialitys,
@@ -200,4 +212,4 @@ db.sequelize.query(`select *, P."firstName" as "patientFirstName", P."lastName" 
                 console.log("error when fething all booking with names"),
                     callback(err, [])
             })
-*/ 
+*/
