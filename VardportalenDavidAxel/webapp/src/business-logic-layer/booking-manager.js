@@ -10,8 +10,6 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
             bookingRepository.getFreeBookings(callback)
         },
         getBookingsWithNames(session, callback) {
-            console.log("i booking manager")
-            console.log(session.isAdmin)
             bookingValidator.checkBookingPrivledges(session, callback)
         },
         createBooking(bookingInfo, callback) {
@@ -30,7 +28,6 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
             bookingRepository.getFreeBookings(callback)
         },
         getBookingsWithNames(session, callback) {
-            console.log("i booking manager")
             bookingValidator.checkBookingPrivledges(session, callback)
         },
         createBooking(bookingInfo, callback) {

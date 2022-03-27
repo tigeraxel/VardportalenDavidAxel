@@ -12,8 +12,6 @@ module.exports = function createSpecialityRouter({specialityManager, sessionVali
                 errors: errors,
                 specialitys: specialitys
             }
-            console.log(specialitys)
-            console.log(errors)
             response.render("createSpeciality.hbs", model)
         })
     })
@@ -21,8 +19,6 @@ module.exports = function createSpecialityRouter({specialityManager, sessionVali
     router.post('/create', function (request, response) {
 
         const specialityName = request.body.specialityName
-
-        console.log(specialityName)
 
         specialityManager.createSpeciality(specialityName, function (errors, text) {
             const model = {

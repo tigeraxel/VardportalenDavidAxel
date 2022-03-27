@@ -64,15 +64,11 @@ module.exports = function createAccountRepository() {
         createAccount(user, callback) {
             const query = 'INSERT INTO users (socialSecurityNumber, userPassword, firstName, lastName, email, phoneNumber,isDoctor, isAdmin) VALUES (?,?,?,?,?,?,0,0)'
             const values = [user.socialSecurityNumber, user.password, user.firstName, user.lastName, user.email, user.phoneNumber]
-            console.log(values)
             db.query(query, values, function (error, user) {
-                console.log(error)
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
-                    console.log("Detta får vi tillbaks")
-                    console.log(user)
                     callback([], user)
                 }
             })
@@ -81,7 +77,6 @@ module.exports = function createAccountRepository() {
         GiveDoctorPrivilige(user, callback) {
             const query = "UPDATE users SET isDoctor = '1' WHERE socialSecurityNumber = ? AND firstName = ? AND lastName = ?"
             const values = [user.socialSecurityNumber, user.firstName, user.lastName]
-            console.log("account repository " + user.socialSecurityNumber)
             db.query(query, values, function (error, users) {
                 if (error) {
                     callback(['databaseError'], null)

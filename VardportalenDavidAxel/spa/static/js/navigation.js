@@ -9,7 +9,6 @@ let userID = ""
 document.addEventListener('DOMContentLoaded', function () {
 
     const anchors = document.querySelectorAll('a')
-    console.log(anchors)
 
     for (const anchor of anchors) {
 
@@ -21,21 +20,12 @@ document.addEventListener('DOMContentLoaded', function () {
             history.pushState(null, "", url)
 
             hideCurrentPage()
-            console.log(url)
             showPage(url)
 
         })
     }
 
     showPage(location.pathname)
-
-    const loginButton = document.body.querySelector('#loginButton')
-
-
-    loginButton.addEventListener("click", function (event) {
-        console.log("vill logga in")
-    })
-
 
 })
 
@@ -136,11 +126,9 @@ async function loadBookingPage(id) {
             "Authorization": "Bearer " + ACCESS_TOKEN
         }
     })
-    // TODO: Check status code and act accordingly!
 
     var booking = await response.json()
     booking = booking[0]
-    console.log(booking)
     document.body.querySelector('#booking-message').innerText = booking.messageFromPatient
     document.body.querySelector('#booking-categoryID').innerText = booking.categoryID
     document.body.querySelector('#booking-time').innerText = booking.appointmentTime
@@ -158,10 +146,8 @@ async function loadBookings() {
             "Authorization": "Bearer " + ACCESS_TOKEN
         }
     })
-    // TODO: Check status code and act accordingly!
 
     var bookings = await response.json()
-    console.log(bookings)
     
 	const allBookingsUl = document.getElementById('all-bookings')
 	allBookingsUl.innerText = ""
@@ -218,8 +204,6 @@ async function reserveBooking(id) {
         covidQuestion: document.body.querySelector('#covidQuestion').value
     }
 
-    console.log(bookingInfo)
-
     const response = await fetch("http://localhost:3000/api/bookings/reserve/" + bookingInfo.bookingID, {
 		method: "POST",
 		headers: {
@@ -228,10 +212,8 @@ async function reserveBooking(id) {
 		},
 		body: new URLSearchParams(bookingInfo)
 	})
-    // TODO: Check status code and act accordingly!
 
     var booking = await response.json()
-    console.log(booking)
 
 }
 
@@ -252,10 +234,8 @@ async function deleteBooking(id) {
 		},
 		body: new URLSearchParams(bookingInfo)
 	})
-    // TODO: Check status code and act accordingly!
 
     var booking = await response.json()
-    console.log(booking)
 
 }
 
@@ -280,7 +260,6 @@ async function createBooking() {
     // TODO: Check status code and act accordingly!
 
     var booking = await response.json()
-    console.log(booking)
 
 }
 
@@ -297,7 +276,6 @@ async function loadLogin() {
         grantType: "userPassword"
     }
 
-    console.log(loginInfo)
     const response = await fetch("http://localhost:3000/api/login",
     {
 		method: "POST",
@@ -306,19 +284,13 @@ async function loadLogin() {
 		},
 		body: new URLSearchParams(loginInfo)
 	})
-    // TODO: Check status code and act accordingly!
 
     const responseBody = await response.json()
-    //console.log(responseBody)
-    //console.log(responseBody["accessToken"])
 
     ACCESS_TOKEN = responseBody.accessToken
     userId = responseBody.userInfo.userID
-    //IS_ADMIN = responseBody.is_admin
-    //IS_LOGGED_IN = true
 
     hideCurrentPage()
-    //updateNav(IS_LOGGED_IN)
     showPage('/')
 
 }
@@ -338,7 +310,6 @@ async function Register() {
         password: document.getElementById('password').value
     }
 
-    console.log(newAccount)
 
     const response = await fetch("http://localhost:3000/api/register/",
     {
@@ -349,10 +320,8 @@ async function Register() {
 		body: new URLSearchParams(newAccount)
 	})
 
-    // TODO: Check status code and act accordingly!
 
     const returnFromFetch = await response.json()
-    console.log(returnFromFetch)
 
     hideCurrentPage()
     showPage('/login')

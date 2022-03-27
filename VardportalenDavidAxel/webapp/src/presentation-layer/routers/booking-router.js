@@ -10,7 +10,6 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
     router.get('/showall', function (request, response) {
         const session = request.session
         bookingManager.getBookingsWithNames(session, function (errors, bookingsWithNames) {
-            //console.log(bookingsWithNames)
             const model = {
                 errors: errors,
                 bookings: bookingsWithNames
@@ -45,10 +44,7 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
         }
 
         bookingManager.updateBooking(bookingInfo, function (errors, bookingMessage) {
-            console.log("Bknings meddelande")
-            console.log(bookingMessage)
             if (errors.length > 0) {
-                console.log(errors)
                 response.render("about.hbs")
             } else {
                 response.render('ourDoctors.hbs', bookingMessage)
@@ -60,8 +56,6 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
 
     router.get('/create', function (request, response) {
         accountManager.getAllDoctors(function (errors, users) {
-            console.log("----------------------------------------------------")
-            console.log(users)
             const model = {
                 errors: errors,
                 users: users
@@ -78,9 +72,7 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
             doctorID: request.body.doctorID
         }
         bookingManager.createBooking(bookingInfo, function (errors, booking) {
-            console.log(booking)
             if (errors.length > 0) {
-                console.log(errors)
                 response.render("about.hbs")
             } else {
                 const model = {

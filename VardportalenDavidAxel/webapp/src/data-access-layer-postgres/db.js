@@ -1,7 +1,6 @@
 const Sequelize = require("sequelize");
 
 
-console.log("Skapar sequelize connection")
 /*
 connectionFound = setInterval(() => {
     try {
@@ -15,12 +14,10 @@ connectionFound = setInterval(() => {
 
 /*const sequelize = new Sequelize("postgres://kalle:docker@postgres-db:5432/postgres")*/
 
-
 const sequelize = new Sequelize('postgres', 'kalle', 'docker', {
     host: 'postgres-db',
     dialect: 'postgres',
 })
-
 
 sequelize.authenticate().then(() => {
     console.log("Connection has been established successfully.")

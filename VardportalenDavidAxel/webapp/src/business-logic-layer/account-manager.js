@@ -19,11 +19,8 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         createAccount(user, callback) {
             accountValidator.validateAccountCredentials(user, async function(validationErrors, newUser){
                 if(validationErrors.length == 0){
-                    console.log("Försöker registrera användare!")
                     hashedPassword = await hashManager.hashUserPassword(newUser.password)
-                    console.log(hashedPassword)
                     newUser.password = hashedPassword
-                    console.log(newUser)
                     accountRepository.createAccount(newUser, callback)
                 }else{
                     callback(validationErrors, [])

@@ -14,7 +14,6 @@ module.exports = function createPostgresSpecialityRepository(){
                 ]
             },
             ).then(newSpeciality => {
-                console.log("lade till speciality " + _specialityName)
                 callback([], newSpeciality)
             }).catch(err => {
                 callback(err, null)

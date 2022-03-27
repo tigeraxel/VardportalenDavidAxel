@@ -17,11 +17,8 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
         }
     
         accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
-            console.log("---------------")
-            console.log(user)
-            console.log(errors)
+
             if (errors.length > 0) {
-                console.log("store error!")
                 response.render("about.hbs")
             } else {
                 request.session.userID = user.userID
@@ -37,8 +34,6 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
                 } else {
                     request.session.isDoctor = false
                 }
-                console.log(request.session)
-                console.log("Precis loggat in")
                 response.render('loggedInPage.hbs')
             }
     
@@ -47,7 +42,6 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
     })
     router.post('/logout', function (request, response) {
         request.session.destroy()
-        console.log("Precis loggat UT")
         response.redirect('/')
     })
     
@@ -87,7 +81,6 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
     
     router.get("/users", function (request, response) {
         accountManager.getAllUsers(function (errors, users) {
-            console.log(users.dataValues)
             const model = {
                 errors: errors,
                 users: users
@@ -114,7 +107,6 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
                 errors: errors,
                 text: text
             }
-            console.log("LYCKADES LÄGGA TILL DOKTOR")
             response.render("addNewDoctor.hbs", model)
         })
     })
