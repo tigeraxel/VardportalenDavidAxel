@@ -33,13 +33,8 @@ CREATE TABLE IF NOT EXISTS users(
 
 INSERT INTO `users` (`userID`, `socialSecurityNumber`, `userPassword`, `firstName`, `lastName`,`email`,`phoneNumber`, `isDoctor`, `isAdmin`)
 VALUES
-	(1, '2000','123', 'axel', 'tiger',"sskdjs@gmail.com","07039374727", 1, 1),
-	(2, '1997','123', 'david', 'wenn',"tjeooo@gmail.com","070394758327", 0, 1),
-	(3, '1998','123', 'gustaf', 'sanderbajs',"sanderbrajjs@gmail.com","07394834727", 1, 0),
-	(4, '1999','123', 'andrey', 'arr',"arr@gmail.com","0733474727", 0, 0),
-    (5, '2003','123', 'sebbe', 'santa',"asanta@gmail.com","07538483943", 1, 1),
-    (6, '2004','123', 'felix', 'sun',"sun@gmail.com","0754383833", 1, 0),
-	(7, '2001','123', 'sandra', 'ni',"nissss020202@gmail.com","0705964724", 0, 0);
+	(1, '2000','$2b$10$mlXKzXj9hhYwLFRXThPkp.ovccRhTNBdNmMzgBFZbKgl09O5SmOUS', 'axel', 'tiger',"sskdjs@gmail.com","07039374727", 1, 1);
+
     
 INSERT INTO `specialitys` (`specialityID`, `specialityName`)
 VALUES
@@ -49,5 +44,5 @@ VALUES
 
 INSERT INTO `bookings` (`bookingID`, `appointmentTime`, `appointmentDate`,`covidQuestion`, `messageFromPatient`, `categoryID`, `doctorID`, `patientID`)
 VALUES
-	(1, '09:19:00', '2022-02-22','Ja jag har haft covid.', 'vill ta min 1a dos covid 19 vaccin!', 1, 1, 4);
+	(1, '09:19:00', '2022-02-22','Ja jag har haft covid.', 'vill ta min 1a dos covid 19 vaccin!', 1, 1, 1);
 
