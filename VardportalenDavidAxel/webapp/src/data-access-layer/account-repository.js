@@ -80,11 +80,10 @@ module.exports = function createAccountRepository() {
             const values = [user.socialSecurityNumber]
             db.query(query, values, function (error, userArray) {
                 if (error) {
+                    console.log("Database error")
                     callback(["DatabaseError"], null)
-                }else if(userArray.length > 0) {
+                }else{
                     callback([], userArray[0])
-                }else {
-                    callback(["wrong username or password", null])
                 }
             })
         }

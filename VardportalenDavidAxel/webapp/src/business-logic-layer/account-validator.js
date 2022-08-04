@@ -32,10 +32,12 @@ module.exports = function createAccountValidator({ accountRepository,postgresAcc
                     callback(errors, [])
                 }else {
                     const validPassword = await hashManager.validateUserPassword(userLogInCredentials.password, foundUser.userPassword)
+
                     if(validPassword){
                         callback([], foundUser)
                     }
                     else{
+                        console.log("Invalid username or password")
                         callback(["Incorrect username or password"])
                     }
                 }
