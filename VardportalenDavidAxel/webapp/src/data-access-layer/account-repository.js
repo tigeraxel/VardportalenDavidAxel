@@ -75,7 +75,7 @@ module.exports = function createAccountRepository() {
 
         },
 
-        getLogInCredentials(user, callback) {
+        getUserBySocialSecurityNumber(user, callback) {
             const query = "SELECT * FROM users WHERE socialSecurityNumber = ?"
             const values = [user.socialSecurityNumber]
             db.query(query, values, function (error, userArray) {
