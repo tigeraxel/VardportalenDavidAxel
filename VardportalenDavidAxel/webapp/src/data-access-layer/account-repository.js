@@ -51,8 +51,9 @@ module.exports = function createAccountRepository() {
             const query = 'INSERT INTO users (socialSecurityNumber, userPassword, firstName, lastName, email, phoneNumber,isDoctor, isAdmin) VALUES (?,?,?,?,?,?,0,0)'
             const values = [user.socialSecurityNumber, user.password, user.firstName, user.lastName, user.email, user.phoneNumber]
             db.query(query, values, function (error, user) {
+                console.log(error)
                 if (error) {
-                    callback(['databaseError'], null)
+                    callback(error, null)
                 }
                 else {
                     callback([], user)
@@ -77,11 +78,11 @@ module.exports = function createAccountRepository() {
         getLogInCredentials(user, callback) {
             const query = "SELECT * FROM users WHERE socialSecurityNumber = ?"
             const values = [user.socialSecurityNumber]
-            db.query(query, values, function (error, user) {
+            db.query(query, values, function (error, userArray) {
                 if (error) {
                     callback(["DatabaseError"], null)
-                }else if(user.length > 0) {
-                    callback([], user[0])
+                }else if(userArray.length > 0) {
+                    callback([], userArray[0])
                 }else {
                     callback(["wrong username or password", null])
                 }

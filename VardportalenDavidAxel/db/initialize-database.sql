@@ -10,12 +10,12 @@ CREATE TABLE IF NOT EXISTS users(
     isAdmin BOOLEAN DEFAULT 0
 );
 
- CREATE TABLE IF NOT EXISTS specialitys(
+CREATE TABLE IF NOT EXISTS specialitys(
     specialityID INT AUTO_INCREMENT PRIMARY KEY,
     specialityName VARCHAR(250)
 );
 
- CREATE TABLE IF NOT EXISTS bookings(
+CREATE TABLE IF NOT EXISTS bookings(
     bookingID INT AUTO_INCREMENT PRIMARY KEY,
     appointmentTime TIME,
     appointmentDate DATE,
