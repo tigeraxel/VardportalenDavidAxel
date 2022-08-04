@@ -5,12 +5,12 @@ module.exports = function createSpecialityRepository() {
         createSpeciality(specialityName, callback) {
             const query = 'INSERT INTO specialitys (specialityName) VALUES (?)'
             const values = specialityName
-            db.query(query, values, function (error, users) {
+            db.query(query, values, function (error, speciality) {
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
-                    callback([], users)
+                    callback([], speciality)
                 }
             })
         },
