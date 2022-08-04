@@ -39,18 +39,7 @@ module.exports = function createPostgresAccountRepository(){
             })
 
         },
-        getAccountNameFromId(_userID, callback) {
-            users.findAll({
-                where: {
-                    userID: _userID
-                },
-                raw: true
-            }).then( user => {
-                callback( [], user)
-            }).catch((err) =>{
-                callback(err, [])
-            })
-        },
+
         createAccount(user,callback){
             users.create({
                 socialSecurityNumber: user.socialSecurityNumber,

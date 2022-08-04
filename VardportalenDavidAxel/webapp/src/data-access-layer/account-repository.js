@@ -10,12 +10,12 @@ module.exports = function createAccountRepository() {
             const query = "SELECT * FROM users WHERE isDoctor = 1"
             const values = []
 
-            db.query(query, values, function (error, users) {
+            db.query(query, values, function (error, doctors) {
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
-                    callback([], users)
+                    callback([], doctors)
                 }
             })
         },
@@ -37,26 +37,12 @@ module.exports = function createAccountRepository() {
             const query = "SELECT * FROM users where userID = ?"
             const values = [id]
 
-            db.query(query, values, function (error, users) {
+            db.query(query, values, function (error, user) {
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
-                    callback([], users)
-                }
-            })
-        },
-
-        getAccountNameFromId(id, callback) {
-            const query = "SELECT * FROM users WHERE userID = ?"
-            const values = [id]
-
-            db.query(query, values, function (error, users) {
-                if (error) {
-                    callback(['databaseError'], null)
-                }
-                else {
-                    callback([], users)
+                    callback([], user)
                 }
             })
         },
