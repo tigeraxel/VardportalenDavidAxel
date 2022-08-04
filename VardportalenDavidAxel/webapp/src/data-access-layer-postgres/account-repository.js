@@ -13,7 +13,6 @@ module.exports = function createPostgresAccountRepository(){
             }).then(doctors=>
                 callback([], doctors)
             ).catch((err) => {
-                console.log(err),
                 callback( err, [])
             })
         },
@@ -24,7 +23,6 @@ module.exports = function createPostgresAccountRepository(){
             .then(foundUsers =>
                 callback( [], foundUsers)
             ).catch((err) => {
-                console.log("error when fetching all users")
                 callback( err, [])
             })
         },
@@ -37,7 +35,6 @@ module.exports = function createPostgresAccountRepository(){
             }).then(()=>{
                 callback( [], user)
             }).catch( (err) => {
-                console.log("could not find user with id "+ _userID)
                 callback( err,[])
             })
 
@@ -51,7 +48,6 @@ module.exports = function createPostgresAccountRepository(){
             }).then( user => {
                 callback( [], user)
             }).catch((err) =>{
-                console.log("error when fetching user with id "+ _userID)
                 callback(err, [])
             })
         },
@@ -77,11 +73,8 @@ module.exports = function createPostgresAccountRepository(){
                     'isAdmin'
                 ],
             }).then( newUser => {
-                console.log("skapade användare!")
-                console.log(newUser)
                 callback( [], newUser)
             }).catch((err) =>{
-                console.log("error when creating user ")
                 if(err["name"] == "SequelizeUniqueConstraintError"){
                     callback([400], [])
                 }
@@ -100,7 +93,6 @@ module.exports = function createPostgresAccountRepository(){
             }).then(updatedUser => {
                 callback([], updatedUser)
             }).catch((err) => {
-                console.log("Could not update doctorID for social number "+ user.socialSecurityNumber)
                 callback( err, [])
             })
         },
@@ -114,7 +106,6 @@ module.exports = function createPostgresAccountRepository(){
             }).then(foundUser => 
                 callback([], foundUser[0])
             ).catch((err) => {
-                console.log("Could not find user with social number "+user.socialSecurityNumber+" and password "+user.password),
                 callback(err, [])
             })
         }

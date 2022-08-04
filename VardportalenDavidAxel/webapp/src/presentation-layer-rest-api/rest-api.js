@@ -37,20 +37,14 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
     // })
 
     router.post("/login", function (request, response) {
-        console.log("logIn")
         const logInCredentials = {
             grantType: request.body.grantType,
             socialSecurityNumber: request.body.socialSecurityNumber,
             password: request.body.password
         }
-        console.log("WEB API LOGIN CREDENTIALS")
-        console.log(logInCredentials)
         if (logInCredentials.grantType != "userPassword") {
             console.log("grantType not password")
-            //skicka tillbaka error
         }
-        console.log("------------------")
-        console.log(logInCredentials)
         accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
             if (errors.length > 0) {
                 response.status(404).json(errors)
@@ -71,7 +65,6 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
                 payload.isLoggedIn = true
                 payload.firstName = user.firstName
                 jwt.sign(payload, JWT_SECRET_KEY, function (error, token) {
-                    console.log(token)
                     if (error) {
                         response.status(401).json("Error when signing token")
                     } else {
@@ -95,10 +88,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
             socialSecurityNumber: request.body.socialSecurityNumber,
             password: request.body.password
         }
-        console.log(newUser)
         accountManager.createAccount(newUser, function (errors, user) {
-            console.log("user:" + user)
-            console.log("errors: " + errors)
             if (errors[0] == 400) {
                 errors[0] = "socialSecurityNumber is already taken"
                 response.status(400).json(errors)
@@ -112,21 +102,13 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
 
 
     router.use(function (request, response, next) {
-        //const token = request.body.token || request.query.token || request.headers["x-access-token"]
-        // const authorizationHeader = request.header("Authorization")
-        // const accessToken = authorizationHeader.substring("bearer ".length)
-        console.log(request.headers.authorization)
         const accessToken = request.headers.authorization.split(' ')[1];
 
         if (!accessToken) {
-            console.log("ingen access token")
             response.status(403).json(["Unauthorized user"])
         }
-        console.log("verifierar token")
         jwt.verify(accessToken, JWT_SECRET_KEY, function (error, payload) {
-            console.log("------------------")
             if (error) {
-                console.log(error)
                 response.sendStatus(403)
             }else {
                 request.body.userInfo = payload
@@ -136,12 +118,9 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
     })
 
     router.get("/bookings/:id", function (request, response) {
-        console.log("fetching booking")
         const id = request.params.id
 
         bookingManager.getBookingWithID(id, function (errors, bookings) {
-            console.log(bookings)
-            console.log(errors)
             if (errors[0] == 400) {
                 errors[0] = "bookings SQL WRONG is already taken"
                 response.status(400).json(errors)
@@ -154,11 +133,8 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
     })
 
     router.get("/bookings", function (request, response) {
-        console.log("fetching bookings")
 
         bookingManager.getBookings(function (errors, bookings) {
-            console.log(bookings)
-            console.log(errors)
             if (errors[0] == 400) {
                 errors[0] = "bookings SQL WRONG is already taken"
                 response.status(400).json(errors)
@@ -179,10 +155,7 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
             date: request.body.date,
             doctorID: request.body.doctorID
         }
-        console.log(bookingInfo)
         bookingManager.createBooking(bookingInfo, function (errors, booking) {
-            console.log(booking)
-            console.log(errors)
             if (errors[0] == 400) {
                 errors[0] = "SQL WRONG is already taken"
                 response.status(400).json(errors)
@@ -199,8 +172,6 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
         const bookingidID = request.params.id
 
         bookingManager.deleteBooking(bookingidID, function (errors, booking) {
-            console.log(booking)
-            console.log(errors)
             if (errors[0] == 400) {
                 errors[0] = "SQL WRONG is already taken"
                 response.status(400).json(errors)
@@ -225,8 +196,6 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
         }
 
         bookingManager.updateBooking(bookingInfo, function (errors, booking) {
-            console.log(booking)
-            console.log(errors)
             if (errors[0] == 400) {
                 errors[0] = "SQL WRONG is already taken"
                 response.status(400).json(errors)
@@ -266,8 +235,6 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
             const model = {
                 specialitys: specialitys
             }
-            console.log(specialitys)
-            console.log(errors)
             if (specialitys.length > 0) {
                 response.status(200).json(model)
             } else {

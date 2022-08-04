@@ -8,9 +8,6 @@
     <title>Document</title>
 
     <script src="navigation.js"></script>
-    <script src="login-page.js"></script>
-    <script src="booking-page.js"></script>
-    <script src="register-page.js"></script>
 
 
     <link rel="stylesheet" href="styles.css">
@@ -26,7 +23,6 @@
             <li><a href="/login">Login</a></li>
             <li><a href="/register">Register</a></li>
             <li><a href="/reserveBooking">reserveBookig</a></li>
-            <li><a href="/deleteBooking">deleteBooking</a></li>
             <li><a href="/createBooking">createBooking</a></li>
             <li><a href="/bookings">bookings</a></li>
 
@@ -37,7 +33,7 @@
     <main>
 
         <div class="page" id="start-page">
-            <h2>TJENARE</h2>
+            <h2>Startsida</h2>
         </div>
 
         <div class="page" id="login-page">
@@ -58,15 +54,6 @@
 				
 			</ul>
 		</div>
-
-        <div class="page" id="deleteBooking-page">
-            <h3> Ange booking ID. </h3>
-            <form id="bookingFormDelete" method="post" action="/api/bookings/delete">
-                <label for="bookingID">bookingID:</label>
-                <input type="text" id="bookingIDdelete" name="bookingIDdelete"><br>
-                <input type="submit" id="deleteBookingButton" value="deletea">
-            </form>
-        </div>
 
         <div class="page" id="createBooking-page">
 

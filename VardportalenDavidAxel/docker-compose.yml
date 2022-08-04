@@ -40,7 +40,4 @@ services:
       - ./spa/nginx.conf:/etc/nginx/nginx.conf
       - ./spa/index.html:/data/www/index.html
       - ./spa/static/js/navigation.js:/data/www/navigation.js
-      - ./spa/static/js/booking-page.js:/data/www/booking-page.js
-      - ./spa/static/js/register-page.js:/data/www/register-page.js
-      - ./spa/static/js/login-page.js:/data/www/login-page.js
       - ./spa/static/css/styles.css:/data/www/styles.css

@@ -44,8 +44,6 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
             app.use('/api', apiRouter)
 
             app.use((error, request, response, next) => {
-                console.log(error)
-                console.log("erroororoeoreoor")
                 model = {
                     errors: error
                 }

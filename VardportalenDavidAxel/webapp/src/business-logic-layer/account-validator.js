@@ -21,7 +21,6 @@ module.exports = function createAccountValidator({ accountRepository,postgresAcc
     return {
         checkLogInCredentials(userLogInCredentials, callback) {
             accountRepository.getLogInCredentials(userLogInCredentials, async function (errors, foundUser) {
-                console.log(errors)
                 if (errors.length > 0) {
                     console.error("Error i account validator")
                     callback(errors, [])

@@ -5,7 +5,7 @@ module.exports = function createBookingRepository() {
     
     return {
         getBookings(callback) {
-            const query = "SELECT * FROM bookings"
+            const query = "SELECT * FROM bookings WHERE patientID IS NOT NULL"
             const values = []
 
             db.query(query, values, function (error, bookings) {
@@ -49,7 +49,6 @@ module.exports = function createBookingRepository() {
 
             const query = "INSERT INTO bookings (appointmentTime, appointmentDate, doctorID) VALUES (?,?,?)"
             const values = [bookingInfo.time, bookingInfo.date, bookingInfo.doctorID]
-            console.log(values)
 
             db.query(query, values, function (error, bookings) {
                 if (error) {
@@ -64,7 +63,6 @@ module.exports = function createBookingRepository() {
 
             const query = "UPDATE bookings SET patientID = ?, messageFromPatient = ?, categoryID = ?, covidQuestion = ? WHERE bookingID = ?"
             const values = [bookingInfo.userID, bookingInfo.message, bookingInfo.CategoryID, bookingInfo.covidQuestion, bookingInfo.bookingID]
-            console.log(bookingInfo.userID)
 
             db.query(query, values, function (error, bookings) {
                 if (error) {
@@ -94,7 +92,6 @@ module.exports = function createBookingRepository() {
             const values = []
 
             db.query(query, values, function (error, bookingsWithNames) {
-                console.log(bookingsWithNames)
                 if (error) {
                     callback(['databaseError'], null)
                 }
@@ -108,7 +105,6 @@ module.exports = function createBookingRepository() {
             const values = [id]
 
             db.query(query, values, function (error, userBooking) {
-                console.log(userBooking)
                 if (error) {
                     callback(['databaseError'], null)
                 }

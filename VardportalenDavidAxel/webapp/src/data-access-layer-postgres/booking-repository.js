@@ -1,7 +1,3 @@
-
-
-
-
 module.exports = function createPostgresBookingRepository() {
     const db = require('./db')
     const bookings = db.bookings
@@ -14,9 +10,20 @@ module.exports = function createPostgresBookingRepository() {
                 .then(allBookings =>
                     callback(allBookings)
                 ).catch(err =>
-                    console.log("could not get all bookings.."),
                     callback(err)
                 ))
+        },
+        deleteBooking(id, callback) {
+            (bookings.destroy({
+                where: {
+                    bookingID: id
+                }
+            }).then(
+                callback([])
+            ).catch((error) => {
+                callback(error)
+            })
+            )
         },
         getFreeBookings(callback) {
             bookings.findAll({
@@ -27,8 +34,7 @@ module.exports = function createPostgresBookingRepository() {
             }).then(freeBookings =>
                 callback([], freeBookings)
             ).catch((error) => {
-                console.log("could not find free bookings.."),
-                    callback(error)
+                callback(error)
             })
         },
         createBooking(bookingInfo, callback) {
@@ -41,11 +47,9 @@ module.exports = function createPostgresBookingRepository() {
                 doctorUserID: bookingInfo.doctorID,
                 patientUserID: null,
             }).then(newBooking => {
-                console.log("skapade ny bokning")
-                callback([],newBooking)
+                callback([], newBooking)
             }).catch((err) => {
-                console.log("Could not create booking.."),
-                    callback(err)
+                callback(err)
             })
         },
         updateBooking(bookingInfo, callback) {
@@ -54,15 +58,13 @@ module.exports = function createPostgresBookingRepository() {
                 messageFromPatient: bookingInfo.message,
                 patientUserID: bookingInfo.userID,
                 specialitySpecialityID: bookingInfo.CategoryID,
-            },{ 
+            }, {
                 where: { bookingID: bookingInfo.bookingID },
             },
             ).then(updatedBooking =>
                 callback([], updatedBooking)
             ).catch((err) => {
-                console.log(err),
-                    console.log("error when updating booking with bookingID " + bookingInfo.bookingID),
-                    callback(err)
+                callback(err)
             })
 
         },
@@ -81,7 +83,6 @@ module.exports = function createPostgresBookingRepository() {
                 raw: true,
                 nest: true
             }).then(foundBookings => {
-                console.log("------------------------")
                 callback([], foundBookings)
             }).catch((err) => {
                 callback(err)
@@ -105,12 +106,8 @@ module.exports = function createPostgresBookingRepository() {
                 raw: true,
                 nest: true
             }).then(foundBookings => {
-                console.log("---------------------------------")
-                console.log(foundBookings)
                 callback([], foundBookings)
             }).catch(err => {
-                console.log("error when fetching bookingsForUserId...")
-                console.log(err)
                 callback(err)
             })
         },
@@ -132,8 +129,8 @@ module.exports = function createPostgresBookingRepository() {
                 ],
                 include: [
                     {
-                        model: Users, 
-                        required: false, 
+                        model: Users,
+                        required: false,
                     },
                     {
                         model: Specialitys,
@@ -200,4 +197,4 @@ db.sequelize.query(`select *, P."firstName" as "patientFirstName", P."lastName" 
                 console.log("error when fething all booking with names"),
                     callback(err, [])
             })
-*/ 
+*/
