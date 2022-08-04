@@ -1,7 +1,7 @@
 const path = require('path')
 const express = require('express')
 const expressHandlebars = require('express-handlebars')
-const redisClient = require('../data-access-layer/session-db')
+const redisClient = require('../business-logic-layer/session-db')
 const sequelize = require('../data-access-layer-postgres/db')
 const session = require('express-session')
 let RedisStore = require('connect-redis')(session)
@@ -25,7 +25,7 @@ module.exports = function createApp({ accountRouter, bookingRouter, specialityRo
                 cookie: {
                     secure: false,
                     httpOnly: false,
-                    maxAge: 100000
+                    maxAge: 400000
                 }
             }))
 
