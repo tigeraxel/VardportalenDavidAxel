@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS users(
     lastName VARCHAR(30) NOT NULL,
     email VARCHAR(30) NOT NULL,
     phoneNumber VARCHAR(30) NOT NULL,
-    isDoctor BOOLEAN DEFAULT '0',
-    isAdmin BOOLEAN DEFAULT '0'
+    isDoctor BOOLEAN DEFAULT 0,
+    isAdmin BOOLEAN DEFAULT 0
 );
 
  CREATE TABLE IF NOT EXISTS specialitys(
@@ -17,9 +17,9 @@ CREATE TABLE IF NOT EXISTS users(
 
  CREATE TABLE IF NOT EXISTS bookings(
     bookingID INT AUTO_INCREMENT PRIMARY KEY,
-    appointmentTime VARCHAR(20),
-    appointmentDate VARCHAR(20),
-    covidQuestion VARCHAR(30),
+    appointmentTime TIME,
+    appointmentDate DATE,
+    covidQuestion VARCHAR(100),
     messageFromPatient VARCHAR(250),
     categoryID INT,
     doctorID INT,
@@ -49,5 +49,5 @@ VALUES
 
 INSERT INTO `bookings` (`bookingID`, `appointmentTime`, `appointmentDate`,`covidQuestion`, `messageFromPatient`, `categoryID`, `doctorID`, `patientID`)
 VALUES
-	(1, '09:19', '22/2/2022','Ja jag har haft covid.', 'vill ta min 1a dos covid 19 vaccin!', 1, 1, 4);
+	(1, '09:19:00', '2022-02-22','Ja jag har haft covid.', 'vill ta min 1a dos covid 19 vaccin!', 1, 1, 4);
 

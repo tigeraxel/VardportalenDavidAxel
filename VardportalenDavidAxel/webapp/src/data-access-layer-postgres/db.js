@@ -68,5 +68,3 @@ function tempQuerys() {
 }
 // tempQuerys()
 // Ta bort kommentar ovan för att se all data
-
-

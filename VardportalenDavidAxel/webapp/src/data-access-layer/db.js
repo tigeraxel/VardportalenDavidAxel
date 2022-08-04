@@ -5,7 +5,7 @@ var dbConnection = mysql2.createConnection({
     port: "3306",
     user: "root",
     password: "abc123",
-    database: "hello"
+    database: "maria"
 })
 
 module.exports = dbConnection

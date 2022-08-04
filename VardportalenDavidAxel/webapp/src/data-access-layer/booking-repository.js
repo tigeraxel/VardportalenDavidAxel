@@ -39,6 +39,8 @@ module.exports = function createBookingRepository() {
                     callback(['databaseError'], null)
                 }
                 else {
+                    console.log("bookings efter query")
+                    console.log(bookings)
                     callback([], bookings)
                 }
             })

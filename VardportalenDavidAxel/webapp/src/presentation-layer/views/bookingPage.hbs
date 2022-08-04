@@ -21,7 +21,7 @@
         <div class="box">
             <h5 class="title is-5">
                 <div id="bookingTimeDiv">
-                    <p>{{this.appointmentDate}} {{this.appointmentTime}}</p>
+                    <p>{{this.appointmentDate.toLocaleDateString('EU')}} {{this.appointmentTime}}</p>
                     <p>{{this.specialityName}}</p>
                     <p>Meddelande från patient: {{this.messageFromPatient}}</p>
 

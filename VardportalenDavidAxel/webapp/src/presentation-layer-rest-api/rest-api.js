@@ -172,7 +172,8 @@ module.exports = function createApiRouter({ accountManager, specialityManager, s
 
 
     router.post("/bookings/create", function (request, response) {
-
+        console.log("Skriver ut")
+        console.log(request.body)
         const bookingInfo = {
             time: request.body.time,
             date: request.body.date,

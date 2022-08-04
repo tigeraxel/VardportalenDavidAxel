@@ -21,6 +21,9 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
 
     router.get('/reserve', function (request, response) {
         bookingManager.getFreeBookings(function (errorsBookings, bookings) {
+            console.log("_____________________________")
+            console.log(bookings)
+            console.log("_____________________________")
             specialityManager.getAllSpeciality(function (errorsSpecialitys, specialitys) {
                 const model = {
                     errorsBookings: errorsBookings,
@@ -45,8 +48,9 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
         }
 
         bookingManager.updateBooking(bookingInfo, function (errors, bookingMessage) {
-            console.log("Bknings meddelande")
+            console.log("_____________________________")
             console.log(bookingMessage)
+            console.log("_____________________________")
             if (errors.length > 0) {
                 console.log(errors)
                 response.render("about.hbs")
@@ -77,6 +81,8 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
             date: request.body.date,
             doctorID: request.body.doctorID
         }
+        console.log("Nya bokningen")
+        console.log(bookingInfo)
         bookingManager.createBooking(bookingInfo, function (errors, booking) {
             console.log(booking)
             if (errors.length > 0) {

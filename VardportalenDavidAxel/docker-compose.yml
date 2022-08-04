@@ -15,7 +15,7 @@ services:
     build: './db'
     environment:
       MARIADB_ROOT_PASSWORD: "abc123"
-      MARIADB_DATABASE: "hello"
+      MARIADB_DATABASE: "maria"
     ports:
       - "3306:3306"
   session-db:

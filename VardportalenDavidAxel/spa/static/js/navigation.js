@@ -270,7 +270,6 @@ async function deleteBooking(id) {
 }
 
 async function createBooking() {
-
     const bookingInfo = {
         time: document.body.querySelector('#time').value,
         date: document.body.querySelector('#date').value,

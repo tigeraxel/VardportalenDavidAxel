@@ -21,8 +21,6 @@ module.exports = function createSessionValidator() {
             }
         },
         authenticateDoctorSession(request, response, next) {
-            console.log("i doctor session validator")
-            console.log(request.session)
             let errors = []
             if (!request.session.isDoctor && !request.session.isAdmin) {
                 errors.push("You need doctor privileges to access this page.")
