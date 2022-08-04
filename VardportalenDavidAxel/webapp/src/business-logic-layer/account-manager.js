@@ -12,10 +12,6 @@ module.exports = function createAccountManager({ accountRepository, accountValid
             accountRepository.getAllUsers(callback)
         },
 
-        getAccountNameFromId(id, callback) {
-            accountRepository.getAccountNameFromId(id, callback)
-        },
-
         createAccount(user, callback) {
             accountValidator.validateAccountCredentials(user, async function(validationErrors, newUser){
                 if(validationErrors.length == 0){
@@ -28,8 +24,8 @@ module.exports = function createAccountManager({ accountRepository, accountValid
             })
         },
 
-        GiveDoctorPrivilige(user, callback) {
-            accountRepository.GiveDoctorPrivilige(user, callback)
+        giveUserDoctorPrivilige(user, callback) {
+            accountRepository.giveUserDoctorPrivilige(user, callback)
         },
 
         getUserByID(id, callback) {

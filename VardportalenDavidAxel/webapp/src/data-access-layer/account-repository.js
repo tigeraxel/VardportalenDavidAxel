@@ -60,15 +60,15 @@ module.exports = function createAccountRepository() {
             })
         },
 
-        GiveDoctorPrivilige(user, callback) {
+        giveUserDoctorPrivilige(user, callback) {
             const query = "UPDATE users SET isDoctor = '1' WHERE socialSecurityNumber = ? AND firstName = ? AND lastName = ?"
             const values = [user.socialSecurityNumber, user.firstName, user.lastName]
-            db.query(query, values, function (error, users) {
+            db.query(query, values, function (error, user) {
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
-                    callback([], users)
+                    callback([], user)
                 }
             })
 
