@@ -4,32 +4,7 @@ module.exports = function createBookingRepository() {
     const db = require('./db')
     
     return {
-        getBookings(callback) {
-            const query = "SELECT * FROM bookings WHERE patientID IS NOT NULL"
-            const values = []
 
-            db.query(query, values, function (error, bookings) {
-                if (error) {
-                    callback(['databaseError'], null)
-                }
-                else {
-                    callback([], bookings)
-                }
-            })
-        },
-        getBookingWithID(id,callback) {
-            const query = "SELECT * FROM bookings WHERE bookingID = ?"
-            const values = [id]
-
-            db.query(query, values, function (error, booking) {
-                if (error) {
-                    callback(['databaseError'], null)
-                }
-                else {
-                    callback([], booking)
-                }
-            })
-        },
         getFreeBookings(callback) {
             const query = "SELECT * FROM bookings WHERE patientID IS NULL "
             const values = []
