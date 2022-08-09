@@ -1,26 +1,26 @@
 CREATE TABLE IF NOT EXISTS users(
     userID INT AUTO_INCREMENT PRIMARY KEY,
-    socialSecurityNumber VARCHAR (12) NOT NULL UNIQUE,
-    userPassword VARCHAR (100) NOT NULL,
-    firstName VARCHAR(30) NOT NULL,
-    lastName VARCHAR(30) NOT NULL,
-    email VARCHAR(30) NOT NULL,
-    phoneNumber VARCHAR(30) NOT NULL,
+    socialSecurityNumber TEXT NOT NULL UNIQUE,
+    userPassword TEXT NOT NULL,
+    firstName TEXT NOT NULL,
+    lastName TEXT NOT NULL,
+    email TEXT NOT NULL,
+    phoneNumber TEXT NOT NULL,
     isDoctor BOOLEAN DEFAULT 0,
     isAdmin BOOLEAN DEFAULT 0
 );
 
 CREATE TABLE IF NOT EXISTS specialitys(
     specialityID INT AUTO_INCREMENT PRIMARY KEY,
-    specialityName VARCHAR(250)
+    specialityName TEXT
 );
 
 CREATE TABLE IF NOT EXISTS bookings(
     bookingID INT AUTO_INCREMENT PRIMARY KEY,
     appointmentTime TIME,
     appointmentDate DATE,
-    covidQuestion VARCHAR(150),
-    messageFromPatient VARCHAR(350),
+    covidQuestion TEXT,
+    messageFromPatient TEXT,
     categoryID INT,
     doctorID INT,
     patientID INT,
