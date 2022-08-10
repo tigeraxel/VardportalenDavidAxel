@@ -27,6 +27,8 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         },
 
         giveUserDoctorPrivilige(user, callback) {
+            //routern skickar HTTP requesten via session-validatorn för att avgöra vilken access användaren har innan
+            //anvädaren får åtkomst till denna funktion.
             accountRepository.giveUserDoctorPrivilige(user, callback)
         },
 
