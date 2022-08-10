@@ -13,13 +13,15 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         },
 
         createAccount(user, callback) {
-            accountValidator.validateAccountCredentials(user, async function(validationErrors, newUser){
+            console.log("I account manager create account")
+
+            accountValidator.validateAccountCredentials(user, async function(validationErrors){
                 if(validationErrors.length == 0){
-                    hashedPassword = await hashManager.hashUserPassword(newUser.password)
-                    newUser.password = hashedPassword
-                    accountRepository.createAccount(newUser, callback)
+                    hashedPassword = await hashManager.hashUserPassword(user.password)
+                    user.password = hashedPassword
+                    accountRepository.createAccount(user, callback)
                 }else{
-                    callback(validationErrors, [])
+                    callback(validationErrors,[])
                 }
             })
         },

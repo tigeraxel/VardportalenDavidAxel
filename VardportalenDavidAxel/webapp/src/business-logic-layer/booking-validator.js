@@ -5,6 +5,7 @@ module.exports = function createBookingValidator({ bookingRepository, postgresBo
     return {
         checkBookingPrivledges(session, callback) {
             if (session.isDoctor || session.isAdmin) {
+                console.log("Inloggad som admin eller doktor")
                 bookingRepository.getBookingsWithNames(function (errors, bookings) {
                     if (errors.length > 0) {
                         callback(errors, [])

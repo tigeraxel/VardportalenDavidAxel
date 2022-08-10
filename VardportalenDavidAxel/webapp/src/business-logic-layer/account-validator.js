@@ -27,28 +27,39 @@ module.exports = function createAccountValidator({ accountRepository,postgresAcc
     return {
         checkLogInCredentials(userLogInCredentials, callback) {
             accountRepository.getUserBySocialSecurityNumber(userLogInCredentials, async function (errors, foundUser) {
+
                 if (errors.length > 0) {
-                    console.error("Error i account validator")
                     callback(errors, [])
                 }else {
-                    const validPassword = await hashManager.validateUserPassword(userLogInCredentials.password, foundUser.userPassword)
+                    //hashManager compares enterd password with hashed password stored in the database and returns either true or false.
+                    const isValidPassword = await hashManager.validateUserPassword(userLogInCredentials.password, foundUser.userPassword)
 
-                    if(validPassword){
+                    if(isValidPassword){
                         callback([], foundUser)
                     }
                     else{
-                        console.log("Invalid username or password")
-                        callback(["Incorrect username or password"])
+                        callback(["Incorrect username or password"],[])
                     }
                 }
             })
         },
-        validateAccountCredentials(newUser, callback) {
-            const validationErrors = validateUsernameAndPassword(newUser)
+        validateAccountCredentials(user, callback) {
+            const validationErrors = validateUsernameAndPassword(user)
             if(validationErrors.length == 0){
-                callback([], newUser)
+                accountRepository.getUserBySocialSecurityNumber(user, function (error, foundUser){
+                    if(error.length > 0){
+                        validationErrors.push("Database error")
+                        callback(validationErrors)
+                    }else if(foundUser){
+                        validationErrors.push("Social security number alrady exist")
+                        callback(validationErrors)
+                    }else{
+                        console.log("user does not exist")
+                        callback([])
+                    }
+                })
             }else{
-                callback(validationErrors, [])
+                callback(validationErrors)
             }
         }
     }

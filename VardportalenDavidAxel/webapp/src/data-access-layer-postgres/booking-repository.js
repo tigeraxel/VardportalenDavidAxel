@@ -6,6 +6,7 @@ module.exports = function createPostgresBookingRepository() {
     const Op = db.Sequelize.Op
     return {
         getBookings(callback) {
+            console.log("i postgres booking-repository funktionen -getBookings()-")
             (bookings.findAll()
                 .then(allBookings =>
                     callback(allBookings)
