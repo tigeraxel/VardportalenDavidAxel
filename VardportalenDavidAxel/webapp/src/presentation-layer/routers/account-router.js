@@ -19,7 +19,10 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
         accountManager.checkLogInCredentials(logInCredentials, function (errors, user) {
 
             if (errors.length > 0) {
-                response.render("about.hbs")
+                const model = {
+                    errors: errors,
+                }
+                response.render('loginPage.hbs', model)
             } else {
                 request.session.userID = user.userID
                 request.session.isLoggedIn = true

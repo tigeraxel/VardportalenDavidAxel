@@ -65,9 +65,9 @@ module.exports = function createPostgresAccountRepository(){
                 callback( [], newUser)
             }).catch((err) =>{
                 if(err["name"] == "SequelizeUniqueConstraintError"){
-                    callback([400], [])
+                    callback(["Username is already taken"], [])
                 }
-                callback([500], [])
+                callback(["Database error"], [])
             })
         
         },
@@ -91,9 +91,13 @@ module.exports = function createPostgresAccountRepository(){
                     socialSecurityNumber: user.socialSecurityNumber,
                 },
                 raw: true
-            }).then(foundUser => 
-                callback([], foundUser[0])
-            ).catch((err) => {
+            }).then(foundUser => {
+                if(foundUser != null){
+                    callback([], foundUser[0])
+                }else{
+                    callback([],null)
+                }
+            }).catch((err) => {
                 callback(err, [])
             })
         }

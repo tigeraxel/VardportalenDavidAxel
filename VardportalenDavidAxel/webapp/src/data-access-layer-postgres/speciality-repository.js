@@ -16,7 +16,7 @@ module.exports = function createPostgresSpecialityRepository(){
             ).then(newSpeciality => {
                 callback([], newSpeciality)
             }).catch(err => {
-                callback(err, null)
+                callback(["databaseError"], null)
             })
         },
 
@@ -27,7 +27,7 @@ module.exports = function createPostgresSpecialityRepository(){
             .then(allSpecialities => {
                 callback([],allSpecialities)
             }).catch(err => {
-                callback(err)
+                callback(["databaseError"], null)
             })
         }
     }

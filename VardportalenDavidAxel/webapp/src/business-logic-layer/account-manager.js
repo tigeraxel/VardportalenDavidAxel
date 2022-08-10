@@ -3,7 +3,7 @@ const hashManager = require('./hash-manager');
 module.exports = function createAccountManager({ accountRepository, accountValidator, postgresAccountRepository  }) {
 
     return {
-        
+
         getAllDoctors(callback) {
             accountRepository.getAllDoctors(callback)
         },
@@ -37,6 +37,8 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         checkLogInCredentials(user, callback) {
             accountValidator.checkLogInCredentials(user, callback)
         }
+        
+
         /*
         getAllDoctors(callback) {
             postgresAccountRepository.getAllDoctors(callback)
@@ -51,9 +53,10 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         },
 
         createAccount(user, callback) {
-            accountValidator.validateAccountCredentials(user, function(validationErrors, newUser){
+            accountValidator.validateAccountCredentials(user, async function(validationErrors, newUser){
                 if(validationErrors.length == 0){
-                    console.log("Försöker registrera användare!")
+                    hashedPassword = await hashManager.hashUserPassword(user.password)
+                    user.password = hashedPassword
                     postgresAccountRepository.createAccount(user, callback)
                 }else{
                     callback(validationErrors, [])
@@ -72,6 +75,6 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         checkLogInCredentials(user, callback) {
             accountValidator.checkLogInCredentials(user, callback)
         }
-*/
+        */
     }
 }

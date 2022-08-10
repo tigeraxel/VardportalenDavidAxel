@@ -25,11 +25,16 @@ function validateUsernameAndPassword(newUser){
 
 module.exports = function createAccountValidator({ accountRepository,postgresAccountRepository }){
     return {
+        
         checkLogInCredentials(userLogInCredentials, callback) {
 
             accountRepository.getUserBySocialSecurityNumber(userLogInCredentials, async function (errors, foundUser) {
-                if (errors.length > 0) {
-                    callback(errors, [])
+                if (errors.length > 0 || foundUser == null) {
+                    if(foundUser==null){
+                        callback(["User not found"],null)
+                    }else{
+                        callback(errors, [])
+                    }
                 }else {
                     //hashManager compares enterd password with hashed password stored in the database and returns either true or false.
                     const isValidPassword = await hashManager.validateUserPassword(userLogInCredentials.password, foundUser.userPassword)
@@ -54,7 +59,48 @@ module.exports = function createAccountValidator({ accountRepository,postgresAcc
                         validationErrors.push("Social security number alrady exist")
                         callback(validationErrors)
                     }else{
-                        console.log("user does not exist")
+                        callback([])
+                    }
+                })
+            }else{
+                callback(validationErrors)
+            }
+        },
+
+        /*
+        checkLogInCredentials(userLogInCredentials, callback) {
+
+            postgresAccountRepository.getUserBySocialSecurityNumber(userLogInCredentials, async function (errors, foundUser) {
+                if(errors.length > 0 || foundUser == null) {
+                    console.log("Sending back error")
+                    if(foundUser==null){
+                        callback(["User not found"],null)
+                    }else{
+                        callback(errors, [])
+                    }
+                }else {
+                    //hashManager compares enterd password with hashed password stored in the database and returns either true or false.
+                    const isValidPassword = await hashManager.validateUserPassword(userLogInCredentials.password, foundUser.userPassword)
+                    if(isValidPassword){
+                        callback([], foundUser)
+                    }
+                    else{
+                        callback(["Incorrect username or password"],[])
+                    }
+                }
+            })
+        },
+        validateAccountCredentials(user, callback) {
+            const validationErrors = validateUsernameAndPassword(user)
+            if(validationErrors.length == 0){
+                postgresAccountRepository.getUserBySocialSecurityNumber(user, function (error, foundUser){
+                    if(error.length > 0){
+                        validationErrors.push("Database error")
+                        callback(validationErrors)
+                    }else if(foundUser){
+                        validationErrors.push("Social security number alrady exist")
+                        callback(validationErrors)
+                    }else{
                         callback([])
                     }
                 })
@@ -62,6 +108,7 @@ module.exports = function createAccountValidator({ accountRepository,postgresAcc
                 callback(validationErrors)
             }
         }
+        */
     }
     
 }
