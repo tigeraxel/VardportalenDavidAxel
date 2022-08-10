@@ -4,33 +4,13 @@ module.exports = function createBookingRepository() {
     const db = require('./db')
     
     return {
+
         getBookings(callback) {
             console.log("i MySQL funktionen -getBookings()-")
             const query = "SELECT * FROM bookings WHERE patientID IS NOT NULL"
             const values = []
-
-            db.query(query, values, function (error, bookings) {
-                if (error) {
-                    callback(['databaseError'], null)
-                }
-                else {
-                    callback([], bookings)
-                }
-            })
         },
-        getBookingWithID(id,callback) {
-            const query = "SELECT * FROM bookings WHERE bookingID = ?"
-            const values = [id]
-
-            db.query(query, values, function (error, booking) {
-                if (error) {
-                    callback(['databaseError'], null)
-                }
-                else {
-                    callback([], booking)
-                }
-            })
-        },
+        
         getFreeBookings(callback) {
             const query = "SELECT * FROM bookings WHERE patientID IS NULL "
             const values = []
@@ -116,11 +96,3 @@ module.exports = function createBookingRepository() {
         }
     }
 }
-
-
-/*
-"SELECT employee.first_name, employee.last_name, call.start_time, call.end_time, call_outcome.outcome_text
-FROM employee
-INNER JOIN call ON call.employee_id = employee.id
-INNER JOIN call_outcome ON call.call_outcome_id = call_outcome.id
-ORDER BY call.start_time ASC;" */

@@ -18,12 +18,6 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
         updateBooking(bookingInfo, callback) {
             bookingRepository.updateBooking(bookingInfo, callback)
         }*/
-        getBookings(callback) {
-            bookingRepository.getBookings(callback)
-        },
-        getBookingWithID(id,callback) {
-            bookingRepository.getBookingWithID(id,callback)
-        },
         getFreeBookings(callback) {
             bookingRepository.getFreeBookings(callback)
         },
