@@ -85,11 +85,10 @@ module.exports = function createPostgresAccountRepository(){
                 callback( err, [])
             })
         },
-        getLogInCredentials(user, callback){
+        getUserBySocialSecurityNumber(user, callback){
             users.findAll({
                 where: {
                     socialSecurityNumber: user.socialSecurityNumber,
-                    userPassword: user.password
                 },
                 raw: true
             }).then(foundUser => 

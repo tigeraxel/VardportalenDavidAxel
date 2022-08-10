@@ -26,8 +26,8 @@ function validateUsernameAndPassword(newUser){
 module.exports = function createAccountValidator({ accountRepository,postgresAccountRepository }){
     return {
         checkLogInCredentials(userLogInCredentials, callback) {
-            accountRepository.getUserBySocialSecurityNumber(userLogInCredentials, async function (errors, foundUser) {
 
+            accountRepository.getUserBySocialSecurityNumber(userLogInCredentials, async function (errors, foundUser) {
                 if (errors.length > 0) {
                     callback(errors, [])
                 }else {
