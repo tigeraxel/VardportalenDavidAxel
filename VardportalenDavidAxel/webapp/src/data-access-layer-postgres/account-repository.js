@@ -91,9 +91,9 @@ module.exports = function createPostgresAccountRepository(){
                     socialSecurityNumber: user.socialSecurityNumber,
                 },
                 raw: true
-            }).then(foundUser => {
-                if(foundUser != null){
-                    callback([], foundUser[0])
+            }).then(foundUsers => {
+                if(foundUsers != null){
+                    callback([], foundUsers[0])
                 }else{
                     callback([],null)
                 }
