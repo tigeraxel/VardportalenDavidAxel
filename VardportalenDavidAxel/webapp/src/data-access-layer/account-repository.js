@@ -84,7 +84,7 @@ module.exports = function createAccountRepository() {
                     callback([], userArray[0])
                 }else if(error) {
                     console.log("Error: " + error)
-                    callback(["DatabaseError"], null)
+                    callback(["databaseError"], null)
                 }else{
                     console.log("else statement")
                     callback([], null)
