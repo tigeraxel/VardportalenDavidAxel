@@ -69,7 +69,7 @@ module.exports = function createPostgresBookingRepository() {
             })
 
         },
-        getBookingsWithNames(callback) {
+        getBookings(callback) {
             bookings.findAll({
                 where: { patientUserID: { [Op.not]: null } },
                 include: {
@@ -92,7 +92,7 @@ module.exports = function createPostgresBookingRepository() {
         getBookingById(id) {
             //hämta bokning för ett id och returnera det tillbaka
         },
-        getBookingForUser(id, callback) {
+        getBookingsForUser(id, callback) {
             bookings.findAll({
                 where: { patientUserID: id },
                 include: {

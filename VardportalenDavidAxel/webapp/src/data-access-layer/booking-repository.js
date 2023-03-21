@@ -62,29 +62,29 @@ module.exports = function createBookingRepository() {
                 }
             })
         },
-        getBookingsWithNames(callback) {
+        getBookings(callback) {
             const query = "select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID;"
             const values = []
 
-            db.query(query, values, function (error, bookingsWithNames) {
+            db.query(query, values, function (error, bookings) {
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
-                    callback([], bookingsWithNames)
+                    callback([], bookings)
                 }
             })
         },
-        getBookingForUser(id, callback) {
+        getBookingsForUser(id, callback) {
             const query = "select *, P.firstName as patientFirstName, P.lastName as patientLastName, D.firstName as doctorFirstName, D.lastName as doctorLastName from bookings join users D on bookings.doctorID = D.userID join users P on bookings.patientID = P.userID join specialitys c on bookings.categoryID = c.specialityID WHERE bookings.patientID = ?;"
             const values = [id]
 
-            db.query(query, values, function (error, userBooking) {
+            db.query(query, values, function (error, userBookings) {
                 if (error) {
                     callback(['databaseError'], null)
                 }
                 else {
-                    callback([], userBooking)
+                    callback([], userBookings)
                 }
             })
         }

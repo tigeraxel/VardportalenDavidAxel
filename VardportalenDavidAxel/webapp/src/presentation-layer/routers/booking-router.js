@@ -10,10 +10,10 @@ module.exports = function createBookingRouter({ bookingManager, accountManager, 
     router.get('/showall', function (request, response) {
         const session = request.session
 
-        bookingManager.getBookingsWithNames(session, function (errors, bookingsWithNames) {
+        bookingManager.getBookings(session, function (errors, bookings) {
             const model = {
                 errors: errors,
-                bookings: bookingsWithNames
+                bookings: bookings
             }
             response.render("bookingPage.hbs", model)
         })

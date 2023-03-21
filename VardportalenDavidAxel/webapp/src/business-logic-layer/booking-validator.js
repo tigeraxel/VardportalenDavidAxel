@@ -6,7 +6,7 @@ module.exports = function createBookingValidator({ bookingRepository, postgresBo
         checkBookingPrivledges(session, callback) {
             if (session.isDoctor || session.isAdmin) {
                 console.log("Inloggad som admin eller doktor")
-                bookingRepository.getBookingsWithNames(function (errors, bookings) {
+                bookingRepository.getBookings(function (errors, bookings) {
                     if (errors.length > 0) {
                         callback(errors, [])
                     } else {
@@ -15,7 +15,7 @@ module.exports = function createBookingValidator({ bookingRepository, postgresBo
                 })
             }
             else {
-                bookingRepository.getBookingForUser(session.userID, function (errors, bookings) {
+                bookingRepository.getBookingsForUser(session.userID, function (errors, bookings) {
                     if (errors.length > 0) {
                         callback(errors, [])
                     } else {
@@ -29,7 +29,7 @@ module.exports = function createBookingValidator({ bookingRepository, postgresBo
         /*
         checkBookingPrivledges(session, callback) {
             if (session.isDoctor || session.isAdmin) {
-                postgresBookingRepository.getBookingsWithNames(function (errors, bookings) {
+                postgresBookingRepository.getBookings(function (errors, bookings) {
                     if (errors.length > 0) {
                         callback(errors, [])
                     } else {
@@ -38,7 +38,7 @@ module.exports = function createBookingValidator({ bookingRepository, postgresBo
                 })
             }
             else {
-                postgresBookingRepository.getBookingForUser(session.userID, function (errors, bookings) {
+                postgresBookingRepository.getBookingsForUser(session.userID, function (errors, bookings) {
                     if (errors.length > 0) {
                         callback(errors, [])
                     } else {

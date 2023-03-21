@@ -7,7 +7,7 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
         getFreeBookings(callback) {
             bookingRepository.getFreeBookings(callback)
         },
-        getBookingsWithNames(session, callback) {
+        getBookings(session, callback) {
             bookingValidator.checkBookingPrivledges(session, callback)
         },
         createBooking(bookingInfo, callback) {
@@ -19,7 +19,7 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
         getFreeBookings(callback) {
             bookingRepository.getFreeBookings(callback)
         },
-        getBookingsWithNames(session, callback) {
+        getBookings(session, callback) {
             bookingValidator.checkBookingPrivledges(session, callback)
         },
         createBooking(bookingInfo, callback) {
