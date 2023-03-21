@@ -58,7 +58,7 @@ module.exports = function createBookingRepository() {
                     callback(['databaseError'], null)
                 }
                 else {
-                    callback([], bookings)
+                    callback([], null)
                 }
             })
         },
