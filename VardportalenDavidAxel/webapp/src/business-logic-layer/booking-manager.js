@@ -3,9 +3,7 @@
 
 module.exports = function createBookingManager({ bookingRepository, bookingValidator, postgresBookingRepository }) {
     return {
-        /*getBookings(callback) {
-            bookingRepository.getBookings(callback)
-        },
+        /*
         getFreeBookings(callback) {
             bookingRepository.getFreeBookings(callback)
         },

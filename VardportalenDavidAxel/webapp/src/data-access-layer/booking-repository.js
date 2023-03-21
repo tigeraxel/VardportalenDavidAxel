@@ -2,15 +2,9 @@
 
 module.exports = function createBookingRepository() {
     const db = require('./db')
-    
+
     return {
 
-        getBookings(callback) {
-            console.log("i MySQL funktionen -getBookings()-")
-            const query = "SELECT * FROM bookings WHERE patientID IS NOT NULL"
-            const values = []
-        },
-        
         getFreeBookings(callback) {
             const query = "SELECT * FROM bookings WHERE patientID IS NULL "
             const values = []
