@@ -66,8 +66,8 @@ module.exports = function createAccountManager({ accountRepository, accountValid
             })
         },
 
-        GiveDoctorPrivilige(user, callback) {
-            postgresAccountRepository.GiveDoctorPrivilige(user, callback)
+        giveUserDoctorPrivilige(user, callback) {
+            postgresAccountRepository.giveUserDoctorPrivilige(user, callback)
         },
 
         getUserByID(id, callback) {

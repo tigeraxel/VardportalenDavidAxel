@@ -71,7 +71,7 @@ module.exports = function createPostgresAccountRepository(){
             })
         
         },
-        GiveDoctorPrivilige(user, callback){
+        giveUserDoctorPrivilige(user, callback){
             users.update({
                 doctorUserID: 1
             },{
