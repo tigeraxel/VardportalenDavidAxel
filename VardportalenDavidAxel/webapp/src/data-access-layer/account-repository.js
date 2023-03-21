@@ -78,16 +78,13 @@ module.exports = function createAccountRepository() {
         getUserBySocialSecurityNumber(user, callback) {
             const query = "SELECT * FROM users WHERE socialSecurityNumber = ?"
             const values = [user.socialSecurityNumber]
-            db.query(query, values, function (error, userArray) {
-                if(userArray) {
-                    console.log("user array: " + userArray)
-                    callback([], userArray[0])
+            db.query(query, values, function (error, users) {
+                if(users) {
+                    console.log("user array: " + users)
+                    callback([], users[0])
                 }else if(error) {
                     console.log("Error: " + error)
                     callback(["databaseError"], null)
-                }else{
-                    console.log("else statement")
-                    callback([], null)
                 }
             })
         }
