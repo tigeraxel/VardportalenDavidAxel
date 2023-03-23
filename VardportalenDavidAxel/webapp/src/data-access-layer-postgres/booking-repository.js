@@ -88,9 +88,6 @@ module.exports = function createPostgresBookingRepository() {
                 callback(err)
             })
         },
-        getBookingById(id) {
-            //hämta bokning för ett id och returnera det tillbaka
-        },
         getBookingsForUser(id, callback) {
             bookings.findAll({
                 where: { patientUserID: id },
