@@ -1,21 +1,33 @@
 const FIRST_NAME_MIN_LENGTH = 3
 const LAST_NAME_MIN_LENGTH = 3
+const PASSWORD_MIN_LENGTH = 3
+const PASSWORD_MAX_LENGTH = 30
 const LAST_NAME_MAX_LENGTH = 30
 const FIRST_NAME_MAX_LENGTH = 30
 const hashManager = require('./hash-manager')
 
 
-function validateUsernameAndPassword(newUser) {
+function validateNamesAndPassword(newUser) {
     const validationErrors = []
     if (newUser.firstName.length < FIRST_NAME_MIN_LENGTH) {
         validationErrors.push("Firstname must be at least " + FIRST_NAME_MIN_LENGTH + " characters")
-    } else if (newUser.lastName.length < LAST_NAME_MIN_LENGTH) {
+    }
+    if (newUser.lastName.length < LAST_NAME_MIN_LENGTH) {
         validationErrors.push("Lastname must be at least " + LAST_NAME_MIN_LENGTH + " characters")
-    } else if (newUser.firstName.length > FIRST_NAME_MAX_LENGTH) {
+    }
+    if (newUser.password.length < PASSWORD_MIN_LENGTH) {
+        validationErrors.push("Password must be at least " + PASSWORD_MIN_LENGTH + " characters")
+    }
+    if (newUser.firstName.length > FIRST_NAME_MAX_LENGTH) {
         validationErrors.push("Lastname must be less than " + FIRST_NAME_MAX_LENGTH + " characters")
-    } else if (newUser.lastName.length > LAST_NAME_MAX_LENGTH) {
+    }
+    if (newUser.lastName.length > LAST_NAME_MAX_LENGTH) {
         validationErrors.push("Lastname must be less than " + LAST_NAME_MAX_LENGTH + " characters")
     }
+    if (newUser.password.length > PASSWORD_MAX_LENGTH) {
+        validationErrors.push("Password must be less than " + PASSWORD_MAX_LENGTH + " characters")
+    }
+    
 
     if (validationErrors.length == 0) {
         return []
@@ -50,7 +62,7 @@ module.exports = function createAccountValidator({ accountRepository, postgresAc
             })
         },
         validateAccountCredentials(user, callback) {
-            const validationErrors = validateUsernameAndPassword(user)
+            const validationErrors = validateNamesAndPassword(user)
             if (validationErrors.length == 0) {
                 accountRepository.getUserBySocialSecurityNumber(user, function (error, foundUser) {
                     if (error.length > 0) {
