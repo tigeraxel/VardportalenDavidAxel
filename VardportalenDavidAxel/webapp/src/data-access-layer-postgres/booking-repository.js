@@ -2,7 +2,6 @@ module.exports = function createPostgresBookingRepository() {
     const db = require('./db')
     const bookings = db.bookings
     const Users = db.users
-    const Specialitys = db.specialitys
     const Op = db.Sequelize.Op
     return {
         getBookings(callback) {
