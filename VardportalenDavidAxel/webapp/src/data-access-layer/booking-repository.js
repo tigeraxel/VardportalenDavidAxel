@@ -34,7 +34,7 @@ module.exports = function createBookingRepository() {
         },
         updateBooking(bookingInfo, callback) {
 
-            const query = "UPDATE bookings SET patientID = ?, messageFromPatient = ?, categoryID = ?, covidQuestion = ? WHERE bookingID = ?"
+            const query = "UPDATE bookings SET patientID = ?, message = ?, categoryID = ?, covidQuestion = ? WHERE bookingID = ?"
             const values = [bookingInfo.userID, bookingInfo.message, bookingInfo.CategoryID, bookingInfo.covidQuestion, bookingInfo.bookingID]
 
             db.query(query, values, function (error, bookings) {
