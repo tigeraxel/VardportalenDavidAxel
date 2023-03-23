@@ -19,7 +19,7 @@ function Bookings(sequelize, DataTypes) {
             type: DataTypes.TEXT,
             allowNull: true
         },
-        messageFromPatient: {
+        message: {
             type: DataTypes.TEXT,
         },
     })

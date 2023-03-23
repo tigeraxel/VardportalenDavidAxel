@@ -42,7 +42,7 @@ module.exports = function createPostgresBookingRepository() {
                 appointmentTime: bookingInfo.time,
                 appointmentDate: bookingInfo.date,
                 covidQuestion: null,
-                messageFromPatient: null,
+                message: null,
                 specialitySpecialityID: null,
                 doctorUserID: bookingInfo.doctorID,
                 patientUserID: null,
@@ -55,7 +55,7 @@ module.exports = function createPostgresBookingRepository() {
         updateBooking(bookingInfo, callback) {
             bookings.update({
                 covidQuestion: bookingInfo.covidQuestion,
-                messageFromPatient: bookingInfo.message,
+                message: bookingInfo.message,
                 patientUserID: bookingInfo.userID,
                 specialitySpecialityID: bookingInfo.CategoryID,
             }, {
@@ -117,7 +117,7 @@ module.exports = function createPostgresBookingRepository() {
                 attributes: [
                     'appointmentDate',
                     'appointmentTime',
-                    'messageFromPatient',
+                    'message',
                     'Users.firstName',
                     'Users.lastname',
 
@@ -178,7 +178,7 @@ db.sequelize.query(`SELECT *, P."firstName" as "patientFirstName", P."lastName" 
 attributes: [
         'appointmentDate',
         'appointmentTime',
-        'messageFromPatient',
+        'message',
         'Users.firstName',
         'Users.lastname',
     ],
