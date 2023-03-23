@@ -14,7 +14,6 @@ module.exports = function createAccountManager({ accountRepository, accountValid
 
         createAccount(user, callback) {
             console.log("I account manager create account")
-
             accountValidator.validateAccountCredentials(user, async function(validationErrors){
                 if(validationErrors.length == 0){
                     hashedPassword = await hashManager.hashUserPassword(user.password)
@@ -26,10 +25,9 @@ module.exports = function createAccountManager({ accountRepository, accountValid
             })
         },
 
-        giveUserDoctorPrivilige(user, callback) {
-            //routern skickar HTTP requesten via session-validatorn för att avgöra vilken access användaren har innan
-            //anvädaren får åtkomst till denna funktion.
-            accountRepository.giveUserDoctorPrivilige(user, callback)
+        giveUserDoctorPrivilige(session,user, callback) {
+            console.log("inuti giveUserDoctorPrivilige ")
+            accountValidator.validateGiveUserDoctorPrivilige(session,user, callback)
         },
 
         getUserByID(id, callback) {

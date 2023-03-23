@@ -93,6 +93,7 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
     })
     
     router.get('/newDoctor', function (request, response) {
+        
         response.render("addNewDoctor.hbs")
     })
     
@@ -103,9 +104,9 @@ module.exports = function createAccountRouter({accountManager, sessionValidator}
             socialSecurityNumber: request.body.socialSecurityNumber,
             lastName: request.body.lastName
         }
-    
-    
-        accountManager.GiveDoctorPrivilige(user, function (errors, text) {
+        const session = request.session
+
+        accountManager.giveUserDoctorPrivilige(session,user, function (errors, text) {
             const model = {
                 errors: errors,
                 text: text
