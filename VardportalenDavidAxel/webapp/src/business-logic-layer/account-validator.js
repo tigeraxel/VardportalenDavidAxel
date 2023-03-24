@@ -27,13 +27,7 @@ function validateNamesAndPassword(newUser) {
     if (newUser.password.length > PASSWORD_MAX_LENGTH) {
         validationErrors.push("Password must be less than " + PASSWORD_MAX_LENGTH + " characters")
     }
-    
-
-    if (validationErrors.length == 0) {
-        return []
-    } else {
-        return validationErrors
-    }
+    return validationErrors
 }
 
 module.exports = function createAccountValidator({ accountRepository, postgresAccountRepository }) {
@@ -71,13 +65,10 @@ module.exports = function createAccountValidator({ accountRepository, postgresAc
                     } else if (foundUser) {
                         validationErrors.push("Social security number alrady exist")
                         callback(validationErrors)
-                    } else {
-                        callback([])
                     }
                 })
-            } else {
-                callback(validationErrors)
             }
+            callback(validationErrors)
         },
 
         validateGiveUserDoctorPrivilige(session,user, callback) {

@@ -26,7 +26,6 @@ module.exports = function createAccountManager({ accountRepository, accountValid
         },
 
         giveUserDoctorPrivilige(session,user, callback) {
-            console.log("inuti giveUserDoctorPrivilige ")
             accountValidator.validateGiveUserDoctorPrivilige(session,user, callback)
         },
 
