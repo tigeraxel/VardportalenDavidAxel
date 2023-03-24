@@ -11,10 +11,6 @@ module.exports = {
 
     async validateUserPassword(enteredPassword, hashedPassword) {
         const isValid = await bcrypt.compare(enteredPassword, hashedPassword)
-        if(isValid){
-            return true
-        }else{
-            return false
-        }
+        return isValid
     }
 }
