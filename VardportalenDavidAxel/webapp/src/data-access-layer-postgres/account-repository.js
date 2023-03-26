@@ -67,7 +67,9 @@ module.exports = function createPostgresAccountRepository(){
                 if(err["name"] == "SequelizeUniqueConstraintError"){
                     callback(["Username is already taken"], [])
                 }
+                else{
                 callback(["databaseError"], [])
+                }
             })
         
         },
