@@ -13,7 +13,7 @@ module.exports = function createPostgresAccountRepository(){
             }).then(doctors=>
                 callback([], doctors)
             ).catch((err) => {
-                callback( err, [])
+                callback( "databaseError", [])
             })
         },
         getAllUsers(callback){
@@ -23,7 +23,7 @@ module.exports = function createPostgresAccountRepository(){
             .then(foundUsers =>
                 callback( [], foundUsers)
             ).catch((err) => {
-                callback( err, [])
+                callback( "databaseError", [])
             })
         },
         getUserById(_userID, callback) {
@@ -35,7 +35,7 @@ module.exports = function createPostgresAccountRepository(){
             }).then(()=>{
                 callback( [], user)
             }).catch( (err) => {
-                callback( err,[])
+                callback( "databaseError",[])
             })
 
         },
@@ -82,7 +82,7 @@ module.exports = function createPostgresAccountRepository(){
             }).then(updatedUser => {
                 callback([], updatedUser)
             }).catch((err) => {
-                callback( err, [])
+                callback( "databaseError", [])
             })
         },
         getUserBySocialSecurityNumber(user, callback){
@@ -98,7 +98,7 @@ module.exports = function createPostgresAccountRepository(){
                     callback([],null)
                 }
             }).catch((err) => {
-                callback(err, [])
+                callback("databaseError", [])
             })
         }
     }  
