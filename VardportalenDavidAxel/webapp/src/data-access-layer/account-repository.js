@@ -51,9 +51,8 @@ module.exports = function createAccountRepository() {
             const query = 'INSERT INTO users (socialSecurityNumber, userPassword, firstName, lastName, email, phoneNumber,isDoctor, isAdmin) VALUES (?,?,?,?,?,?,0,0)'
             const values = [user.socialSecurityNumber, user.password, user.firstName, user.lastName, user.email, user.phoneNumber]
             db.query(query, values, function (error, user) {
-                console.log(error)
                 if (error) {
-                    callback(error, null)
+                    callback(['databaseError'], null)
                 }
                 else {
                     callback([], user)
@@ -83,7 +82,6 @@ module.exports = function createAccountRepository() {
                     console.log("user array: " + users)
                     callback([], users[0])
                 }else if(error) {
-                    console.log("Error: " + error)
                     callback(["databaseError"], null)
                 }
             })
