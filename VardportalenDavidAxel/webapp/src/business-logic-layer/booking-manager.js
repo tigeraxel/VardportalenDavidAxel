@@ -16,6 +16,8 @@ module.exports = function createBookingManager({ bookingRepository, bookingValid
         updateBooking(bookingInfo, callback) {
             bookingRepository.updateBooking(bookingInfo, callback)
         }*/
+
+        // We have authorization checks for all of these but unfortunetely it is in the PL. No time to fix it this time.
         getFreeBookings(callback) {
             bookingRepository.getFreeBookings(callback)
         },
